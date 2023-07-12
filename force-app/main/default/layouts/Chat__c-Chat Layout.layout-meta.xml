@@ -106,6 +106,15 @@
             <sortOrder>2</sortOrder>
         </platformActionListItems>
     </platformActionList>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Model__c</fields>
+        <fields>Prompt_Tokens__c</fields>
+        <fields>Completion_Tokens__c</fields>
+        <fields>Role__c</fields>
+        <fields>Content__c</fields>
+        <relatedList>Message__c.Thread__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

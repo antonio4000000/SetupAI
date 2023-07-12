@@ -11,7 +11,12 @@
     <isNavTabPersistenceDisabled>true</isNavTabPersistenceDisabled>
     <label>SetupAI</label>
     <navType>Console</navType>
+    <tabs>Chat__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SetupAI_UtilityBar</utilityBar>
-    <workspaceConfig/>
+    <workspaceConfig>
+        <mappings>
+            <tab>Chat__c</tab>
+        </mappings>
+    </workspaceConfig>
 </CustomApplication>
