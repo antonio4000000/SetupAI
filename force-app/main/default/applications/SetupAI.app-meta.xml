@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#FFCE39</headerColor>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>true</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>true</isNavTabPersistenceDisabled>
+    <label>SetupAI</label>
+    <navType>Console</navType>
+    <tabs>Chat__c</tabs>
+    <uiType>Lightning</uiType>
+    <utilityBar>SetupAI_UtilityBar</utilityBar>
+    <workspaceConfig>
+        <mappings>
+            <tab>Chat__c</tab>
+        </mappings>
+    </workspaceConfig>
+</CustomApplication>

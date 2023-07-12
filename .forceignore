@@ -3,6 +3,7 @@
 #
 
 package.xml
+force-app/main/default/profiles/Admin.profile-meta.xml
 
 # LWC configuration files
 **/jsconfig.json
