@@ -1,0 +1,3 @@
+sfdx force:org:create -a SetupAI/issue# -d 30 -s -f config/project-scratch-def.json
+sfdx force:user:permset:assign -n SetupAi-Admin
+sfdx force:org:open
