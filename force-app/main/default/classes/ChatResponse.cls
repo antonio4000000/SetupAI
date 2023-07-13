@@ -1,3 +1,9 @@
+/* 
+ * Author:      Anthony Wheeler(wheeler.anthony96@gmail.com)
+ * Created:     2023-07-13
+ * Description: Responses received from OpenAI Chat API
+*/
+
 public with sharing class ChatResponse {
 
     public String id;

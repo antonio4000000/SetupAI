@@ -1,7 +1,7 @@
 /* 
  * Author:      Anthony Wheeler(wheeler.anthony96@gmail.com)
  * Created:     2023-02-10
- * Description: Interfaces with external APIs
+ * Description: Interfaces with APIs
 */
 
 public class Callout {

@@ -1,3 +1,9 @@
+/* 
+ * Author:      Anthony Wheeler(wheeler.anthony96@gmail.com)
+ * Created:     2023-07-13
+ * Description: Used to submit requests to OpenAI Chat API
+*/
+
 public with sharing class ChatRequest {
 
     public String model;

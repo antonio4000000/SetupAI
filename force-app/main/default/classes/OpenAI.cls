@@ -1,3 +1,9 @@
+/* 
+ * Author:      Anthony Wheeler(wheeler.anthony96@gmail.com)
+ * Created:     2023-07-13
+ * Description: Interface for OpenAI APIs
+*/
+
 public with sharing class OpenAI {
     
     //Send Chat thread and returns generated response
