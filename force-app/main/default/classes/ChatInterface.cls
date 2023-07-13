@@ -13,14 +13,26 @@ public with sharing class ChatInterface {
                 WHERE SetupAI__Abbreviation__c = :modelAbbr].MasterLabel;
     }
 
+    //Retrieve defined functions and return them formatted
+    private static ChatRequest.ChatFunction[] getFunctions(){
+        ChatRequest.ChatFunction[] toReturn = new ChatRequest.ChatFunction[]{};
+        for(Function__mdt func : [SELECT Id, MasterLabel, Description__c,
+                                                (SELECT Id, MasterLabel, Description__c, Type__c, Enumerated_Values__c, Required__c
+                                                FROM Properties__r)
+                                            FROM Function__mdt]){
+            toReturn.add(new ChatRequest.ChatFunction(func));
+        }
+        return toReturn;
+    }
+
     //Submits Chat to API and returns response
     public static ChatRequest.ChatMessage chat(ChatRequest.ChatMessage[] messages, String model){
         //Construct request
         ChatRequest req = new ChatRequest(
-            getModel(model),
+            getModel(model == null ? 'gpt-3' : model),
             0,
             messages,
-            null //TODO: Functions
+            getFunctions()
         );
         //Submit request
         ChatResponse res = OpenAI.chat(req);
