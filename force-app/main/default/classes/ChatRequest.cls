@@ -11,6 +11,13 @@ public with sharing class ChatRequest {
     public ChatMessage[] messages;
     public ChatFunction[] functions;
 
+    public ChatRequest(String model, Integer temperature, ChatMessage[] messages, ChatFunction[] functions){
+        this.model = model;
+        this.temperature = temperature;
+        this.messages = messages;
+        this.functions = functions;
+    }
+
     public String serialize(){
         String processed = JSON.serialize(this,true);
         //Don't maintain null values except content on messages
@@ -56,6 +63,19 @@ public with sharing class ChatRequest {
     }
     //Represents a function that the assistant can call
     public class ChatFunction {
+        public ChatFunction(Function__mdt function){
+            this.name = function.MasterLabel;
+            this.description = function.Description__c;
+            if(function.Properties__r != null){
+                this.required = new String[]{};
+                Map<String,Property> properties = new Map<String,Property>();
+                for(Function_Property__mdt prop : function.Properties__r){
+                    properties.put(prop.MasterLabel,new Property(prop));
+                    if(prop.Required__c)this.required.add(prop.MasterLabel);
+                }
+                this.parameters = new Parameters('object',properties);
+            }
+        }
         public String name;
         public String description;
         public Parameters parameters;
@@ -63,11 +83,20 @@ public with sharing class ChatRequest {
     }
     //Represents the parameters passed into a ChatFunction
     public class Parameters {
+        public Parameters(String type, Map<String,Property> properties){
+            this.type = type;
+            this.properties = properties;
+        }
         public String type;
         public Map<String,Property> properties;
     }
     //Represents properties passed in as Parameters into ChatFunction
     public class Property {
+        public Property(Function_Property__mdt prop){
+            this.type = prop.Type__c;
+            this.description = prop.Description__c;
+            this.enum_x = prop.Enumerated_Values__c?.split('\n');
+        }
         public String type;
         public String description;
         public String[] enum_x;
