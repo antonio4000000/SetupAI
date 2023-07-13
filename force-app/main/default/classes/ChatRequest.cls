@@ -1,7 +1,7 @@
 public with sharing class ChatRequest {
 
     public String model;
-    public Double temperature;
+    public Integer temperature;
     public ChatMessage[] messages;
     public ChatFunction[] functions;
 
