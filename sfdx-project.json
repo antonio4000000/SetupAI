@@ -6,7 +6,7 @@
     }
   ],
   "name": "SetupAI",
-  "namespace": "",
+  "namespace": "SetupAI",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "57.0"
 }
