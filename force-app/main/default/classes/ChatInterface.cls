@@ -29,10 +29,10 @@ public with sharing class ChatInterface {
     public static ChatRequest.ChatMessage chat(ChatRequest.ChatMessage[] messages, String model){
         //Construct request
         ChatRequest req = new ChatRequest(
-            getModel(model == null ? 'gpt-3' : model),
-            0,
-            messages,
-            getFunctions()
+            /** model */            getModel(model == null ? 'gpt-3' : model),
+            /** temperature */      0,
+            /** messages */         messages,
+            /** functions */        getFunctions()
         );
         //Submit request
         ChatResponse res = OpenAI.chat(req);
