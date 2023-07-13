@@ -11,6 +11,13 @@ public with sharing class ChatRequest {
     public ChatMessage[] messages;
     public ChatFunction[] functions;
 
+    public ChatRequest(String model, Integer temperature, ChatMessage[] messages, ChatFunction[] functions){
+        this.model = model;
+        this.temperature = temperature;
+        this.messages = messages;
+        this.functions = functions;
+    }
+
     public String serialize(){
         String processed = JSON.serialize(this,true);
         //Don't maintain null values except content on messages

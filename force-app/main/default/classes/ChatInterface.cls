@@ -12,6 +12,21 @@ public with sharing class ChatInterface {
                 FROM SetupAI__Model__mdt
                 WHERE SetupAI__Abbreviation__c = :modelAbbr].MasterLabel;
     }
+
+    //Submits Chat to API and returns response
+    public static ChatRequest.ChatMessage chat(ChatRequest.ChatMessage[] messages, String model){
+        //Construct request
+        ChatRequest req = new ChatRequest(
+            getModel(model),
+            0,
+            messages,
+            null //TODO: Functions
+        );
+        //Submit request
+        ChatResponse res = OpenAI.chat(req);
+        //Return response from assistant
+        return res?.choices[0]?.message;
+    }
   
 
 }
