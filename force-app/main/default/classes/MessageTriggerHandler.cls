@@ -32,11 +32,15 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
                 //Insert for next queueable
                 insert MessageConvertor.convert(aiResponse);
             }
-            when 'assistant'{
-
-            }
-            when 'error'{
-
+            when 'assistant','error'{
+                if(this.newMessage.Function_Name__c != null){
+                    Function.execute(this.newMessage.Function_Name__c,
+                                     this.newMessage.Function_Arguments__c,
+                                     this.newMessage.Thread__c);
+                }else if(this.newMessage.Content__c != null && this.newMessage.Content__c != 'null'){
+                    Message_Notice__e notice = new Message_Notice__e(MessageId__c = this.newMessage.Id);
+                    Database.SaveResult results = EventBus.publish(notice);
+                }
             }
         }
     }
