@@ -37,7 +37,13 @@ public with sharing class ChatInterface {
         //Submit request
         ChatResponse res = OpenAI.chat(req);
         //Return response from assistant
-        return res?.choices[0]?.message;
+        ChatRequest.ChatMessage toReturn = res?.choices[0]?.message;
+        if(toReturn != null){
+            //Copy tokens down so they can be saved to records later
+            toReturn.completionTokens = res?.usage?.completion_tokens;
+            toReturn.promptTokens = res?.usage?.prompt_tokens;
+        }
+        return toReturn;
     }
   
 
