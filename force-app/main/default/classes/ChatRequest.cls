@@ -49,6 +49,15 @@ public with sharing class ChatRequest {
             this.role = role;
             this.content = content;
         }
+        public ChatMessage(Message__c message){
+            this.role = message.Role__c;
+            this.content = message.Content__c;
+            if(message.Function_Name__c != null){
+                this.function_call = new ChatMessageFunctionCall();
+                this.function_call.name = message.Function_Name__c;
+                this.function_call.arguments = message.Function_Arguments__c;
+            }
+        }
         public String role;
         public String content;
         public String name;
