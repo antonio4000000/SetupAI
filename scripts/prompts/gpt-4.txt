@@ -30,19 +30,15 @@ Prompt: "The 'Is Primary' checkbox on Contact is reverting to unchecked every ti
    - If no updates are found on the checkbox, move on to solution 2, otherwise inform user of your findings.
 
 2. Check for any Process Builders or Record Triggered Flows on the Contact object that might be reverting the 'Is Primary' field:
-   - TODO: Flesh out this step, then workflows
-   
-   - Check for active Process Builders: Run this Tooling API SOQL query "SELECT Id, DeveloperName, ActiveVersion.VersionNumber, ActiveVersion.ProcessType, ActiveVersion.Metadata FROM FlowDefinition WHERE ActiveVersion.ProcessType = 'Workflow' AND ActiveVersion.Metadata.processMetadataValues[0].value = '{VALUE FROM FIRST QUERY}' AND ActiveVersion.Metadata.isActive = true"
+   - Check for active Flows or Process Builders: Run this SOQL query(NOT TOOLING)(NOTE THAT ITS FILTERING BY OBJECT LABEL, NOT API NAME) "SELECT Id, IsActive, Label, ApiName, ProcessType, TriggerType, TriggerObjectOrEventId, TriggerObjectOrEventLabel FROM FlowDefinitionView WHERE TriggerObjectOrEventLabel='Contact'"
+   - If none found, move on to solution 3, otherwise go through each one and look for updates to the "Is Primary" checkbox in the metadata: Run this Tooling API query "SELECT LatestVersion.Metadata FROM FlowDefinition WHERE DeveloperName = '{API NAME FROM LAST QUERY}'"
+   - Comb through the metadata and if you find a reason the checkbox might be reverted, inform the user, otherwise move on to step 3
 
+3. Check for any Workflow Rules that could be reverting the "Is Primary" checkbox on update
+   TODO: Flesh out some more
+   - Check for active Workflow Rules: Run this Tooling API SOQL query "SELECT Id, Name, TableEnumOrId, Metadata FROM WorkflowRule WHERE TableEnumOrId = '{VALUE FROM FIRST QUERY}' AND Metadata.isActive = true"
 
-- Check for active Workflow Rules: Run this Tooling API SOQL query "SELECT Id, Name, TableEnumOrId, Metadata FROM WorkflowRule WHERE TableEnumOrId = '{VALUE FROM FIRST QUERY}' AND Metadata.isActive = true"
-
-2. Check for any Validation Rules on the Contact object that might be preventing the 'Is Primary' field from being checked:
-   - Sometimes, a Validation Rule might prevent a field from being updated if certain conditions are not met.
-   - Check for active Validation Rules: Run this Tooling API SOQL query "SELECT Id, Name, Active, Description, ErrorMessage, ValidationFormula FROM ValidationRule WHERE EntityDefinition.QualifiedAPIName = '{VALUE FROM FIRST QUERY}' AND Active = true"
-   - If this query returns results, review the ValidationFormula for each Validation Rule to see if they might be causing the issue. If you find a potential cause, let the user know. If not, move on to the next solution.
-
-3. Check for any Apex Classes that might be causing the 'Is Primary' field to revert to unchecked:
+4. Check for any Apex Classes that might be causing the 'Is Primary' field to revert to unchecked:
    - Apex Classes can also cause unexpected field value changes.
    - Check for Apex Classes: Run this Tooling API SOQL query "SELECT Id, Name, Body FROM ApexClass"
    - If this query returns results, review the Body for each Apex Class to see if they might be causing the issue. If you find a potential cause, let the user know. If not, let the user know that you were unable to find the cause of the issue.
