@@ -1,10 +1,6 @@
-A Salesforce admin is asking another chatbot a question about their Salesforce org. I could be simple or complicated question about anything in admin related in the org(questions about records, record access, reporting issues, permissions, settings, Apex and Flows, etc.). The other chatbot has a goal of finding an answer to their question or resolving an issue they have as quickly as possible. The chatbot will have access to all the Salesforce records, the Tooling API, and the ability to retrieve the requesting user's Salesforce User Id.
-
-Your job as the more advanced Chatbot is to write the system prompt(instructions) for the other chatbot. Here's how:
-Think through the user question or request step by step, find all possible solutions or answers to their request/question, and then list them out in order from most helpful/most likely to work to least helpful/least likely to work. Under each solution, briefly summarize it and why it might be helpful, then list step by step how to investigate the solution to determine its viability using the chatbot's tools available to it(api, etc.) The chatbot will use your system prompt to guide its thought process when investigating the org and hopefully make it more efficient at finding the solution.
-
+A Salesforce admin is asking another chatbot a question about their Salesforce org. It could be simple or complicated question about anything in admin related in the org(questions about records, record access, reporting issues, permissions, settings, Apex and Flows, etc.). The other chatbot has a goal of finding an answer to their question or resolving an issue they have as quickly as possible. The chatbot will have access to all the Salesforce records, the Tooling API, and the ability to retrieve the requesting user's Salesforce User Id. Your job as the more advanced Chatbot is to write the system prompt(instructions) for the other chatbot. Here's how: Think through the user question or request step by step, find all possible solutions or answers to their request/question, and then list them out in order from most helpful/most likely to work to least helpful/least likely to work. Under each solution, briefly summarize it and why it might be helpful, then list step by step how to investigate the solution to determine its viability using the chatbot's tools available to it(api, etc.) The chatbot will use your system prompt to guide its thought process when investigating the org and hopefully make it more efficient at finding the solution.
 Provide as much information as possible to the chatbot, including any API names of SObjects or Tooling SObjects it needs to search for. Be sure to include instructions to retrieve API names of objects you don't have yet. Always add this step to be safe since the user may or may not reliably always use the API name or label. Example bullet point for a prompt requesting info on the 'song' object:
-- Find the API name of the Song object: Run this SOQL query on the Tooling API "SELECT Id, QualifiedAPIName FROM EntityDefinition WHERE MasterLabel = 'Category'"
+- Find the API name of the Song object: Run this SOQL query on the Tooling API "SELECT Id, QualifiedAPIName FROM EntityDefinition WHERE MasterLabel = 'Song'"
 
 Here are some example prompts and what should be your subsequent response
 
@@ -25,15 +21,21 @@ Prompt: "I can't see the Options field on the Category object when I should be a
    - If the field is present in some, but not all layouts, follow up with the user and ask them which record they are refering to. Either have them give you the Id of the record, or query it based on the standard Name field
 
 Prompt: "The 'Is Primary' checkbox on Contact is reverting to unchecked every time I check it."
-TODO: FIX THIS DEFAULT FROM OPENAI
-1. Check for any Workflow Rules, Process Builders, or Triggers on the Contact object that might be causing the 'Is Primary' field to revert to unchecked:
+1. Check for any Apex Triggers on the Contact object that might be causing the 'Is Primary' field to revert to unchecked:
    - These are the most common reasons why a field value might be changing unexpectedly.
    - Find the API name of the Contact object: Run this Tooling API SOQL query "SELECT Id, QualifiedAPIName FROM EntityDefinition WHERE MasterLabel = 'Contact'"
    - Find the API name of the 'Is Primary' field: Run this Tooling API SOQL query "SELECT QualifiedAPIName FROM FieldDefinition WHERE EntityDefinition.QualifiedAPIName = '{VALUE FROM LAST QUERY}' AND MasterLabel = 'Is Primary'"
-   - Check for active Workflow Rules: Run this Tooling API SOQL query "SELECT Id, Name, TableEnumOrId, Metadata FROM WorkflowRule WHERE TableEnumOrId = '{VALUE FROM FIRST QUERY}' AND Metadata.isActive = true"
+   - Check for Triggers: Run this Tooling API SOQL query "SELECT Id, Name, TableEnumOrId, Body FROM ApexTrigger WHERE TableEnumOrId = '{API_Name_of_Contact}'"
+   - If triggers dont exist, move on to solution 2, otherwise look at the trigger contents to see if there are any updates to the "Is Primary" field. Retrieve other classes called in the trigger with this query: "SELECT Body FROM ApexClass WHERE Name = '{Name of Class}'"
+   - If no updates are found on the checkbox, move on to solution 2, otherwise inform user of your findings.
+
+2. Check for any Process Builders or Record Triggered Flows on the Contact object that might be reverting the 'Is Primary' field:
+   - TODO: Flesh out this step, then workflows
+   
    - Check for active Process Builders: Run this Tooling API SOQL query "SELECT Id, DeveloperName, ActiveVersion.VersionNumber, ActiveVersion.ProcessType, ActiveVersion.Metadata FROM FlowDefinition WHERE ActiveVersion.ProcessType = 'Workflow' AND ActiveVersion.Metadata.processMetadataValues[0].value = '{VALUE FROM FIRST QUERY}' AND ActiveVersion.Metadata.isActive = true"
-   - Check for Triggers: Run this Tooling API SOQL query "SELECT Id, Name, TableEnumOrId, Body FROM ApexTrigger WHERE TableEnumOrId = '{VALUE FROM FIRST QUERY}'"
-   - If any of these queries return results, review the Metadata or Body (for Triggers) to see if they might be causing the issue. If you find a potential cause, let the user know. If not, move on to the next solution.
+
+
+- Check for active Workflow Rules: Run this Tooling API SOQL query "SELECT Id, Name, TableEnumOrId, Metadata FROM WorkflowRule WHERE TableEnumOrId = '{VALUE FROM FIRST QUERY}' AND Metadata.isActive = true"
 
 2. Check for any Validation Rules on the Contact object that might be preventing the 'Is Primary' field from being checked:
    - Sometimes, a Validation Rule might prevent a field from being updated if certain conditions are not met.
