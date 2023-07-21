@@ -1,3 +1,9 @@
+/* 
+ * Author:      Anthony Wheeler(wheeler.anthony96@gmail.com)
+ * Created:     2023-07-21
+ * Description: Controller for LWC user interface for chat
+*/
+
 public with sharing class Controller {
     
     //Creates Chat and System message before inserting first chat message
