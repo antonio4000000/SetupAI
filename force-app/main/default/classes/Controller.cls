@@ -13,24 +13,30 @@ public with sharing class Controller {
     //Creates Chat and System message before inserting first chat message
     @AuraEnabled(cacheable=true)
     public static void initialize(String firstMessage){
-        String chatId = generateChat(firstMessage);
+        Chat__c chat = generateChat(firstMessage);
         String systemPrompt = generateSystemPrompt(firstMessage);
-        insert new Message__c(
-            Role__c = 'system',
-            Content__c = [SELECT Content__c
-                          FROM System_Prompt__mdt
-                          WHERE MasterLabel = :PRIMARY_LABEL].Content__c + '\n' + systemPrompt,
-            Thread__c = chatId
-        );
-        insert new Message__c(
-            Role__c = 'user',
-            Content__c = firstMessage,
-            Thread__c = chatId
-        );
+        Message__c[] threadToInsert = new Message__c[]{
+            new Message__c(
+                Role__c = 'system',
+                Content__c = [SELECT Content__c
+                            FROM System_Prompt__mdt
+                            WHERE MasterLabel = :PRIMARY_LABEL].Content__c + '\n' + systemPrompt
+            ),
+            new Message__c(
+                Role__c = 'user',
+                Content__c = firstMessage
+            )
+        };
+        //Insert all records
+        insert chat;
+        for(Message__c message : threadToInsert){
+            message.Thread__c = chat.Id;
+        }
+        insert threadToInsert;
     }
 
     //Creates initial Chat__c record
-    private static String generateChat(String message){
+    private static Chat__c generateChat(String message){
         //Submit request to generate header
         String header = ChatInterface.chat(
             new ChatRequest.ChatMessage[]{
@@ -47,15 +53,15 @@ public with sharing class Controller {
                     message
                 )
             }, 
-            'gpt-3'
+            'gpt-3',
+            false
         ).content;
+        System.debug(header);
         //Save chat record
-        Chat__c newChat = new Chat__c(
+        return new Chat__c(
             Running__c = true,
             Name = header
         );
-        insert newChat;
-        return newChat.Id;
     }
 
     //Use gpt-4 to generate System prompt for gpt-3
@@ -76,7 +82,8 @@ public with sharing class Controller {
                     message
                 )
             }, 
-            'gpt-4'
+            'gpt-4',
+            false
         ).content;
     }
 
