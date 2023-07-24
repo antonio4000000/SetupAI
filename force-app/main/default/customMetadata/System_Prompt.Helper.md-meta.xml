@@ -41,6 +41,12 @@ Prompt: &quot;The &apos;Is Primary&apos; checkbox on Contact is reverting to unc
 - If none are found, move on to step 4
 4. Let the user know you haven&apos;t seen anything in the automation in your org so far.
 - Ask for more details, and/or summarize some of your findings explaining why you haven&apos;t found a solution
-- If the field is part of a namespace, look for the package with that namespace and inform the user the automation may be part of the package.</value>
+- If the field is part of a namespace, look for the package with that namespace and inform the user the automation may be part of the package.
+Prompt: &quot;Summarize the CaseTriggerHandler class&quot;
+1. Read the CaseTriggerHandler class and summarize directly to user
+- Run Tooling SOQL Query to find CaseTriggerHandler: &quot;SELECT Name, Body FROM ApexClass WHERE Name = &apos;CaseTriggerHandler&apos;&quot;
+- If a result is returned, assess the class body contents, summarize the contents for the end user, and if there are any best practices or errors, make some simple recommendations they could do to fix the class or make it more efficient.
+- If no class was found, re-run the query but with this where clause: &quot;WHERE Name LIKE &apos;%CaseTriggerHandler%&apos;&quot;. If you find a class with a name just 1-2 characters off from CaseTriggerHandler, summarize, that class for the end user following the guidelines in the previous step. 
+- If still no class is found, let the user know you couldn&apos;t find the class they were referring to, and ask them to double check the exact name of the class.</value>
     </values>
 </CustomMetadata>
