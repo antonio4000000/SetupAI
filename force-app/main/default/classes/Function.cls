@@ -8,34 +8,32 @@ public with sharing class Function {
 
     //Executes specified action and saves results to chat
     public static void execute(String name, String arguments, String chatId){
+        String content = '';
         try{
-            String results;
             switch on name {
                 when 'soql' {
-                    results = soql(FunctionParam.parseSOQL(arguments));
+                    content = soql(FunctionParam.parseSOQL(arguments));
                 }
                 when 'getToolingObjects'{
-                    results = getToolingObjects();
+                    content = getToolingObjects();
                 }
                 when 'describeToolingObject' {
-                    results = describeToolingObject(FunctionParam.parseDescribeTooling(arguments));
+                    content = describeToolingObject(FunctionParam.parseDescribeTooling(arguments));
                 }
                 when 'describeDrilldown' {
-                    results = describeDrilldown(FunctionParam.parseDescribeDrilldown(arguments));
+                    content = describeDrilldown(FunctionParam.parseDescribeDrilldown(arguments));
                 }
                 when 'getUserId'{
-                    results = UserInfo.getUserId();
+                    content = UserInfo.getUserId();
                 }
             }
-            insert new Message__c(Thread__c = chatId,
-                                  Role__c = 'function',
-                                  Content__c = results,
-                                  Function_Name__c = name);
         }catch(Exception ex){
-            insert new Message__c(Thread__c = chatId,
-                                  Role__c = 'user',
-                                  Content__c = ex.getMessage());
+            content = ex.getMessage();
         }
+        insert new Message__c(Thread__c = chatId,
+                              Role__c = 'function',
+                              Content__c = content,
+                              Function_Name__c = name);
     }
     
     //Execute SOQL Query
