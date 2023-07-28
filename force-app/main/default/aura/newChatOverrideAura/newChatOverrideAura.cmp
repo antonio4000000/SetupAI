@@ -1,0 +1,3 @@
+<aura:component implements="lightning:actionOverride,force:hasRecordId,force:hasSObjectName">
+    <c:newChatOverrideLWC recordId="{!v.recordId}" onrecordcreated="{!c.recordCreated}"/> 
+</aura:component>
