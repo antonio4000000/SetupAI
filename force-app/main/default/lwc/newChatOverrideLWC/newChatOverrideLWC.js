@@ -11,6 +11,8 @@ export default class NewChatOverrideLWC extends LightningElement {
     @track userInput = '';
     //List of UI messages 
     @track messages = [];
+    //Displays spinner when tru
+    isLoading = false;
 
     //Platform event handling to display new messages
     subscription = {};
@@ -31,13 +33,15 @@ export default class NewChatOverrideLWC extends LightningElement {
 
     //Upon user submit button press, save to records
     submit() {
+        this.isLoading = true;
         if (this.userInput.trim() !== '') {
             submitMessage({content: this.userInput, chatId: this.recordId})
                 .then(result => {
                     //Returns new chat Id when new chat created so component can redirect
                     if(result){
+                        console.log(result);
                         const newRecordCreated = new CustomEvent('recordcreated', {
-                            detail: { newId : result.chatId },
+                            detail: { result },
                         });
                         // Fire the custom event
                         this.dispatchEvent(newRecordCreated);
@@ -57,6 +61,7 @@ export default class NewChatOverrideLWC extends LightningElement {
             .then((result) => {
                 console.log(result);
                 this.messages = result;
+                this.isLoading = false;
             })
             .catch((error) => {
                 console.log('ERROR');
@@ -68,6 +73,7 @@ export default class NewChatOverrideLWC extends LightningElement {
     handleSubscribe() {
         // Callback invoked whenever a new event message is received
         const messageCallback = (response) => {
+            this.isLoading = true;
             console.log(response);
             console.log('CALLBACK');
             this.retrieveMessages();

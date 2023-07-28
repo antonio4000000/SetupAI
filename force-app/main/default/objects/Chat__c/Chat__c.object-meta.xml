@@ -58,8 +58,10 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>Edit</actionName>
+        <content>newChatOverrideAura</content>
         <formFactor>Large</formFactor>
-        <type>Default</type>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>Edit</actionName>
@@ -86,8 +88,10 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
+        <content>newChatOverrideAura</content>
         <formFactor>Large</formFactor>
-        <type>Default</type>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
@@ -128,8 +132,10 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <content>newChatOverrideAura</content>
         <formFactor>Large</formFactor>
-        <type>Default</type>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>

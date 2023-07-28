@@ -1,10 +1,11 @@
 ({
     recordCreated : function (component, event, helper) {
-        var newId = event.getParam('newId');
+        console.log('received reload event');
+        var newId = event.getParam('result');
+        console.log(newId);
         var navEvt = $A.get("e.force:navigateToSObject");
         navEvt.setParams({
-          "recordId": newId,
-          "slideDevName": "conversation"
+          "recordId": newId
         });
         navEvt.fire();
     }
