@@ -46,16 +46,12 @@ export default class NewChatOverrideLWC extends LightningElement {
     retrieveMessages(){
         getMessages({chatId: this.recordId})
             .then((result) => {
-                console.log(result.allMessages);
-                this.messages = result.allMessages;
-                
-                if(!this.recordId){
-                    const newRecordCreated = new CustomEvent('recordcreated', {
-                        detail: { newId : result.chatId },
-                    });
-                    // Fire the custom event
-                    this.dispatchEvent(newRecordCreated);
-                }
+                this.messages = result;
+                const newRecordCreated = new CustomEvent('recordcreated', {
+                    detail: { newId : result.chatId },
+                });
+                // Fire the custom event
+                this.dispatchEvent(newRecordCreated);
             })
             .catch((error) => {
                 console.log('ERROR');
