@@ -44,7 +44,6 @@ public class Callout {
         req.setMethod(method);
         req.setTimeout(120000);
         if(body != null) req.setBody(body);
-        System.debug(body);
         if(headers != null && headers.size() > 0){
             for(String key : headers.keySet()){
                 req.setHeader(key, headers.get(key));

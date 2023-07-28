@@ -56,7 +56,6 @@ public with sharing class Controller {
             'gpt-3',
             false
         ).content;
-        System.debug(header);
         //Save chat record
         return new Chat__c(
             Running__c = true,

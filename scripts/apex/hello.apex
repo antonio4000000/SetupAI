@@ -1,1 +1,1 @@
-Controller.initialize('Summarize the ChatInterface class');
+Controller.initialize('Do I have access to the Role field on the Message object?');
