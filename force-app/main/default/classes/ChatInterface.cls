@@ -26,13 +26,13 @@ public with sharing class ChatInterface {
     }
 
     //Submits Chat to API and returns response
-    public static ChatRequest.ChatMessage chat(ChatRequest.ChatMessage[] messages, String model){
+    public static ChatRequest.ChatMessage chat(ChatRequest.ChatMessage[] messages, String model, Boolean includeFunctions){
         //Construct request
         ChatRequest req = new ChatRequest(
             /** model */            getModel(model == null ? 'gpt-3' : model),
             /** temperature */      0,
             /** messages */         messages,
-            /** functions */        getFunctions()
+            /** functions */        includeFunctions ? getFunctions() : null
         );
         //Submit request
         ChatResponse res = OpenAI.chat(req);
@@ -45,6 +45,5 @@ public with sharing class ChatInterface {
         }
         return toReturn;
     }
-  
 
 }

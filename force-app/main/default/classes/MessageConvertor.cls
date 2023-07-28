@@ -16,13 +16,14 @@ public with sharing class MessageConvertor {
     }
 
     //Convert records to classes
-    public static Message__c convert(ChatRequest.ChatMessage message){
+    public static Message__c convert(ChatRequest.ChatMessage message, String chatId){
         return new Message__c(Role__c = message.role,
                               Content__c = message.content,
                               Completion_Tokens__c = message.completionTokens,
                               Prompt_Tokens__c = message.promptTokens,
                               Function_Name__c = message.function_call?.name,
-                              Function_Arguments__c = message.function_call?.arguments);
+                              Function_Arguments__c = message.function_call?.arguments,
+                              Thread__c = chatId);
     }
 
 }

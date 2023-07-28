@@ -27,10 +27,11 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
                 //Get AI Response
                 ChatRequest.ChatMessage aiResponse = ChatInterface.chat(
                     MessageConvertor.convert(entireThread),
-                    'gpt-3'
+                    'gpt-3',
+                    true
                 );
                 //Insert for next queueable
-                insert MessageConvertor.convert(aiResponse);
+                insert MessageConvertor.convert(aiResponse, this.newMessage.Thread__c);
             }
             when 'assistant','error'{
                 if(this.newMessage.Function_Name__c != null){

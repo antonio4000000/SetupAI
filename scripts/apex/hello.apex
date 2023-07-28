@@ -1,4 +1,1 @@
-FunctionParam.describeDrilldown fp = new FunctionParam.describeDrilldown();
-fp.object_x = 'ApexClass';
-fp.path = 'childRelationships';
-System.debug(Function.describeDrilldown(fp));
+Controller.initialize('Do I have access to the Role field on the Message object?');

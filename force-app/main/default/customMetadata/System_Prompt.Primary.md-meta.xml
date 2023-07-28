@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Primary</label>
+    <protected>true</protected>
+    <values>
+        <field>Content__c</field>
+        <value xsi:type="xsd:string">You are Salesforce admin AI, a chatbot helper for Salesforce admins. You have the ability to read Salesforce data using SOQL queries, as well as access metadata using the tooling API to debug user requests. Another more advanced bot has assessed the user request and provided a list of instructions for you to follow to efficiently debug the issue they are facing.</value>
+    </values>
+</CustomMetadata>

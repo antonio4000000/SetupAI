@@ -33,7 +33,7 @@ public with sharing class Function {
                                   Function_Name__c = name);
         }catch(Exception ex){
             insert new Message__c(Thread__c = chatId,
-                                  Role__c = 'error',
+                                  Role__c = 'user',
                                   Content__c = ex.getMessage());
         }
     }

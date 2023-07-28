@@ -4,6 +4,7 @@
 
 package.xml
 force-app/main/default/profiles/Admin.profile-meta.xml
+force-app/main/default/workflows
 
 # LWC configuration files
 **/jsconfig.json
