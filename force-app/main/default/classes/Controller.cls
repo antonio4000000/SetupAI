@@ -14,14 +14,15 @@ public with sharing class Controller {
 
     //Saves user message to Salesforce
     @AuraEnabled
-    public static void submitMessage(String content, String chatId){
+    public static String submitMessage(String content, String chatId){
         try {
             if(chatId == null){
-                initialize(content);
+                return initialize(content);
             }else{
                 insert new Message__c(Thread__c = chatId,
                                       Content__c = content,
                                       Role__c = 'user');
+                return null;
             }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
@@ -29,7 +30,7 @@ public with sharing class Controller {
     }
     
     //Creates Chat and System message before inserting first chat message
-    private static void initialize(String firstMessage){
+    private static String initialize(String firstMessage){
         Chat__c chat = generateChat(firstMessage);
         String systemPrompt = generateSystemPrompt(firstMessage);
         Message__c[] threadToInsert = new Message__c[]{
@@ -50,6 +51,7 @@ public with sharing class Controller {
             message.Thread__c = chat.Id;
         }
         insert threadToInsert;
+        return chat.Id;
     }
 
     //Creates initial Chat__c record

@@ -33,8 +33,17 @@ export default class NewChatOverrideLWC extends LightningElement {
     submit() {
         if (this.userInput.trim() !== '') {
             submitMessage({content: this.userInput, chatId: this.recordId})
-                .then(() => {
+                .then(result => {
+                    //Returns new chat Id when new chat created so component can redirect
+                    if(result){
+                        const newRecordCreated = new CustomEvent('recordcreated', {
+                            detail: { newId : result.chatId },
+                        });
+                        // Fire the custom event
+                        this.dispatchEvent(newRecordCreated);
+                    }
                     this.userInput = '';
+                    this.retrieveMessages();
                 })
                 .catch(error => {
                     console.log(error.body.message);
@@ -46,12 +55,8 @@ export default class NewChatOverrideLWC extends LightningElement {
     retrieveMessages(){
         getMessages({chatId: this.recordId})
             .then((result) => {
+                console.log(result);
                 this.messages = result;
-                const newRecordCreated = new CustomEvent('recordcreated', {
-                    detail: { newId : result.chatId },
-                });
-                // Fire the custom event
-                this.dispatchEvent(newRecordCreated);
             })
             .catch((error) => {
                 console.log('ERROR');
