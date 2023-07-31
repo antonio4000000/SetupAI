@@ -61,7 +61,8 @@ export default class NewChatOverrideLWC extends LightningElement {
             .then((result) => {
                 console.log(result);
                 this.messages = result;
-                this.isLoading = false;
+                //If last message is not user submitted, hide loading wheel
+                this.isLoading = this.messages[this.messages.length-1].msgClass.includes('outbound');
             })
             .catch((error) => {
                 console.log('ERROR');

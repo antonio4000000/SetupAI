@@ -1,7 +1,4 @@
 <template>
-    <template if:true={isLoading}>
-        <lightning-spinner alternative-text="loading"></lightning-spinner>
-    </template>
     <lightning-card title="Chat Bot" icon-name="custom:custom14" class="slds-m-around_x-small">
         <div class="slds-grid slds-grid_vertical">
             <div class="slds-box slds-box_x-small chat-container">
@@ -19,6 +16,9 @@
                             </li>
                         </template>
                     </ul>
+                    <template if:true={isLoading}>
+                        <lightning-spinner alternative-text="loading"></lightning-spinner>
+                    </template>
                 </section>
             </div>
             <div class="slds-m-top_small">
