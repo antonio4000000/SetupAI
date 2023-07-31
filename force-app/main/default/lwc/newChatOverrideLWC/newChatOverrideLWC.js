@@ -2,6 +2,7 @@ import { LightningElement, track, api } from 'lwc';
 import { subscribe, unsubscribe, onError, setDebugFlag, isEmpEnabled } from 'lightning/empApi';
 import getMessages from '@salesforce/apex/Controller.getMessages';
 import submitMessage from '@salesforce/apex/Controller.submitMessage';
+import getChatSummary from '@salesforce/apex/Controller.getChatSummary';
 
 export default class NewChatOverrideLWC extends LightningElement {
 
@@ -13,6 +14,8 @@ export default class NewChatOverrideLWC extends LightningElement {
     @track messages = [];
     //Displays spinner when tru
     isLoading = false;
+    //Chat summary
+    title = 'New Chat';
 
     //Platform event handling to display new messages
     subscription = {};
@@ -22,9 +25,21 @@ export default class NewChatOverrideLWC extends LightningElement {
     connectedCallback(){
         if(this.recordId){
             this.retrieveMessages();
+            getChatSummary({chatId:this.recordId})
+                .then(result => {
+                    this.title = result != null ? result : this.title;
+                })
+                .catch(error => {
+                    console.log(error.body.message);
+                })
         } 
         this.handleSubscribe();
     }
+
+    //On component rendered
+    renderedCallback() {
+        this.template.querySelector('.chat-messages').scrollTop = this.template.querySelector('.chat-messages').scrollHeight;
+    }     
 
     //Handle user input updates
     handleInputChange(event) {

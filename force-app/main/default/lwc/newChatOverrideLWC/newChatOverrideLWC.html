@@ -1,7 +1,7 @@
 <template>
-    <lightning-card title="Chat Bot" icon-name="custom:custom14" class="slds-m-around_x-small">
-        <div class="slds-grid slds-grid_vertical">
-            <div class="slds-box slds-box_x-small chat-container">
+    <lightning-card title={title} icon-name="custom:custom14" class="slds-m-around_x-small">
+        <div class="slds-grid slds-grid_vertical chat-container">
+            <div class="slds-box slds-box_x-small chat-messages">
                 <section role="log" class="slds-chat">
                     <ul class="slds-chat-list">
                         <template for:each={messages} for:item="message">
@@ -21,7 +21,7 @@
                     </template>
                 </section>
             </div>
-            <div class="slds-m-top_small">
+            <div class="slds-m-top_small user-input-box">
                 <lightning-input type="text" label="Your message" value={userInput} onchange={handleInputChange} class="slds-m-around_x-small"></lightning-input>
                 <lightning-button variant="brand" label="Send" title="Send" onclick={submit} class="slds-m-left_x-small"></lightning-button>
             </div>

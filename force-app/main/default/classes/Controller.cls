@@ -156,5 +156,21 @@ public with sharing class Controller {
         public string containerClass{get;set;}
     }
 
+    //<<<<<<<<-------Message Retrieval Methods and Variables------------------
+
+    @AuraEnabled
+    public static String getChatSummary(String chatId){
+        try {
+            if(chatId != null){
+                return [SELECT Name
+                        FROM Chat__c
+                        WHERE Id =: chatId].Name;
+            }else{
+                return null;
+            }
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
 
 }
