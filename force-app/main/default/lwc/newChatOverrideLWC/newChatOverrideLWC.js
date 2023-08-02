@@ -13,9 +13,11 @@ export default class NewChatOverrideLWC extends LightningElement {
     //List of UI messages 
     @track messages = [];
     //Displays spinner when tru
-    isLoading = false;
+    @track isLoading = false;
+    //Fade in animation style
+    @track fadeAnimation = 'fade-in'
     //Chat summary
-    title = 'New Chat';
+    @track title = 'New Chat';
 
     //Platform event handling to display new messages
     subscription = {};
@@ -38,6 +40,9 @@ export default class NewChatOverrideLWC extends LightningElement {
 
     //On component rendered
     renderedCallback() {
+        setTimeout(() => {
+            this.fadeAnimation = '';
+        }, 400);
         this.template.querySelector('.chat-messages').scrollTop = this.template.querySelector('.chat-messages').scrollHeight;
     }     
 
