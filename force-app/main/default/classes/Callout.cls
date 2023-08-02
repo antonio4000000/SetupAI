@@ -4,7 +4,7 @@
  * Description: Interfaces with APIs
 */
 
-public class Callout {
+public with sharing class Callout {
 
     //Custom exception for handling errors
     public class CalloutException extends Exception{}
@@ -17,7 +17,7 @@ public class Callout {
 
     public static String execute(String namedCred, String endpoint, String method, String body, Map<String, String> headers){
         //Retrieve endpoint with friendly name
-        Endpoint__mdt e = [SELECT Endpoint__c FROM Endpoint__mdt WHERE MasterLabel = :endpoint];
+        Endpoint__mdt e = [SELECT Endpoint__c FROM Endpoint__mdt WHERE MasterLabel = :endpoint WITH SECURITY_ENFORCED];
         return execute(
             'callout:' + namedCred + e.Endpoint__c, 
             method, 

@@ -16,13 +16,19 @@ public with sharing class Controller {
     @AuraEnabled
     public static String submitMessage(String content, String chatId){
         try {
-            if(chatId == null){
-                return initialize(content);
+            //Verify access to messages and chat
+            if(CRUD.createChat() && CRUD.createMessage()){
+                if(chatId == null){
+                    return initialize(content);
+                }else{
+                    insert new Message__c(Thread__c = chatId,
+                                        Content__c = content,
+                                        Role__c = 'user');
+                    return null;
+                }
             }else{
-                insert new Message__c(Thread__c = chatId,
-                                      Content__c = content,
-                                      Role__c = 'user');
-                return null;
+                System.debug('one was false');
+                throw new AuraHandledException('You do not have the ability to create new chats. Please contact your administrator.');
             }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
@@ -37,8 +43,9 @@ public with sharing class Controller {
             new Message__c(
                 Role__c = 'system',
                 Content__c = [SELECT Content__c
-                            FROM System_Prompt__mdt
-                            WHERE MasterLabel = :PRIMARY_LABEL].Content__c + '\n' + systemPrompt
+                              FROM System_Prompt__mdt
+                              WHERE MasterLabel = :PRIMARY_LABEL
+                              WITH SECURITY_ENFORCED].Content__c + '\n' + systemPrompt
             ),
             new Message__c(
                 Role__c = 'user',
@@ -64,7 +71,8 @@ public with sharing class Controller {
                     'system',
                     [SELECT Content__c
                      FROM System_Prompt__mdt
-                     WHERE MasterLabel = :TITLE_LABEL].Content__c
+                     WHERE MasterLabel = :TITLE_LABEL
+                     WITH SECURITY_ENFORCED].Content__c
                 ),
                 //User Prompt
                 new ChatRequest.ChatMessage(
@@ -92,7 +100,8 @@ public with sharing class Controller {
                     'system',
                     [SELECT Content__c
                     FROM System_Prompt__mdt
-                    WHERE MasterLabel = :HELPER_LABEL].Content__c
+                    WHERE MasterLabel = :HELPER_LABEL
+                    WITH SECURITY_ENFORCED].Content__c
                 ),
                 //User Prompt
                 new ChatRequest.ChatMessage(
@@ -119,6 +128,7 @@ public with sharing class Controller {
                                    WHERE Thread__c = :chatId 
                                    AND Function_Name__c = null 
                                    AND Role__c != 'function'
+                                   WITH SECURITY_ENFORCED
                                    ORDER BY CreatedDate ASC];
             for(Message__c msg : msgObj){
                 MessageWrapper returnObj = new MessageWrapper();
@@ -164,7 +174,8 @@ public with sharing class Controller {
             if(chatId != null){
                 return [SELECT Name
                         FROM Chat__c
-                        WHERE Id =: chatId].Name;
+                        WHERE Id =: chatId
+                        WITH SECURITY_ENFORCED].Name;
             }else{
                 return null;
             }

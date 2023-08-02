@@ -10,16 +10,18 @@ public with sharing class ChatInterface {
     private static String getModel(String modelAbbr){
         return [SELECT MasterLabel 
                 FROM SetupAI__Model__mdt
-                WHERE SetupAI__Abbreviation__c = :modelAbbr].MasterLabel;
+                WHERE SetupAI__Abbreviation__c = :modelAbbr
+                WITH SECURITY_ENFORCED].MasterLabel;
     }
 
     //Retrieve defined functions and return them formatted
     private static ChatRequest.ChatFunction[] getFunctions(){
         ChatRequest.ChatFunction[] toReturn = new ChatRequest.ChatFunction[]{};
         for(Function__mdt func : [SELECT Id, MasterLabel, Description__c,
-                                                (SELECT Id, MasterLabel, Description__c, Type__c, Enumerated_Values__c, Required__c
-                                                FROM Properties__r)
-                                            FROM Function__mdt]){
+                                    (SELECT Id, MasterLabel, Description__c, Type__c, Enumerated_Values__c, Required__c
+                                     FROM Properties__r)
+                                  FROM Function__mdt
+                                  WITH SECURITY_ENFORCED]){
             toReturn.add(new ChatRequest.ChatFunction(func));
         }
         return toReturn;
