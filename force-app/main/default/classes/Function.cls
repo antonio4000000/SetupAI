@@ -6,6 +6,8 @@
 
 public with sharing class Function {
 
+    public class FunctionException extends Exception{}
+
     //Executes specified action and saves results to chat
     public static void execute(String name, String arguments, String chatId){
         String content = '';
@@ -25,6 +27,9 @@ public with sharing class Function {
                 }
                 when 'getUserId'{
                     content = UserInfo.getUserId();
+                }
+                when 'metadataDrilldown'{
+                    content = metadataDrilldown(FunctionParam.parseMetadataDrilldown(arguments));
                 }
             }
         }catch(Exception ex){
@@ -68,6 +73,42 @@ public with sharing class Function {
     public static String describeDrilldown(FunctionParam.describeDrilldown args){
         String describeResults = ToolingAPI.describeSObject(args.object_x);
         return JSONHelper.getJSONValue(describeResults,args.path);
+    }
+
+    //Drilldown into Tooling API Metadata
+    public static String metadataDrilldown(FunctionParam.metadataDrilldown args){
+        //Query from Tooling API
+        Object metadataRecords = ((Map<String, Object>)JSON.deserializeUntyped(
+            ToolingAPI.query(args.toolingQuery)
+        )).get('records');
+        //Get records from query results
+        List<Object> recordsList = (List<Object>)JSON.deserializeUntyped(JSON.serialize(metadataRecords));
+        //Verify record list returns only one record
+        if(recordsList.size() > 1){
+            throw new FunctionException('Metadata query returned multiple records. Ensure your query only returns one record.');
+        }
+        //Deserialize first item in record list
+        Map<String, Object> resultsJSON = (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(recordsList[0]));
+        //Verify query returned metadata
+        if(resultsJSON.containsKey('Metadata')){
+            //Get metadata from query
+            String metadata = JSON.serialize(resultsJSON.get('Metadata'));
+            //Get value at specified path
+            String pathValue = JSONHelper.getJSONValue(metadata, args.path);
+            //If object, just return keys
+            if(pathValue.startsWith('{') && pathValue.endsWith('}')){
+                Map<String, Object> metadataJSON = (Map<String, Object>)JSON.deserializeUntyped(pathValue);
+                String returnKeys = 'Here are the keys at specified path: ';
+                for(String key : metadataJSON.keySet()){
+                    returnKeys = returnKeys + key + ', ';
+                }
+                return returnKeys.removeEnd(', ');
+            }else{
+                return pathValue;
+            }
+        }else{
+            throw new FunctionException('Metadata not found in query results. Make sure to include \'Metadata\' as part of the SELECT clause.');
+        }
     }
 
 }
