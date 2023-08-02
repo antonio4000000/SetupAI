@@ -1,3 +1,4 @@
 <aura:component implements="lightning:actionOverride,force:hasRecordId,force:hasSObjectName">
+    <lightning:workspaceAPI aura:id="workspace"/>    
     <c:newChatOverrideLWC recordId="{!v.recordId}" onrecordcreated="{!c.recordCreated}"/> 
 </aura:component>
