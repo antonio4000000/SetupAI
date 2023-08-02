@@ -4,6 +4,6 @@
     <protected>true</protected>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Execute a SOQL query against the Salesforce database of this org, or query Tooling API object records from this org.</value>
+        <value xsi:type="xsd:string">Execute a SOQL query against the Salesforce database of this org, or query Tooling API object records from this org. (Don&apos;t query metadata field on any Tooling API type. Use metadataDrilldown function instead)</value>
     </values>
 </CustomMetadata>
