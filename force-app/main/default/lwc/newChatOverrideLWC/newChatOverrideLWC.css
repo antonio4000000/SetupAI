@@ -1,0 +1,34 @@
+.loading-msg {
+    color: gray;
+    width: 35%;
+}
+hr {
+    margin: 2px !important;
+}
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 75vh; /* adjust this value according to your needs */
+}
+.chat-messages {
+    overflow: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column-reverse;
+}
+.user-input-box {
+    position: sticky;
+    bottom: 0;
+}
+.fade-in {
+    opacity: 0;
+    animation: fadeIn .4s ease-in-out forwards;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
