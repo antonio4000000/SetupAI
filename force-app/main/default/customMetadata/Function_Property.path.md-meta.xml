@@ -4,7 +4,7 @@
     <protected>true</protected>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Path to drilldown into on describe info for this object. (Must be value from describeToolingObject function results)</value>
+        <value xsi:type="xsd:string">Path to drilldown into on describe info for this Tooling type. (Must be field from describeToolingObject function results)</value>
     </values>
     <values>
         <field>Enumerated_Values__c</field>

@@ -4,6 +4,6 @@
     <protected>true</protected>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Drilldown into the describe info for a given SObject. Call the describeToolingObject function first to get a list of key paths you can drilldown into.</value>
+        <value xsi:type="xsd:string">Drilldown into the fields on a given Tooling type. Call the describeToolingObject function first to get a list of key paths you can drilldown into.</value>
     </values>
 </CustomMetadata>
