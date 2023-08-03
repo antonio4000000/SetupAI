@@ -6,6 +6,8 @@
 
 public with sharing class MessageTriggerHandler implements Queueable, Database.AllowsCallouts {
     
+    public class MessageTriggerHandlerException extends Exception{}
+
     //Message beind handled
     public Message__c newMessage;
 
@@ -23,6 +25,7 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
                                              FROM Message__c
                                              WHERE Thread__c =:this.newMessage.Thread__c
                                              AND Role__c !=:'error'
+                                             WITH SECURITY_ENFORCED
                                              ORDER BY Name];
                 //Get AI Response
                 ChatRequest.ChatMessage aiResponse = ChatInterface.chat(
@@ -30,8 +33,13 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
                     'gpt-3',
                     true
                 );
-                //Insert for next queueable
-                insert MessageConvertor.convert(aiResponse, this.newMessage.Thread__c);
+                //Check message create permissions
+                if(CRUD.createMessage()){
+                    //Insert for next queueable
+                    insert MessageConvertor.convert(aiResponse, this.newMessage.Thread__c);
+                }else{
+                    throw new MessageTriggerHandlerException(Label.Create_Message_Access);
+                }
             }
             when 'assistant','error'{
                 if(this.newMessage.Function_Name__c != null){

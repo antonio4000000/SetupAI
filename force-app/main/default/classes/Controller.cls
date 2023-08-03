@@ -28,7 +28,7 @@ public with sharing class Controller {
                 }
             }else{
                 System.debug('one was false');
-                throw new AuraHandledException('You do not have the ability to create new chats. Please contact your administrator.');
+                throw new AuraHandledException(Label.Create_Chat_Access);
             }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
