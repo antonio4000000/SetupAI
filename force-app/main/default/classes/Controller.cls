@@ -8,10 +8,6 @@ public with sharing class Controller {
 
     //--------------Chat Initialization Methods and Variables------->>>>>>>>>>
 
-    private static final String TITLE_LABEL = 'Title';
-    private static final String HELPER_LABEL = 'Helper';
-    private static final String PRIMARY_LABEL = 'Primary';
-
     //Saves user message to Salesforce
     @AuraEnabled
     public static String submitMessage(String content, String chatId){
@@ -41,10 +37,7 @@ public with sharing class Controller {
         Message__c[] threadToInsert = new Message__c[]{
             new Message__c(
                 Role__c = 'system',
-                Content__c = [SELECT Content__c
-                              FROM System_Prompt__mdt
-                              WHERE MasterLabel = :PRIMARY_LABEL
-                              WITH SECURITY_ENFORCED].Content__c + '\n' + systemPrompt
+                Content__c = systemPrompt
             ),
             new Message__c(
                 Role__c = 'user',
@@ -68,10 +61,7 @@ public with sharing class Controller {
                 //System prompt
                 new ChatRequest.ChatMessage(
                     'system',
-                    [SELECT Content__c
-                     FROM System_Prompt__mdt
-                     WHERE MasterLabel = :TITLE_LABEL
-                     WITH SECURITY_ENFORCED].Content__c
+                    SystemPromptHelper.getPrompt(SystemPromptHelper.TITLE_LABEL)
                 ),
                 //User Prompt
                 new ChatRequest.ChatMessage(
@@ -97,10 +87,7 @@ public with sharing class Controller {
                 //System prompt for this request
                 new ChatRequest.ChatMessage(
                     'system',
-                    [SELECT Content__c
-                    FROM System_Prompt__mdt
-                    WHERE MasterLabel = :HELPER_LABEL
-                    WITH SECURITY_ENFORCED].Content__c
+                    SystemPromptHelper.getPrompt(SystemPromptHelper.HELPER_LABEL)
                 ),
                 //User Prompt
                 new ChatRequest.ChatMessage(

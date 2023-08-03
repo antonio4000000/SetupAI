@@ -5,11 +5,15 @@
 */
 
 public with sharing class MessageConvertor {
-    
+
+    //Get general system prompt
+    public static String systemPrompt = SystemPromptHelper.getPrompt(SystemPromptHelper.PRIMARY_LABEL) + '\n';
+                                
     //Convert records to classes
     public static ChatRequest.ChatMessage[] convert(Message__c[] messages){
         ChatRequest.ChatMessage[] toReturn = new ChatRequest.ChatMessage[]{};
         for(Message__c message : messages){
+            message.Content__c = message.Role__c == 'system' ? systemPrompt + message.Content__c : message.Content__c; //append system prompt
             toReturn.add(new ChatRequest.ChatMessage(message));
         }
         return toReturn;
@@ -18,7 +22,7 @@ public with sharing class MessageConvertor {
     //Convert records to classes
     public static Message__c convert(ChatRequest.ChatMessage message, String chatId){
         return new Message__c(Role__c = message.role,
-                              Content__c = message.content,
+                              Content__c = message.role == 'system' ? message.content.remove(systemPrompt) : message.content, //Never save custom metadata system prompt
                               Completion_Tokens__c = message.completionTokens,
                               Prompt_Tokens__c = message.promptTokens,
                               Function_Name__c = message.function_call?.name,
