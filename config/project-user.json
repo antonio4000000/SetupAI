@@ -1,0 +1,13 @@
+{
+    "Username": "wheeler.evan444@gmail.com.setupai",
+    "LastName": "Wheeler",
+    "Email": "wheeler.evan444@gmail.com",
+    "Alias": "tester1",
+    "TimeZoneSidKey": "America/Chicago",
+    "LocaleSidKey": "en_US",
+    "EmailEncodingKey": "UTF-8",
+    "LanguageLocaleKey": "en_US",
+    "profileName": "System Administrator",
+    "permsets": ["SetupAI_Admin"],
+    "generatePassword": true
+}

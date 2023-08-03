@@ -4,6 +4,6 @@
     <protected>true</protected>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Get list of all objects accessible in the Tooling API for the org the user is logged into.</value>
+        <value xsi:type="xsd:string">Get list of all types accessible in the Tooling API for the org the user is logged into. Use this method only to remind yourself of existing Tooling API types. This method doesn&apos;t return metadata, it only informs you of the types of metadata you can query. IMPORTANT: If the user requests information on SObjects, run a Tooling SOQL query on &apos;EntityDefinition&apos;. It is very unlikely the user will specifically request Tooling API specific info.</value>
     </values>
 </CustomMetadata>

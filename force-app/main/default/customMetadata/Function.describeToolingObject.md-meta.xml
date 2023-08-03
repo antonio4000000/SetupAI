@@ -4,6 +4,6 @@
     <protected>true</protected>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Calls Tooling API for describe information for a given Tooling API SObject. Returns only the keys in the describe info. After calling this, call the decsribeDrilldown function to drilldown into one of the keys.</value>
+        <value xsi:type="xsd:string">Calls Tooling API for a list of fields on a Tooling API type. Returns only the field names in the describe info. After calling this, call the decsribeDrilldown function to drilldown into one of the fields. (IMPORTANT: Do not use this function for information on SObjects accessible to the end user. For SObject information, run a Tooling SOQL query on &apos;EntityDefinition&apos;. This method is more used to gather which type of fields you can query in a Tooling SOQL query)</value>
     </values>
 </CustomMetadata>
