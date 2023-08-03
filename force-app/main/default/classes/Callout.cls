@@ -49,6 +49,7 @@ public with sharing class Callout {
                 req.setHeader(key, headers.get(key));
             }
         }
+        req.setHeader('Authorization', 'Bearer {!$Credential.Password}');
         //Execute request
         HttpResponse res = h.send(req);
         //Handle and return response
