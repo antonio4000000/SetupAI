@@ -22,13 +22,12 @@ public with sharing class Controller {
                     return initialize(content);
                 }else{
                     insert new Message__c(Thread__c = chatId,
-                                        Content__c = content,
-                                        Role__c = 'user');
+                                          Content__c = content,
+                                          Role__c = 'user');
                     return null;
                 }
             }else{
-                System.debug('one was false');
-                throw new AuraHandledException('You do not have the ability to create new chats. Please contact your administrator.');
+                throw new AuraHandledException(Label.Create_Chat_Access);
             }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
