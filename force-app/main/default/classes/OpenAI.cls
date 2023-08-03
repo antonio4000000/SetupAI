@@ -10,7 +10,7 @@ public with sharing class OpenAI {
     public static ChatResponse chat(ChatRequest req){
         try{
             return(ChatResponse)JSON.deserialize(Callout.execute(
-                /** Named Credential */     'SetupAI__OpenAI', 
+                /** Named Credential */     'SetupAI__OpenAI_Legacy', 
                 /** Endpoint */             'Chat',
                 /** Method */               'POST',
                 /** Body */                 req.serialize(),
