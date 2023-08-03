@@ -33,6 +33,7 @@ export default class NewChatOverrideLWC extends LightningElement {
                 })
                 .catch(error => {
                     console.log(error.body.message);
+                    this.displayError(error.body.message);
                 })
         } 
         this.handleSubscribe();
@@ -59,7 +60,6 @@ export default class NewChatOverrideLWC extends LightningElement {
                 .then(result => {
                     //Returns new chat Id when new chat created so component can redirect
                     if(result){
-                        console.log(result);
                         const newRecordCreated = new CustomEvent('recordcreated', {
                             detail: { result },
                         });
@@ -71,6 +71,7 @@ export default class NewChatOverrideLWC extends LightningElement {
                 })
                 .catch(error => {
                     console.log(error.body.message);
+                    this.displayError(error.body.message);
                 })
         }
     }
@@ -79,14 +80,13 @@ export default class NewChatOverrideLWC extends LightningElement {
     retrieveMessages(){
         getMessages({chatId: this.recordId})
             .then((result) => {
-                console.log(result);
                 this.messages = result;
                 //If last message is not user submitted, hide loading wheel
                 this.isLoading = this.messages[this.messages.length-1].msgClass.includes('outbound');
             })
             .catch((error) => {
-                console.log('ERROR');
                 console.log(error.body.message);
+                this.displayError(error.body.message);
             });
     }
 
@@ -95,8 +95,6 @@ export default class NewChatOverrideLWC extends LightningElement {
         // Callback invoked whenever a new event message is received
         const messageCallback = (response) => {
             this.isLoading = true;
-            console.log(response);
-            console.log('CALLBACK');
             this.retrieveMessages();
         };
  
@@ -106,6 +104,17 @@ export default class NewChatOverrideLWC extends LightningElement {
             console.log('Subscription request sent to: ', JSON.stringify(response.channel));
             this.subscription = response;
         });
+    }
+
+    //Displays error message on screen
+    displayError(message){
+        this.messages.push({
+            msgClass: 'slds-chat-message__text slds-chat-message__text_inbound',
+            containerClass: 'slds-chat-listitem slds-chat-listitem_inbound',
+            id: 0,
+            text: message
+        });
+        this.isLoading = false;
     }
 
 }
