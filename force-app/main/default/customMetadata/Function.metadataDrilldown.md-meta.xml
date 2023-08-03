@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>metadataDrilldown</label>
+    <protected>true</protected>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">If the Tooling API object has a Metadata field, run a Tooling SOQL query returning that field. It will return all the keys in the metadata. Pass one of those key into the path of this method to drilldown into the Metadata to find what you need. If the path you specify leads to an object, all the keys in that object will be returned, allowing you to drill down deeper(i.e. if you pass in the key &apos;feedLayout&apos; into the Layout metadata, it will return all the fields on the layout object. You could then pass &apos;feedLayout.hideSidebar&apos; to view the &apos;hideSidebar&apos; field on the feedLayout for a given Layout.) If a key/path returns a primitive value, that&apos;s the end of the path, and the value you want to reference.</value>
+    </values>
+</CustomMetadata>

@@ -32,4 +32,13 @@ public with sharing class FunctionParam {
         return (FunctionParam.describeDrilldown)JSON.deserialize(args, FunctionParam.describeDrilldown.class);
     }
 
+    public class metadataDrilldown{
+        public String path;
+        public String toolingQuery;
+    }
+
+    public static FunctionParam.metadataDrilldown parseMetadataDrilldown(String args){
+        return (FunctionParam.metadataDrilldown)JSON.deserialize(args, FunctionParam.metadataDrilldown.class);
+    }
+
 }
