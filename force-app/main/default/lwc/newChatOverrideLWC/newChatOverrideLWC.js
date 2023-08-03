@@ -1,5 +1,5 @@
 import { LightningElement, track, api } from 'lwc';
-import { subscribe, unsubscribe, onError, setDebugFlag, isEmpEnabled } from 'lightning/empApi';
+import { subscribe } from 'lightning/empApi';
 import getMessages from '@salesforce/apex/Controller.getMessages';
 import submitMessage from '@salesforce/apex/Controller.submitMessage';
 import getChatSummary from '@salesforce/apex/Controller.getChatSummary';
@@ -21,7 +21,9 @@ export default class NewChatOverrideLWC extends LightningElement {
 
     //Platform event handling to display new messages
     subscription = {};
+    errorSubscription = {};
     @api channelName = '/event/Message_Notice__e';
+    @api errorChannelName = '/event/Async_Error__e';
 
     //On component load, retrieve messages
     connectedCallback(){
@@ -97,12 +99,20 @@ export default class NewChatOverrideLWC extends LightningElement {
             this.isLoading = true;
             this.retrieveMessages();
         };
- 
         // Invoke subscribe method of empApi. Pass reference to messageCallback
         subscribe(this.channelName, -1, messageCallback).then(response => {
             // Response contains the subscription information on subscribe call
             console.log('Subscription request sent to: ', JSON.stringify(response.channel));
             this.subscription = response;
+        });
+
+        //Handle error subscription
+        const errorCallback = (response) => {
+            this.displayError(JSON.parse(JSON.stringify(response.data.payload.SetupAI__Error_Content__c)));
+        }
+        subscribe(this.errorChannelName, -1, errorCallback).then(response => {
+            console.log('Subscription request sent to: ', JSON.stringify(response.channel));
+            this.errorSubscription = response
         });
     }
 
