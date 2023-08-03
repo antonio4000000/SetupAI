@@ -1,0 +1,1 @@
+SELECT SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SEtupAI__Function_Arguments__c FROM SetupAI__Message__c WHERE SEtupAI__Thread__c = 'a006s000002pcryAAA' ORDER BY CreatedDate
