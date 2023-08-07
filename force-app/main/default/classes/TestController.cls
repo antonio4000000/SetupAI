@@ -36,4 +36,48 @@ public with sharing class TestController {
         System.assertEquals('The API name of the Chat object is "SetupAI__Chat__c".', messages[1].text, 'Incorrect message');
     }
 
+    @isTest
+    static void testGetChatSummary(){
+        //Get test chat
+        Chat__c testChat = [SELECT Id, Name
+                            FROM Chat__c
+                            LIMIT 1];
+
+        //Run test
+        Test.startTest();
+        String chatName = Controller.getChatSummary(testChat.Id);
+        Test.stopTest();
+
+        //Verify results
+        System.assertEquals(testChat.Name, chatName, 'Unexpected Chat Summary');
+    }
+
+    @isTest 
+    static void testSubmitMessageNew(){
+        //Setup test
+        Test.setMock(HttpCalloutMock.class, new OpenAIMock());
+
+        //Run test
+        Test.startTest();
+        String results = Controller.submitMessage('Hi there', null);
+        Test.stopTest();
+
+        //Verify results
+        Chat__c newChat = [SELECT Id, Name 
+                           FROM Chat__c
+                           WHERE Id = :results];
+        System.assertEquals('Chat thread started', newChat.Name, 'Unexpected thread summary');
+        Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
+                                 FROM SetupAI__Message__c 
+                                 WHERE SetupAI__Thread__c = :newChat.Id
+                                 ORDER BY Name];
+        System.assertEquals(3, messages.size(), 'Unexpected number of messages saved to chat');
+        System.assertEquals('system', messages[0].Role__c, 'Unexpected role on message');
+        System.assert(messages[0].Content__c.contains('Just say hi and ask the end user how you can help them today'), 'Unexpected content in system message');
+        System.assertEquals('user', messages[1].Role__c, 'Unexpected role on message');
+        System.assertEquals('Hi there', messages[1].Content__c, 'Unexpected user message content');
+        System.assertEquals('assistant', messages[2].Role__c, 'Unexpected role on message');
+        System.assertEquals('Hello! How can I help you today?', messages[2].Content__c, 'Unexpected user message content');
+    }
+
 }
