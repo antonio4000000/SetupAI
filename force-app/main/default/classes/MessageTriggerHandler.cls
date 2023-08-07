@@ -28,7 +28,7 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
                                                     WHERE Thread__c =:this.newMessage.Thread__c
                                                     AND Role__c !=:'error'
                                                     WITH SECURITY_ENFORCED
-                                                    ORDER BY Name];
+                                                    ORDER BY Id];
                         //Get AI Response
                         ChatRequest.ChatMessage aiResponse = ChatInterface.chat(
                             MessageConvertor.convert(entireThread),

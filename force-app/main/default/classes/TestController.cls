@@ -70,7 +70,7 @@ public with sharing class TestController {
         Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
                                  FROM SetupAI__Message__c 
                                  WHERE SetupAI__Thread__c = :newChat.Id
-                                 ORDER BY Name];
+                                 ORDER BY Id];
         System.assertEquals(3, messages.size(), 'Unexpected number of messages saved to chat');
         System.assertEquals('system', messages[0].Role__c, 'Unexpected role on message');
         System.assert(messages[0].Content__c.contains('Just say hi and ask the end user how you can help them today'), 'Unexpected content in system message');
@@ -78,6 +78,31 @@ public with sharing class TestController {
         System.assertEquals('Hi there', messages[1].Content__c, 'Unexpected user message content');
         System.assertEquals('assistant', messages[2].Role__c, 'Unexpected role on message');
         System.assertEquals('Hello! How can I help you today?', messages[2].Content__c, 'Unexpected user message content');
+    }
+
+    @isTest
+    static void testSubmitMessageExisting(){
+        //Setup test
+        Test.setMock(HttpCalloutMock.class, new OpenAIMock());
+        Chat__c testChat = [SELECT Id
+                            FROM Chat__c
+                            LIMIT 1];
+        
+        //Run test
+        Test.startTest();
+        String results = Controller.submitMessage('Thank you very much', testChat.Id);
+        Test.stopTest();
+
+        //Verify results
+        Message__c[] allMessages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
+                                    FROM SetupAI__Message__c 
+                                    WHERE SetupAI__Thread__c = :testChat.Id
+                                    ORDER BY Id];
+        System.assertEquals(7, allMessages.size(), 'Unexpected number of messages saved to thread');
+        System.assertEquals('user', allMessages[5].Role__c, 'Unexpected role for message');
+        System.assertEquals('Thank you very much', allMessages[5].Content__c, 'Unexpected content on user message');
+        System.assertEquals('assistant', allMessages[6].Role__c, 'Unexpected role for message');
+        System.assertEquals('You\'re welcome! If you have any more questions, feel free to ask.', allMessages[6].Content__c, 'Unexpected content on assistant message');
     }
 
 }
