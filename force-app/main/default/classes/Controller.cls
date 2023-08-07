@@ -6,6 +6,11 @@
 
 public with sharing class Controller {
 
+    public static final String OUTBOUND_MESSAGE_CLASS = 'slds-chat-message__text slds-chat-message__text_outbound';
+    public static final String OUTBOUND_CONTAINER_CLASS = 'slds-chat-listitem slds-chat-listitem_outbound';
+    public static final String INBOUND_MESSAGE_CLASS = 'slds-chat-message__text slds-chat-message__text_inbound';
+    public static final String INBOUND_CONTAINER_CLASS = 'slds-chat-listitem slds-chat-listitem_inbound';
+
     //--------------Chat Initialization Methods and Variables------->>>>>>>>>>
 
     //Saves user message to Salesforce
@@ -114,19 +119,20 @@ public with sharing class Controller {
                                    WHERE Thread__c = :chatId 
                                    AND Function_Name__c = null 
                                    AND Role__c != 'function'
+                                   AND Role__c != 'system'
                                    WITH SECURITY_ENFORCED
                                    ORDER BY CreatedDate ASC];
             for(Message__c msg : msgObj){
                 MessageWrapper returnObj = new MessageWrapper();
                 if(msg.Role__c == 'user'){
-                    returnObj.containerClass = 'slds-chat-listitem slds-chat-listitem_outbound';
-                    returnObj.msgClass = 'slds-chat-message__text slds-chat-message__text_outbound';
+                    returnObj.containerClass = OUTBOUND_CONTAINER_CLASS;
+                    returnObj.msgClass = OUTBOUND_MESSAGE_CLASS;
                     returnObj.id = msg.Id;
                     returnObj.text = msg.Content__c;
                 }
                 if(msg.Role__c == 'assistant' || msg.Role__c == 'error'){
-                    returnObj.msgClass = 'slds-chat-message__text slds-chat-message__text_inbound';
-                    returnObj.containerClass = 'slds-chat-listitem slds-chat-listitem_inbound';
+                    returnObj.containerClass = INBOUND_CONTAINER_CLASS;
+                    returnObj.msgClass = INBOUND_MESSAGE_CLASS;
                     returnObj.id = msg.Id;
                     returnObj.text = (msg.Role__c == 'error' ? 'ERROR: ' : '' ) + msg.Content__c;
                 }

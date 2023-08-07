@@ -6,6 +6,9 @@
 
 public with sharing class Callout {
 
+    //Set to false for test setup methods to avoid callouts
+    public static Boolean testSetup = false;
+
     //Custom exception for handling errors
     public class CalloutException extends Exception{}
 
@@ -38,26 +41,28 @@ public with sharing class Callout {
 
     //Execute callouts
     private static String execute(String completeURL, String method, String body, Map<String, String> headers){
-        //Construct callout
-        HttpRequest req = new HttpRequest();
-        req.setEndpoint(completeURL);
-        req.setMethod(method);
-        req.setTimeout(120000);
-        if(body != null) req.setBody(body);
-        if(headers != null && headers.size() > 0){
-            for(String key : headers.keySet()){
-                req.setHeader(key, headers.get(key));
+        if(!testSetup){
+            //Construct callout
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint(completeURL);
+            req.setMethod(method);
+            req.setTimeout(120000);
+            if(body != null) req.setBody(body);
+            if(headers != null && headers.size() > 0){
+                for(String key : headers.keySet()){
+                    req.setHeader(key, headers.get(key));
+                }
             }
-        }
-        req.setHeader('Authorization', 'Bearer {!$Credential.Password}');
-        //Execute request
-        HttpResponse res = h.send(req);
-        //Handle and return response
-        if(!errorCodes.contains(res.getStatusCode())){
-            return res.getBody();
-        }else{
-            throw new CalloutException(res.getBody());
-        }   
+            req.setHeader('Authorization', 'Bearer {!$Credential.Password}');
+            //Execute request
+            HttpResponse res = h.send(req);
+            //Handle and return response
+            if(!errorCodes.contains(res.getStatusCode())){
+                return res.getBody();
+            }else{
+                throw new CalloutException(res.getBody());
+            }  
+        }else{return 'success';}
     }
 
 }
