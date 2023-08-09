@@ -49,13 +49,14 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
                                             this.newMessage.Function_Arguments__c,
                                             this.newMessage.Thread__c);
                         }else if(this.newMessage.Content__c != null && this.newMessage.Content__c != 'null'){
-                            Message_Notice__e notice = new Message_Notice__e(MessageId__c = this.newMessage.Id);
+                            Message_Notice__e notice = new Message_Notice__e(Chat_Id__c = this.newMessage.Thread__c);
                             Database.SaveResult results = EventBus.publish(notice);
                         }
                     }
                 }
             }catch(Exception ex){
-                Async_Error__e notice = new Async_Error__e(SetupAI__Error_Content__c = ex.getMessage());
+                Async_Error__e notice = new Async_Error__e(SetupAI__Error_Content__c = ex.getMessage(),
+                                                           Chat_Id__c = this.newMessage.Thread__c);
                 Database.SaveResult results = EventBus.publish(notice);
             }
         }
