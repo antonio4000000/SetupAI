@@ -18,6 +18,11 @@ public with sharing class OpenAIMock implements HttpCalloutMock {
     private static Map<String, String> thankYouResponseMap = new Map<String, String>{
         'Conversation'=>'{"id": "chatcmpl-7l27kXhSQLd6DVel9iLGmxZ87JO3x","object": "chat.completion","created": 1691443936,"model": "gpt-3.5-turbo-0613","choices": [{"index": 0,"message": {"role": "assistant","content": "You\'re welcome! If you have any more questions, feel free to ask."},"finish_reason": "stop"}],"usage": {"prompt_tokens": 1393,"completion_tokens": 17,"total_tokens": 1410}}'
     };
+    //User Request: 'What is my user Id?'
+    private static Map<String, String> userIdMap = new Map<String, String>{
+        'FunctionCall'=>'{"id": "chatcmpl-7lg516RmuH6P3SKvCtEhrecnUQy1L","object": "chat.completion","created": 1691597527,"model": "gpt-3.5-turbo-0613","choices": [{"index": 0,"message": {"role": "assistant","content": null,"function_call": {"name": "getUserId","arguments": "{}"}},"finish_reason": "function_call"}],"usage": {"prompt_tokens": 1115,"completion_tokens": 6,"total_tokens": 1121}}',
+        'Conversation'=>'{"id": "chatcmpl-7lg6OQFPDOdC5a4yjXDtDx1g7KedK","object": "chat.completion","created": 1691597612,"model": "gpt-3.5-turbo-0613","choices": [{"index": 0,"message": {"role": "assistant","content": "Your user Id is ' + UserInfo.getUserId() + '."},"finish_reason": "stop"}],"usage": {"prompt_tokens": 1138,"completion_tokens": 16,"total_tokens": 1154}}'
+    };
 
     //------------------Map requests to responses------------------------
     
@@ -27,10 +32,11 @@ public with sharing class OpenAIMock implements HttpCalloutMock {
         System.debug(req.getBody());
         response.setBody(
             getResponseBody(
-                /* Request Body */      req.getBody(), 
-                /* Mappings*/   req.getBody().contains('Hi there') ? hiThereResponseMap :
-                                req.getBody().contains('Thank you very much') ? thankYouResponseMap : 
-                                new Map<String, String>{}
+                /* Request Body */  req.getBody(), 
+                /* Mappings*/       req.getBody().contains('Hi there') ? hiThereResponseMap :
+                                    req.getBody().contains('Thank you very much') ? thankYouResponseMap : 
+                                    req.getBody().contains('What is my user Id?') ? userIdMap : 
+                                    new Map<String, String>{}
             )
         );
         response.setStatusCode(200);
@@ -42,7 +48,10 @@ public with sharing class OpenAIMock implements HttpCalloutMock {
     private static String getResponseBody(String body, Map<String, String> responseMap){
         return body.contains('You are a Salesforce chatbot label maker.') ? responseMap.get('LabelMaker') :
                body.contains('A Salesforce admin is asking another chatbot a question about their Salesforce org.') ? responseMap.get('SystemPromptHelper') :
-               body.contains('"functions":') ? responseMap.get('Conversation') :
+               body.contains('"functions":') ? 
+                    !body.contains('"role":"function"') && body.contains('"function_call":')?
+                    responseMap.get('FunctionCall') :
+                    responseMap.get('Conversation') :
                null;
     }
     
