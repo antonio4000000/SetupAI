@@ -1,4 +1,4 @@
-FunctionParam.describeDrilldown md = new FunctionParam.describeDrilldown();
-md.object_x = 'EntityDefinition';
-md.path = 'fields';
-System.debug(Function.describeDrilldown(md));
+System.debug(JSON.serialize(
+    Database.query('SELECT AccountNumber FROM Account WHERE Name = \'Test Account\'')
+)
+);

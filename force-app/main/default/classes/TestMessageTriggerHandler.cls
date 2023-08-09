@@ -1,7 +1,7 @@
 /* 
  * Author:      Anthony Wheeler(wheeler.anthony96@gmail.com)
  * Created:     2023-08-08
- * Description: Test coverage for MessageTrigger and MessageTriggerHandler
+ * Description: Test coverage for MessageTrigger.trigger and MessageTriggerHandler.cls
 */
 
 @isTest
@@ -11,8 +11,7 @@ public with sharing class TestMessageTriggerHandler {
     static void testSetup(){
         Callout.testSetup = true;
         //Inser dummy chat
-        Chat__c testChat = new Chat__c(Name = 'Get User Id',
-                                       Running__c = true);
+        Chat__c testChat = TestDataFactory.getChat('Get User Id');
         insert testChat;
         //Insert dummy messages
         Message__c[] thread = new Message__c[]{
