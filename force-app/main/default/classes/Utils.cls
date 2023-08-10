@@ -25,4 +25,11 @@ public class Utils {
         }
     }
 
+    //Gets body of text static resource
+    public static String getStaticResource(String nameOfFile){
+        return [SELECT Body
+                FROM StaticResource 
+                WHERE Name = :nameOfFile].Body.toString();
+    }
+
 }

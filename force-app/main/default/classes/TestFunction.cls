@@ -46,6 +46,22 @@ public with sharing class TestFunction {
                 Thread__c = toolingChat.Id
             )
         };
+
+        //Prep getToolingObjects
+        Chat__c toolingObjectsChat = TestDataFactory.getChat('Accessible objects through Tooling API summary');
+        insert toolingObjectsChat;
+        insert new Message__c[]{
+            new Message__c(
+                Role__c = 'system',
+                Content__c = '1. Retrieve all accessible objects through the Tooling API:- The Tooling API provides access to metadata and other Salesforce org data. It\'s used for development, to create and test code, retrieve metadata, and so on.- To retrieve all objects accessible through the Tooling API, run this Tooling API SOQL query: "SELECT SObjectType FROM sObjects"- This will return a list of all the objects that the Tooling API can access. The list will include standard objects, custom objects, and other metadata types.- If the user wants to know about a specific object, they can filter the results by adding a WHERE clause to the query, like this: "SELECT SObjectType FROM sObjects WHERE SObjectType = \'{OBJECT_NAME}\'"- If the object is not returned in the query results, it means that the object is not accessible through the Tooling API. In this case, the user might need to use the Metadata API or another API to access the object.- If the object is returned in the query results, it means that the object is accessible through the Tooling API. The user can then use other Tooling API queries to retrieve more information about the object, such as its fields, relationships, and so on.',
+                Thread__c = toolingObjectsChat.Id
+            ),
+            new Message__c(
+                Role__c = 'user',
+                Content__c = 'What objects are accessible to me through the Tooling API?',
+                Thread__c = toolingObjectsChat.Id
+            )
+        };
     }
 
     //Test SOQL query function call
@@ -116,6 +132,42 @@ public with sharing class TestFunction {
         System.assert(messages[3].Content__c.contains('public with sharing class MessageTriggerHandler'), 'Unexpected function content');
         System.assertEquals('assistant', messages[4].Role__c, 'Unexpected role on message');
         System.assert(messages[4].Content__c.contains('The MessageTriggerHandler Apex class is a public class that implements the Queueable and Database.AllowsCallouts interfaces'), 'Unexpected assistant content');
+    }
+
+    //Test getToolingObjects function call
+    @isTest
+    static void testGetToolingObjects(){
+        //Setup test
+        Test.setMock(HttpCalloutMock.class, new OpenAIMock());
+        Chat__c testChat = [SELECT Id
+                            FROM Chat__c
+                            WHERE Name = :'Accessible objects through Tooling API summary'
+                            LIMIT 1];
+        
+        //Run test
+        Test.startTest();
+        insert new Message__c(
+            Role__c = 'assistant',
+            Function_Name__c = 'getToolingObjects',
+            Function_Arguments__c = '{}',
+            Thread__c = testChat.Id
+        );
+        Test.stopTest();
+        
+        //Verify results
+        Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
+                                 FROM SetupAI__Message__c 
+                                 WHERE SetupAI__Thread__c = :testChat.Id
+                                 ORDER BY Id];
+        System.debug(messages[4]);
+        System.assertEquals(5, messages.size(), 'Unexpected number of messages');
+        System.assertEquals('getToolingObjects', messages[2].Function_Name__c, 'Unexpected function call');
+        System.assertEquals('assistant', messages[2].Role__c, 'Unexpected role on message');
+        System.assertEquals('function', messages[3].Role__c, 'Unexpected role on message');
+        System.assertEquals('getToolingObjects', messages[3].Function_Name__c, 'Unexpected function call');
+        System.assert(messages[3].Content__c.contains('["AIApplication","AIApplicationConfig","AIReplyRecommendationsSettings"'), 'Unexpected function content');
+        System.assertEquals('assistant', messages[4].Role__c, 'Unexpected role on message');
+        System.assert(messages[4].Content__c.contains('The objects accessible to you through the Tooling API are:  - AIApplication - AIApplicationConfig - AIReplyRecommendationsSettings - AccessControlPolicy - AccountInsightsSettings'), 'Unexpected assistant content');
     }
 
 }
