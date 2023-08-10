@@ -25,7 +25,7 @@ public with sharing class OpenAIMock implements HttpCalloutMock {
     };
     //User Request: 'What is the Account number of the account named 'Test Account'?'
     private static Map<String, String> accountNumberMap = new Map<String, String>{
-        'Converation'=>'{"id": "chatcmpl-7lgstzUUVv7LzCw0YAQwF7aE1lL7J","object": "chat.completion","created": 1691600619,"model": "gpt-3.5-turbo-0613","choices": [{"index": 0,"message": {"role": "assistant","content": "The Account number of the account named \'Test Account\' is 1234."},"finish_reason": "stop"}],"usage": {"prompt_tokens": 1224,"completion_tokens": 17,"total_tokens": 1241}}'
+        'Conversation'=>'{"id": "chatcmpl-7lgstzUUVv7LzCw0YAQwF7aE1lL7J","object": "chat.completion","created": 1691600619,"model": "gpt-3.5-turbo-0613","choices": [{"index": 0,"message": {"role": "assistant","content": "The Account number of the account named \'Test Account\' is 1234."},"finish_reason": "stop"}],"usage": {"prompt_tokens": 1224,"completion_tokens": 17,"total_tokens": 1241}}'
     };
 
     //------------------Map requests to responses------------------------
@@ -33,7 +33,6 @@ public with sharing class OpenAIMock implements HttpCalloutMock {
     //Handle callout
     public HttpResponse respond(HttpRequest req){
         HttpResponse response = new HttpResponse();
-        System.debug(req.getBody());
         response.setBody(
             getResponseBody(
                 /* Request Body */  req.getBody(), 
@@ -54,7 +53,7 @@ public with sharing class OpenAIMock implements HttpCalloutMock {
         return body.contains('You are a Salesforce chatbot label maker.') ? responseMap.get('LabelMaker') :
                body.contains('A Salesforce admin is asking another chatbot a question about their Salesforce org.') ? responseMap.get('SystemPromptHelper') :
                body.contains('"functions":') ? 
-                    !body.contains('"role":"function"') && body.contains('"function_call":')?
+                    !body.contains('"role":"function"') && body.contains('"function_call":') ?
                     responseMap.get('FunctionCall') :
                     responseMap.get('Conversation') :
                null;
