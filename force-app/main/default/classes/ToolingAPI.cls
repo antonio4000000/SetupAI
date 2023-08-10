@@ -7,7 +7,7 @@
 public with sharing class ToolingAPI {
 
     //Get endpoint metadata
-    private static String getEndpoint(String name){
+    public static String getEndpoint(String name){
         Endpoint__mdt endpoint = [SELECT Endpoint__c
                                   FROM Endpoint__mdt
                                   WHERE DeveloperName =:name

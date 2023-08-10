@@ -14,7 +14,10 @@ public with sharing class OpenAI {
                 /** Endpoint */             'Chat',
                 /** Method */               'POST',
                 /** Body */                 req.serialize(),
-                /** Headers */              new Map<String, String>{'Content-Type'=>'application/json'}
+                /** Headers */              new Map<String, String>{
+                                                'Content-Type'=>'application/json',
+                                                'Authorization'=>'Bearer {!$Credential.Password}'
+                                            }
             ).replace('"object":', '"object_x":'),ChatResponse.class);
         }catch(Exception ex){
             return new ChatResponse(

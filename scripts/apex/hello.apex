@@ -1,4 +1,5 @@
-System.debug(JSON.serialize(
-    Database.query('SELECT AccountNumber FROM Account WHERE Name = \'Test Account\'')
-)
+System.debug(
+    JSON.serialize(
+        ToolingAPI.query('SELECT Name, Body FROM ApexClass WHERE Name = \'MessageTriggerHandler\'')
+    )
 );

@@ -27,11 +27,18 @@ public with sharing class OpenAIMock implements HttpCalloutMock {
     private static Map<String, String> accountNumberMap = new Map<String, String>{
         'Conversation'=>'{"id": "chatcmpl-7lgstzUUVv7LzCw0YAQwF7aE1lL7J","object": "chat.completion","created": 1691600619,"model": "gpt-3.5-turbo-0613","choices": [{"index": 0,"message": {"role": "assistant","content": "The Account number of the account named \'Test Account\' is 1234."},"finish_reason": "stop"}],"usage": {"prompt_tokens": 1224,"completion_tokens": 17,"total_tokens": 1241}}'
     };
+    //User Request: 'Summarize the MessageTriggerHandler Apex class'
+    private static Map<String, String> apexClassMap = new Map<String, String>{
+        'Conversation'=>'{"id": "chatcmpl-7m6E02cQ7KB2ElWpx2EBEt2vkg2th","object": "chat.completion","created": 1691698028,"model": "gpt-3.5-turbo-0613","choices": [{"index": 0,"message": {"role": "assistant","content": "The MessageTriggerHandler Apex class is a public class that implements the Queueable and Database.AllowsCallouts interfaces. It is responsible for handling inserted Message__c records and continuing the chat. Here are some key points about the class:  - The class has an inner class called MessageTriggerHandlerException, which extends the Exception class. - The class has a variable called newMessage of type Message__c, which represents the message being handled. - The class has a constructor that takes a Message__c parameter and assigns it to the newMessage variable. - The class implements the execute method from the Queueable interface, which is responsible for executing the logic in a separate queueable job. - Inside the execute method, there is a switch statement based on the Role__c field of the newMessage. Depending on the role, different actions are taken. - If the role is \'user\' or \'function\', the class retrieves the entire thread of messages related to the newMessage, using a SOQL query. It then calls a ChatInterface to get an AI response based on the entire thread. If the user has create permissions for messages, a new message is inserted based on the AI response. - If the role is \'assistant\' or \'error\', the class checks if there is a Function_Name__c specified in the newMessage. If so, it calls a Function.execute method with the function name and arguments. If not, it checks if there is a Content__c specified in the newMessage and it is not null. If so, it creates a Message_Notice__e event and publishes it using the EventBus. - If any exception occurs during the execution, an Async_Error__e event is created with the error message and the Chat_Id__c, and it is published using the EventBus.  Overall, the MessageTriggerHandler class handles the logic for continuing the chat based on the role of the message and performs various actions like retrieving the entire thread, calling AI services, executing functions, and publishing events."},"finish_reason": "stop"}],"usage": {"prompt_tokens": 2018,"completion_tokens": 405,"total_tokens": 2423}}'
+    };
 
     //------------------Map requests to responses------------------------
     
     //Handle callout
     public HttpResponse respond(HttpRequest req){
+        //If tooling call, return immmediately
+        if(req.getEndpoint().contains(ToolingAPI.getEndpoint('Tooling'))) return ToolingAPIMock.getToolingResponse(req);
+        //Generate OpanAI Response
         HttpResponse response = new HttpResponse();
         response.setBody(
             getResponseBody(
@@ -40,6 +47,7 @@ public with sharing class OpenAIMock implements HttpCalloutMock {
                                     req.getBody().contains('Thank you very much') ? thankYouResponseMap : 
                                     req.getBody().contains('What is my user Id?') ? userIdMap : 
                                     req.getBody().contains('What is the Account number of the account named \'Test Account\'?') ? accountNumberMap : 
+                                    req.getBody().contains('Summarize the MessageTriggerHandler Apex class') ? apexClassMap : 
                                     new Map<String, String>{}
             )
         );
