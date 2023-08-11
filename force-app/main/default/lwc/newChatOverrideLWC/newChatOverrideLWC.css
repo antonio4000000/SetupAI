@@ -32,3 +32,15 @@ hr {
         opacity: 1;
     }
 }
+.align-items-center {
+    align-items: center;
+}
+
+.input-text {
+    /* Adjust this if there are still some misalignments. For example: */
+    /* margin-top: 4px; */
+}
+
+.send-button {
+    margin-top: 32px;
+}
