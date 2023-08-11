@@ -1,3 +1,3 @@
 System.debug(
-    ToolingAPIMock.responseMap.get('getToolingObjects')
+    ToolingAPI.describeSObject('ApexClass')
 );

@@ -18,6 +18,25 @@ public with sharing class TestDataFactory {
         return newChat;
     }
 
+    //Create a Chat__c with System messaqe and user message
+    public static Chat__c createChatWithSystemAndUser(String summary, String systemMessage, String userMessage){
+        Chat__c newChat = TestDataFactory.getChat(summary);
+        insert newChat;
+        insert new Message__c[]{
+            new Message__c(
+                Role__c = 'system',
+                Content__c = systemMessage,
+                Thread__c = newChat.Id
+            ),
+            new Message__c(
+                Role__c = 'user',
+                Content__c = userMessage,
+                Thread__c = newChat.Id
+            )
+        };
+        return newChat;
+    }
+
     //Generate single Chat__c record
     public static Chat__c getChat(String summary){
         return new Chat__c(
