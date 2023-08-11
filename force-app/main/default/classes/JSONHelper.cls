@@ -13,7 +13,7 @@ public with sharing class JSONHelper {
         if (path.contains('.')) {
             for (String key : path.split('\\.')) {
                 value = ((Map<String, Object>) value).get(key);
-                if(Utils.isPrimitive(value)) break;
+                if(Utils.isPrimitive(value) || Utils.isList(value)) break;
             }
         } else {
             value = oldMap.get(path);
