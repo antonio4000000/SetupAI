@@ -1,4 +1,5 @@
-FunctionParam.describeDrilldown md = new FunctionParam.describeDrilldown();
-md.object_x = 'EntityDefinition';
-md.path = 'fields';
-System.debug(Function.describeDrilldown(md));
+insert new Message__c(
+    Role__c = 'HEY',
+    Content__c = 'hey',
+    Thread__c = 'a007i000006VOoFAAW'
+);

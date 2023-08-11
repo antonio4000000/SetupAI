@@ -11,9 +11,14 @@ public with sharing class MessageConvertor {
                                 
     //Convert records to classes
     public static ChatRequest.ChatMessage[] convert(Message__c[] messages){
-        ChatRequest.ChatMessage[] toReturn = new ChatRequest.ChatMessage[]{};
+        ChatRequest.ChatMessage[] toReturn = new ChatRequest.ChatMessage[]{
+            new ChatRequest.ChatMessage(
+                'system',
+                systemPrompt
+            )
+        };
         for(Message__c message : messages){
-            message.Content__c = message.Role__c == 'system' ? systemPrompt + message.Content__c : message.Content__c; //append system prompt
+            message.Content__c = message.Content__c;
             toReturn.add(new ChatRequest.ChatMessage(message));
         }
         return toReturn;

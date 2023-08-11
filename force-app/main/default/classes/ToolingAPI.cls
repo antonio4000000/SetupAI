@@ -7,7 +7,7 @@
 public with sharing class ToolingAPI {
 
     //Get endpoint metadata
-    private static String getEndpoint(String name){
+    public static String getEndpoint(String name){
         Endpoint__mdt endpoint = [SELECT Endpoint__c
                                   FROM Endpoint__mdt
                                   WHERE DeveloperName =:name
@@ -34,6 +34,17 @@ public with sharing class ToolingAPI {
             'GET', 
             null, 
             new Map<String, String>{'Content-Type'=>'application/json'}
+        );
+    }
+
+    //Get all fields on a given Tooling API SObject type
+    public static List<Object> getFields(String sobjectType){
+        return (List<Object>)JSON.deserializeUntyped(
+            JSON.serialize(
+                ((Map<String,Object>)JSON.deserializeUntyped(
+                    describeSObject(sobjectType)
+                )).get('fields')
+            )
         );
     }
     

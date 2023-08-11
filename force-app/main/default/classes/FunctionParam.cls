@@ -15,21 +15,12 @@ public with sharing class FunctionParam {
         return (FunctionParam.SOQL)JSON.deserialize(args, FunctionParam.SOQL.class);
     }
 
-    public class describeTooling{
+    public class getFields{
         public String object_x;
     }
 
-    public static FunctionParam.describeTooling parseDescribeTooling(String args){
-        return (FunctionParam.describeTooling)JSON.deserialize(args, FunctionParam.describeTooling.class);
-    }
-
-    public class describeDrilldown{
-        public String object_x;
-        public String path;
-    }
-
-    public static FunctionParam.describeDrilldown parseDescribeDrilldown(String args){
-        return (FunctionParam.describeDrilldown)JSON.deserialize(args, FunctionParam.describeDrilldown.class);
+    public static FunctionParam.getFields parseGetFields(String args){
+        return (FunctionParam.getFields)JSON.deserialize(args, FunctionParam.getFields.class);
     }
 
     public class metadataDrilldown{

@@ -6,6 +6,11 @@
 
 public with sharing class Controller {
 
+    public static final String OUTBOUND_MESSAGE_CLASS = 'slds-chat-message__text slds-chat-message__text_outbound';
+    public static final String OUTBOUND_CONTAINER_CLASS = 'slds-chat-listitem slds-chat-listitem_outbound';
+    public static final String INBOUND_MESSAGE_CLASS = 'slds-chat-message__text slds-chat-message__text_inbound';
+    public static final String INBOUND_CONTAINER_CLASS = 'slds-chat-listitem slds-chat-listitem_inbound';
+
     //--------------Chat Initialization Methods and Variables------->>>>>>>>>>
 
     //Saves user message to Salesforce
@@ -33,23 +38,12 @@ public with sharing class Controller {
     //Creates Chat and System message before inserting first chat message
     private static String initialize(String firstMessage){
         Chat__c chat = generateChat(firstMessage);
-        String systemPrompt = generateSystemPrompt(firstMessage);
-        Message__c[] threadToInsert = new Message__c[]{
-            new Message__c(
-                Role__c = 'system',
-                Content__c = systemPrompt
-            ),
-            new Message__c(
-                Role__c = 'user',
-                Content__c = firstMessage
-            )
-        };
-        //Insert all records
         insert chat;
-        for(Message__c message : threadToInsert){
-            message.Thread__c = chat.Id;
-        }
-        insert threadToInsert;
+        insert new Message__c(
+            Role__c = 'user',
+            Content__c = firstMessage,
+            Thread__c = chat.Id
+        );
         return chat.Id;
     }
 
@@ -79,27 +73,6 @@ public with sharing class Controller {
         );
     }
 
-    //Use gpt-4 to generate System prompt for gpt-3
-    private static String generateSystemPrompt(String message){
-        //Submit request to generate System prompt
-        return ChatInterface.chat(
-            new ChatRequest.ChatMessage[]{
-                //System prompt for this request
-                new ChatRequest.ChatMessage(
-                    'system',
-                    SystemPromptHelper.getPrompt(SystemPromptHelper.HELPER_LABEL)
-                ),
-                //User Prompt
-                new ChatRequest.ChatMessage(
-                    'user',
-                    message
-                )
-            }, 
-            'gpt-4',
-            false
-        ).content;
-    }
-
     //<<<<<<<<<<----Chat Initialization Methods and Variables-----------------
 
     //--------------Message Retrieval Methods and Variables--------->>>>>>>>>>
@@ -114,19 +87,20 @@ public with sharing class Controller {
                                    WHERE Thread__c = :chatId 
                                    AND Function_Name__c = null 
                                    AND Role__c != 'function'
+                                   AND Role__c != 'system'
                                    WITH SECURITY_ENFORCED
                                    ORDER BY CreatedDate ASC];
             for(Message__c msg : msgObj){
                 MessageWrapper returnObj = new MessageWrapper();
                 if(msg.Role__c == 'user'){
-                    returnObj.containerClass = 'slds-chat-listitem slds-chat-listitem_outbound';
-                    returnObj.msgClass = 'slds-chat-message__text slds-chat-message__text_outbound';
+                    returnObj.containerClass = OUTBOUND_CONTAINER_CLASS;
+                    returnObj.msgClass = OUTBOUND_MESSAGE_CLASS;
                     returnObj.id = msg.Id;
                     returnObj.text = msg.Content__c;
                 }
                 if(msg.Role__c == 'assistant' || msg.Role__c == 'error'){
-                    returnObj.msgClass = 'slds-chat-message__text slds-chat-message__text_inbound';
-                    returnObj.containerClass = 'slds-chat-listitem slds-chat-listitem_inbound';
+                    returnObj.containerClass = INBOUND_CONTAINER_CLASS;
+                    returnObj.msgClass = INBOUND_MESSAGE_CLASS;
                     returnObj.id = msg.Id;
                     returnObj.text = (msg.Role__c == 'error' ? 'ERROR: ' : '' ) + msg.Content__c;
                 }
