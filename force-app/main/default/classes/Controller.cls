@@ -38,23 +38,12 @@ public with sharing class Controller {
     //Creates Chat and System message before inserting first chat message
     private static String initialize(String firstMessage){
         Chat__c chat = generateChat(firstMessage);
-        String systemPrompt = generateSystemPrompt(firstMessage);
-        Message__c[] threadToInsert = new Message__c[]{
-            new Message__c(
-                Role__c = 'system',
-                Content__c = systemPrompt
-            ),
-            new Message__c(
-                Role__c = 'user',
-                Content__c = firstMessage
-            )
-        };
-        //Insert all records
         insert chat;
-        for(Message__c message : threadToInsert){
-            message.Thread__c = chat.Id;
-        }
-        insert threadToInsert;
+        insert new Message__c(
+            Role__c = 'user',
+            Content__c = firstMessage,
+            Thread__c = chat.Id
+        );
         return chat.Id;
     }
 
@@ -82,28 +71,6 @@ public with sharing class Controller {
             Running__c = true,
             Name = header
         );
-    }
-
-    //Use gpt-4 to generate System prompt for gpt-3
-    private static String generateSystemPrompt(String message){
-        return '';
-        //Submit request to generate System prompt
-        // return ChatInterface.chat(
-        //     new ChatRequest.ChatMessage[]{
-        //         //System prompt for this request
-        //         new ChatRequest.ChatMessage(
-        //             'system',
-        //             SystemPromptHelper.getPrompt(SystemPromptHelper.HELPER_LABEL)
-        //         ),
-        //         //User Prompt
-        //         new ChatRequest.ChatMessage(
-        //             'user',
-        //             message
-        //         )
-        //     }, 
-        //     'gpt-4',
-        //     false
-        // ).content;
     }
 
     //<<<<<<<<<<----Chat Initialization Methods and Variables-----------------
