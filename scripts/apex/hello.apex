@@ -1,3 +1,3 @@
 System.debug(
-    ToolingAPI.describeSObject('ApexClass')
+    ToolingAPI.describeSObject('EntityDefinition')
 );

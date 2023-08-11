@@ -4,7 +4,7 @@
     <protected>true</protected>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Name of Tooling type to get fields for.</value>
+        <value xsi:type="xsd:string">API Name of SObject to find fields for</value>
     </values>
     <values>
         <field>Enumerated_Values__c</field>
@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Function__c</field>
-        <value xsi:type="xsd:string">describeToolingObject</value>
+        <value xsi:type="xsd:string">getFields</value>
     </values>
     <values>
         <field>Required__c</field>
