@@ -105,7 +105,7 @@ public with sharing class TestMessageTriggerHandler {
 
         //Verify results
         System.assertEquals(1, MessageTriggerHandler.asyncErrorsPublished.size(), 'Incorrect number of events published');
-        System.assertEquals('Invalid message saved: Unexpected role', MessageTriggerHandler.asyncErrorsPublished[0].SetupAI__Error_Content__c, 'Unexpected Error Message');
+        System.assertEquals(Label.Unexpected_Role, MessageTriggerHandler.asyncErrorsPublished[0].SetupAI__Error_Content__c, 'Unexpected Error Message');
         System.assertEquals(testChat.Id, MessageTriggerHandler.asyncErrorsPublished[0].Chat_Id__c, 'Unexpected Error Message');
     }
 

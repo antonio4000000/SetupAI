@@ -57,7 +57,7 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
                         }
                     }
                     when else{
-                        throw new MessageTriggerHandlerException('Invalid message saved: Unexpected role');
+                        throw new MessageTriggerHandlerException(Label.Unexpected_Role);
                     }
                 }
             }catch(Exception ex){

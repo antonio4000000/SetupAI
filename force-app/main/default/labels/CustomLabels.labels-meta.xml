@@ -16,4 +16,28 @@
         <shortDescription>Create Message Access</shortDescription>
         <value>You do not have the ability to create new messages. Please contact your administrator.</value>
     </labels>
+    <labels>
+        <fullName>Unexpected_Role</fullName>
+        <categories>Errors</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Unexpected Role</shortDescription>
+        <value>Invalid message saved: Unexpected role</value>
+    </labels>
+    <labels>
+        <fullName>Metadata_Not_Found</fullName>
+        <categories>Errors</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Metadata Not Found</shortDescription>
+        <value>Metadata not found in query results. Make sure to include &apos;Metadata&apos; as part of the SELECT clause.</value>
+    </labels>
+    <labels>
+        <fullName>Multiple_Metadata_Records</fullName>
+        <categories>Errors</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Multiple Metadata Records</shortDescription>
+        <value>Metadata query returned multiple records. Ensure your query only returns one record.</value>
+    </labels>
 </CustomLabels>

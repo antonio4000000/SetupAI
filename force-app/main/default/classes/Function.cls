@@ -103,7 +103,7 @@ public with sharing class Function {
         List<Object> recordsList = (List<Object>)JSON.deserializeUntyped(JSON.serialize(metadataRecords));
         //Verify record list returns only one record
         if(recordsList.size() > 1){
-            throw new FunctionException('Metadata query returned multiple records. Ensure your query only returns one record.');
+            throw new FunctionException(Label.Multiple_Metadata_Records);
         }
         //Deserialize first item in record list
         Map<String, Object> resultsJSON = (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(recordsList[0]));
@@ -125,7 +125,7 @@ public with sharing class Function {
                 return pathValue;
             }
         }else{
-            throw new FunctionException('Metadata not found in query results. Make sure to include \'Metadata\' as part of the SELECT clause.');
+            throw new FunctionException(Label.Metadata_Not_Found);
         }
     }
 
