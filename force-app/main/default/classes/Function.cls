@@ -19,11 +19,11 @@ public with sharing class Function {
                 when 'getToolingObjects'{
                     content = getToolingObjects();
                 }
-                when 'describeToolingObject' {
-                    content = describeToolingObject(FunctionParam.parseDescribeTooling(arguments));
+                when 'getFields'{
+                    content = getFields(FunctionParam.parseGetFields(arguments));
                 }
-                when 'describeDrilldown' {
-                    content = describeDrilldown(FunctionParam.parseDescribeDrilldown(arguments));
+                when 'getToolingFields'{
+                    content = getToolingFields(FunctionParam.parseGetFields(arguments));
                 }
                 when 'getUserId'{
                     content = UserInfo.getUserId();
@@ -59,20 +59,38 @@ public with sharing class Function {
         return JSON.serialize(ToolingAPI.getSObjects().getSObjectNames());
     }
 
-    //Return information on Tooling API object specified(Returns keys in JSON object that AI can select from)
-    public static String describeToolingObject(FunctionParam.describeTooling args){
-        String describeResults = ToolingAPI.describeSObject(args.object_x);
-        String keys = '';
-        for(String key : ((Map<String,Object>)JSON.deserializeUntyped(describeResults)).keySet()){
-            keys = keys + ';' + key;
+    //Return list of all fields on a given SObject
+    public static String getFields(FunctionParam.getFields args){
+        //Initialize return type
+        List<Map<String,String>> allFields = new List<Map<String,String>>();
+        //Loop through fields
+        for(Schema.SObjectField field : Schema.getGlobalDescribe().get(args.object_x).getDescribe().fields.getMap().values()){
+            Schema.DescribeFieldResult fieldDescribe = field.getDescribe();
+            allFields.add(new Map<String,String>{
+                'label'=>fieldDescribe.getLabel(),
+                'apiName'=>fieldDescribe.getName(),
+                'type'=>String.valueOf(fieldDescribe.getType())
+            });
         }
-        return keys;
+        return JSON.serialize(allFields);
     }
 
-    //Drillsdown into describe info
-    public static String describeDrilldown(FunctionParam.describeDrilldown args){
-        String describeResults = ToolingAPI.describeSObject(args.object_x);
-        return JSONHelper.getJSONValue(describeResults,args.path);
+    //Return list of all fields on a given Tooling API SObject
+    public static String getToolingFields(FunctionParam.getFields args){
+        //Initialize return type
+        List<Map<String,Object>> allFields = new List<Map<String,Object>>();
+        //Loop through fields
+        for(Object field : ToolingAPI.getFields(args.object_x)){
+            //Split out field
+            Map<String,Object> fieldDeserialized = (Map<String,Object>)JSON.deserializeUntyped(JSON.serialize(field));
+            //Map new results
+            allFields.add(new Map<String,Object>{
+                'label'=>fieldDeserialized.get('label'),
+                'apiName'=>fieldDeserialized.get('name'),
+                'type'=>fieldDeserialized.get('type')
+            });
+        }
+        return JSON.serialize(allFields);
     }
 
     //Drilldown into Tooling API Metadata

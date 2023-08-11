@@ -86,23 +86,24 @@ public with sharing class Controller {
 
     //Use gpt-4 to generate System prompt for gpt-3
     private static String generateSystemPrompt(String message){
+        return '';
         //Submit request to generate System prompt
-        return ChatInterface.chat(
-            new ChatRequest.ChatMessage[]{
-                //System prompt for this request
-                new ChatRequest.ChatMessage(
-                    'system',
-                    SystemPromptHelper.getPrompt(SystemPromptHelper.HELPER_LABEL)
-                ),
-                //User Prompt
-                new ChatRequest.ChatMessage(
-                    'user',
-                    message
-                )
-            }, 
-            'gpt-4',
-            false
-        ).content;
+        // return ChatInterface.chat(
+        //     new ChatRequest.ChatMessage[]{
+        //         //System prompt for this request
+        //         new ChatRequest.ChatMessage(
+        //             'system',
+        //             SystemPromptHelper.getPrompt(SystemPromptHelper.HELPER_LABEL)
+        //         ),
+        //         //User Prompt
+        //         new ChatRequest.ChatMessage(
+        //             'user',
+        //             message
+        //         )
+        //     }, 
+        //     'gpt-4',
+        //     false
+        // ).content;
     }
 
     //<<<<<<<<<<----Chat Initialization Methods and Variables-----------------

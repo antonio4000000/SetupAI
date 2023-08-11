@@ -36,6 +36,17 @@ public with sharing class ToolingAPI {
             new Map<String, String>{'Content-Type'=>'application/json'}
         );
     }
+
+    //Get all fields on a given Tooling API SObject type
+    public static List<Object> getFields(String sobjectType){
+        return (List<Object>)JSON.deserializeUntyped(
+            JSON.serialize(
+                ((Map<String,Object>)JSON.deserializeUntyped(
+                    describeSObject(sobjectType)
+                )).get('fields')
+            )
+        );
+    }
     
     //Execute Tooling query
     public static String query(String query){
