@@ -1,3 +1,5 @@
-System.debug(
-    ToolingAPI.query('SELECT Metadata FROM Layout WHERE EntityDefinitionId = \'01I7i0000030Ciy\'')
+insert new Message__c(
+    Role__c = 'HEY',
+    Content__c = 'hey',
+    Thread__c = 'a007i000006VOoFAAW'
 );

@@ -8,6 +8,9 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
     
     public class MessageTriggerHandlerException extends Exception{}
 
+    //Cache platform events for test coverage
+    public static Async_Error__e[] asyncErrorsPublished = new Async_Error__e[]{};
+
     //Message beind handled
     public Message__c newMessage;
 
@@ -53,11 +56,15 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
                             Database.SaveResult results = EventBus.publish(notice);
                         }
                     }
+                    when else{
+                        throw new MessageTriggerHandlerException('Invalid message saved: Unexpected role');
+                    }
                 }
             }catch(Exception ex){
                 Async_Error__e notice = new Async_Error__e(SetupAI__Error_Content__c = ex.getMessage(),
                                                            Chat_Id__c = this.newMessage.Thread__c);
                 Database.SaveResult results = EventBus.publish(notice);
+                asyncErrorsPublished.add(notice);
             }
         }
     }
