@@ -39,6 +39,11 @@ public with sharing class TestFunction {
             /** Summary */  'EntityDefinition Tooling API type fields summary',
             /** User */     'What fields are on the EntityDefinition Tooling API type?'
         );
+        //metadataDrilldown
+        TestDataFactory.createChatWithFirstMessage(
+            /** Summary */  '\'SetupAI__Chat__c-Chat Layout\' page layout fields summary',
+            /** User */     'What fields are on the \'SetupAI__Chat__c-Chat Layout\' page layout?'
+        );
     }
 
     //Test SOQL query function call
@@ -215,5 +220,42 @@ public with sharing class TestFunction {
         System.assertEquals('assistant', messages[3].Role__c, 'Unexpected role on message');
         System.assert(messages[3].Content__c.contains('The EntityDefinition Tooling API type has the following fields:  1. Id: Entity Definition ID 2. DurableId:'), 'Unexpected assistant content');
     }
+
+    //Test metadataDrilldown function call
+    @isTest
+    static void testMetadataDrilldown(){
+        //Setup test
+        Test.setMock(HttpCalloutMock.class, new OpenAIMock());
+        Chat__c testChat = [SELECT Id
+                            FROM Chat__c
+                            WHERE Name = :'\'SetupAI__Chat__c-Chat Layout\' page layout fields summary'
+                            LIMIT 1];
+        
+        //Run test
+        Test.startTest();
+        insert new Message__c(
+            Role__c = 'assistant',
+            Function_Name__c = 'metadataDrilldown',
+            Function_Arguments__c = '{  "path": "layoutSections",  "toolingQuery": "SELECT Metadata FROM Layout WHERE EntityDefinitionId = \'01I7i0000030Ciy\'"}',
+            Thread__c = testChat.Id
+        );
+        Test.stopTest();
+
+        //Verify results
+        Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
+                                 FROM SetupAI__Message__c 
+                                 WHERE SetupAI__Thread__c = :testChat.Id
+                                 ORDER BY Id];
+        System.assertEquals(4, messages.size(), 'Unexpected number of messages');
+        System.assertEquals('metadataDrilldown', messages[1].Function_Name__c, 'Unexpected function call');
+        System.assertEquals('assistant', messages[1].Role__c, 'Unexpected role on message');
+        System.assertEquals('function', messages[2].Role__c, 'Unexpected role on message');
+        System.assertEquals('metadataDrilldown', messages[2].Function_Name__c, 'Unexpected function call');
+        System.assert(messages[2].Content__c.contains('[{"customLabel":false,"detailHeading":true,"editHeading":true,'), 'Unexpected function content');
+        System.assertEquals('assistant', messages[3].Role__c, 'Unexpected role on message');
+        System.assert(messages[3].Content__c.contains('The \'SetupAI__Chat__c-Chat Layout\' page layout has the following fields:  1. Information:'), 'Unexpected assistant content');
+    }
+
+    
 
 }
