@@ -28,15 +28,16 @@
                         label="Your message" 
                         value={userInput} 
                         onchange={handleInputChange} 
+                        onkeypress={handleKeyPress}
                         class="slds-col slds-m-around_x-small slds-grow input-text">
                     </lightning-input>
-                    <lightning-button 
-                        variant="brand" 
-                        label="Send" 
+                    <lightning-button-icon
+                        icon-name="utility:send"
+                        variant="border-filled"
                         title="Send" 
                         onclick={submit} 
                         class="slds-m-around_x-small slds-shrink-none send-button">
-                    </lightning-button>
+                    </lightning-button-icon>
                 </div>                         
             </div>
         </lightning-card>

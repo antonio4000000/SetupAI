@@ -6,7 +6,7 @@
 
 public with sharing class Controller {
 
-    public static final String OUTBOUND_MESSAGE_CLASS = 'slds-chat-message__text slds-chat-message__text_outbound';
+    public static final String OUTBOUND_MESSAGE_CLASS = 'slds-chat-message__text slds-chat-message__text_outbound-agent';
     public static final String OUTBOUND_CONTAINER_CLASS = 'slds-chat-listitem slds-chat-listitem_outbound';
     public static final String INBOUND_MESSAGE_CLASS = 'slds-chat-message__text slds-chat-message__text_inbound';
     public static final String INBOUND_CONTAINER_CLASS = 'slds-chat-listitem slds-chat-listitem_inbound';

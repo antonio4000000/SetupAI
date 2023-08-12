@@ -56,8 +56,8 @@ export default class NewChatOverrideLWC extends LightningElement {
 
     //Upon user submit button press, save to records
     submit() {
-        this.isLoading = true;
         if (this.userInput.trim() !== '') {
+            this.isLoading = true;
             submitMessage({content: this.userInput, chatId: this.recordId})
                 .then(result => {
                     //Returns new chat Id when new chat created so component can redirect
@@ -129,6 +129,13 @@ export default class NewChatOverrideLWC extends LightningElement {
             text: message
         });
         this.isLoading = false;
+    }
+
+    //Handles key press when entering text
+    handleKeyPress(event){
+        if(event.keyCode === 13){
+            this.submit();
+        }
     }
 
 }
