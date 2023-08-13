@@ -2,11 +2,18 @@
   "packageDirectories": [
     {
       "path": "force-app",
-      "default": true
+      "default": true,
+      "package": "SetupAI",
+      "versionName": "ver 0.1",
+      "versionNumber": "0.1.0.NEXT",
+      "versionDescription": "AI Assistant to Salesforce Admins"
     }
   ],
   "name": "SetupAI",
   "namespace": "SetupAI",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "57.0"
+  "sourceApiVersion": "57.0",
+  "packageAliases": {
+    "SetupAI": "0HoDp000000sXvIKAU"
+  }
 }
