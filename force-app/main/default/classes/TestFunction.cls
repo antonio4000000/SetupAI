@@ -51,34 +51,34 @@ public with sharing class TestFunction {
     static void testSoql(){
         //Setup test
         Test.setMock(HttpCalloutMock.class, new OpenAIMock());
-        Chat__c testChat = [SELECT Id
-                            FROM Chat__c
-                            WHERE Name = :'Query Account'
-                            LIMIT 1];
+        SetupAI__Chat__c testChat = [SELECT Id
+                                     FROM SetupAI__Chat__c
+                                     WHERE Name = :'Query Account'
+                                     LIMIT 1];
         
         //Run test
         Test.startTest();
-        insert new Message__c(
-            Role__c = 'assistant',
-            Function_Name__c = 'soql',
-            Function_Arguments__c = '{"type":"data","query":"SELECT AccountNumber FROM Account WHERE Name = \'Test Account\'"}',
-            Thread__c = testChat.Id
+        insert new SetupAI__Message__c(
+            SetupAI__Role__c = 'assistant',
+            SetupAI__Function_Name__c = 'soql',
+            SetupAI__Function_Arguments__c = '{"type":"data","query":"SELECT AccountNumber FROM Account WHERE Name = \'Test Account\'"}',
+            SetupAI__Thread__c = testChat.Id
         );
         Test.stopTest();
         
         //Verify results
-        Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
-                                 FROM SetupAI__Message__c 
-                                 WHERE SetupAI__Thread__c = :testChat.Id
-                                 ORDER BY Id];
+        SetupAI__Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
+                                          FROM SetupAI__Message__c 
+                                          WHERE SetupAI__Thread__c = :testChat.Id
+                                          ORDER BY Id];
         System.assertEquals(4, messages.size(), 'Unexpected number of messages');
-        System.assertEquals('soql', messages[1].Function_Name__c, 'Unexpected function call');
-        System.assertEquals('assistant', messages[1].Role__c, 'Unexpected role on message');
-        System.assertEquals('function', messages[2].Role__c, 'Unexpected role on message');
-        System.assertEquals('soql', messages[2].Function_Name__c, 'Unexpected function call');
-        System.assert(messages[2].Content__c.contains('"1234"'), 'Unexpected function content');
-        System.assertEquals('assistant', messages[3].Role__c, 'Unexpected role on message');
-        System.assertEquals('The Account number of the account named \'Test Account\' is 1234.', messages[3].Content__c, 'Unexpected content from assistant');
+        System.assertEquals('soql', messages[1].SetupAI__Function_Name__c, 'Unexpected function call');
+        System.assertEquals('assistant', messages[1].SetupAI__Role__c, 'Unexpected role on message');
+        System.assertEquals('function', messages[2].SetupAI__Role__c, 'Unexpected role on message');
+        System.assertEquals('soql', messages[2].SetupAI__Function_Name__c, 'Unexpected function call');
+        System.assert(messages[2].SetupAI__Content__c.contains('"1234"'), 'Unexpected function content');
+        System.assertEquals('assistant', messages[3].SetupAI__Role__c, 'Unexpected role on message');
+        System.assertEquals('The Account number of the account named \'Test Account\' is 1234.', messages[3].SetupAI__Content__c, 'Unexpected content from assistant');
     }
 
     //Test Tooling SOQL function call
@@ -86,34 +86,34 @@ public with sharing class TestFunction {
     static void testToolingSOQL(){
         //Setup test
         Test.setMock(HttpCalloutMock.class, new OpenAIMock());
-        Chat__c testChat = [SELECT Id
-                            FROM Chat__c
-                            WHERE Name = :'MessageTriggerHandler Apex Class Summary'
-                            LIMIT 1];
+        SetupAI__Chat__c testChat = [SELECT Id
+                                     FROM SetupAI__Chat__c
+                                     WHERE Name = :'MessageTriggerHandler Apex Class Summary'
+                                     LIMIT 1];
         
         //Run test
         Test.startTest();
-        insert new Message__c(
-            Role__c = 'assistant',
-            Function_Name__c = 'soql',
-            Function_Arguments__c = '{"type":"tooling","query":"SELECT Name, Body FROM ApexClass WHERE Name = \'MessageTriggerHandler\'"}',
-            Thread__c = testChat.Id
+        insert new SetupAI__Message__c(
+            SetupAI__Role__c = 'assistant',
+            SetupAI__Function_Name__c = 'soql',
+            SetupAI__Function_Arguments__c = '{"type":"tooling","query":"SELECT Name, Body FROM ApexClass WHERE Name = \'MessageTriggerHandler\'"}',
+            SetupAI__Thread__c = testChat.Id
         );
         Test.stopTest();
         
         //Verify results
-        Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
-                                 FROM SetupAI__Message__c 
-                                 WHERE SetupAI__Thread__c = :testChat.Id
-                                 ORDER BY Id];
+        SetupAI__Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
+                                          FROM SetupAI__Message__c 
+                                          WHERE SetupAI__Thread__c = :testChat.Id
+                                          ORDER BY Id];
         System.assertEquals(4, messages.size(), 'Unexpected number of messages');
-        System.assertEquals('soql', messages[1].Function_Name__c, 'Unexpected function call');
-        System.assertEquals('assistant', messages[1].Role__c, 'Unexpected role on message');
-        System.assertEquals('function', messages[2].Role__c, 'Unexpected role on message');
-        System.assertEquals('soql', messages[2].Function_Name__c, 'Unexpected function call');
-        System.assert(messages[2].Content__c.contains('public with sharing class MessageTriggerHandler'), 'Unexpected function content');
-        System.assertEquals('assistant', messages[3].Role__c, 'Unexpected role on message');
-        System.assert(messages[3].Content__c.contains('The MessageTriggerHandler Apex class is a public class that implements the Queueable and Database.AllowsCallouts interfaces'), 'Unexpected assistant content');
+        System.assertEquals('soql', messages[1].SetupAI__Function_Name__c, 'Unexpected function call');
+        System.assertEquals('assistant', messages[1].SetupAI__Role__c, 'Unexpected role on message');
+        System.assertEquals('function', messages[2].SetupAI__Role__c, 'Unexpected role on message');
+        System.assertEquals('soql', messages[2].SetupAI__Function_Name__c, 'Unexpected function call');
+        System.assert(messages[2].SetupAI__Content__c.contains('public with sharing class MessageTriggerHandler'), 'Unexpected function content');
+        System.assertEquals('assistant', messages[3].SetupAI__Role__c, 'Unexpected role on message');
+        System.assert(messages[3].SetupAI__Content__c.contains('The MessageTriggerHandler Apex class is a public class that implements the Queueable and Database.AllowsCallouts interfaces'), 'Unexpected assistant content');
     }
 
     //Test getToolingObjects function call
@@ -121,34 +121,34 @@ public with sharing class TestFunction {
     static void testGetToolingObjects(){
         //Setup test
         Test.setMock(HttpCalloutMock.class, new OpenAIMock());
-        Chat__c testChat = [SELECT Id
-                            FROM Chat__c
-                            WHERE Name = :'Accessible objects through Tooling API summary'
-                            LIMIT 1];
+        SetupAI__Chat__c testChat = [SELECT Id
+                                     FROM SetupAI__Chat__c
+                                     WHERE Name = :'Accessible objects through Tooling API summary'
+                                     LIMIT 1];
         
         //Run test
         Test.startTest();
-        insert new Message__c(
-            Role__c = 'assistant',
-            Function_Name__c = 'getToolingObjects',
-            Function_Arguments__c = '{}',
-            Thread__c = testChat.Id
+        insert new SetupAI__Message__c(
+            SetupAI__Role__c = 'assistant',
+            SetupAI__Function_Name__c = 'getToolingObjects',
+            SetupAI__Function_Arguments__c = '{}',
+            SetupAI__Thread__c = testChat.Id
         );
         Test.stopTest();
         
         //Verify results
-        Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
-                                 FROM SetupAI__Message__c 
-                                 WHERE SetupAI__Thread__c = :testChat.Id
-                                 ORDER BY Id];
+        SetupAI__Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
+                                          FROM SetupAI__Message__c 
+                                          WHERE SetupAI__Thread__c = :testChat.Id
+                                          ORDER BY Id];
         System.assertEquals(4, messages.size(), 'Unexpected number of messages');
-        System.assertEquals('getToolingObjects', messages[1].Function_Name__c, 'Unexpected function call');
-        System.assertEquals('assistant', messages[1].Role__c, 'Unexpected role on message');
-        System.assertEquals('function', messages[2].Role__c, 'Unexpected role on message');
-        System.assertEquals('getToolingObjects', messages[2].Function_Name__c, 'Unexpected function call');
-        System.assert(messages[2].Content__c.contains('["AIApplication","AIApplicationConfig","AIReplyRecommendationsSettings"'), 'Unexpected function content');
-        System.assertEquals('assistant', messages[3].Role__c, 'Unexpected role on message');
-        System.assert(messages[3].Content__c.contains('The objects accessible to you through the Tooling API are:  - AIApplication - AIApplicationConfig - AIReplyRecommendationsSettings - AccessControlPolicy - AccountInsightsSettings'), 'Unexpected assistant content');
+        System.assertEquals('getToolingObjects', messages[1].SetupAI__Function_Name__c, 'Unexpected function call');
+        System.assertEquals('assistant', messages[1].SetupAI__Role__c, 'Unexpected role on message');
+        System.assertEquals('function', messages[2].SetupAI__Role__c, 'Unexpected role on message');
+        System.assertEquals('getToolingObjects', messages[2].SetupAI__Function_Name__c, 'Unexpected function call');
+        System.assert(messages[2].SetupAI__Content__c.contains('["AIApplication","AIApplicationConfig","AIReplyRecommendationsSettings"'), 'Unexpected function content');
+        System.assertEquals('assistant', messages[3].SetupAI__Role__c, 'Unexpected role on message');
+        System.assert(messages[3].SetupAI__Content__c.contains('The objects accessible to you through the Tooling API are:  - AIApplication - AIApplicationConfig - AIReplyRecommendationsSettings - AccessControlPolicy - AccountInsightsSettings'), 'Unexpected assistant content');
     }
 
     //Test getFields function call
@@ -163,27 +163,27 @@ public with sharing class TestFunction {
         
         //Run test
         Test.startTest();
-        insert new Message__c(
-            Role__c = 'assistant',
-            Function_Name__c = 'getFields',
-            Function_Arguments__c = '{"object_x": "SetupAI__Chat__c"}',
-            Thread__c = testChat.Id
+        insert new SetupAI__Message__c(
+            SetupAI__Role__c = 'assistant',
+            SetupAI__Function_Name__c = 'getFields',
+            SetupAI__Function_Arguments__c = '{"object_x": "SetupAI__Chat__c"}',
+            SetupAI__Thread__c = testChat.Id
         );
         Test.stopTest();
 
         //Verify results
-        Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
-                                 FROM SetupAI__Message__c 
-                                 WHERE SetupAI__Thread__c = :testChat.Id
-                                 ORDER BY Id];
+        SetupAI__Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
+                                          FROM SetupAI__Message__c 
+                                          WHERE SetupAI__Thread__c = :testChat.Id
+                                          ORDER BY Id];
         System.assertEquals(4, messages.size(), 'Unexpected number of messages');
-        System.assertEquals('getFields', messages[1].Function_Name__c, 'Unexpected function call');
-        System.assertEquals('assistant', messages[1].Role__c, 'Unexpected role on message');
-        System.assertEquals('function', messages[2].Role__c, 'Unexpected role on message');
-        System.assertEquals('getFields', messages[2].Function_Name__c, 'Unexpected function call');
-        System.assert(messages[2].Content__c.contains('[{"type":"ID","apiName":"Id",'), 'Unexpected function content');
-        System.assertEquals('assistant', messages[3].Role__c, 'Unexpected role on message');
-        System.assert(messages[3].Content__c.contains('The available fields on the Chat object (SetupAI__Chat__c) are:'), 'Unexpected assistant content');
+        System.assertEquals('getFields', messages[1].SetupAI__Function_Name__c, 'Unexpected function call');
+        System.assertEquals('assistant', messages[1].SetupAI__Role__c, 'Unexpected role on message');
+        System.assertEquals('function', messages[2].SetupAI__Role__c, 'Unexpected role on message');
+        System.assertEquals('getFields', messages[2].SetupAI__Function_Name__c, 'Unexpected function call');
+        System.assert(messages[2].SetupAI__Content__c.contains('[{"type":"ID","apiName":"Id",'), 'Unexpected function content');
+        System.assertEquals('assistant', messages[3].SetupAI__Role__c, 'Unexpected role on message');
+        System.assert(messages[3].SetupAI__Content__c.contains('The available fields on the Chat object (SetupAI__Chat__c) are:'), 'Unexpected assistant content');
     }
 
     //Test getToolingFields function call
@@ -191,34 +191,34 @@ public with sharing class TestFunction {
     static void testGetToolingFields(){
         //Setup test
         Test.setMock(HttpCalloutMock.class, new OpenAIMock());
-        Chat__c testChat = [SELECT Id
-                            FROM Chat__c
+        SetupAI__Chat__c testChat = [SELECT Id
+                            FROM SetupAI__Chat__c
                             WHERE Name = :'EntityDefinition Tooling API type fields summary'
                             LIMIT 1];
         
         //Run test
         Test.startTest();
-        insert new Message__c(
-            Role__c = 'assistant',
-            Function_Name__c = 'getToolingFields',
-            Function_Arguments__c = '{"object_x": "EntityDefinition"}',
-            Thread__c = testChat.Id
+        insert new SetupAI__Message__c(
+            SetupAI__Role__c = 'assistant',
+            SetupAI__Function_Name__c = 'getToolingFields',
+            SetupAI__Function_Arguments__c = '{"object_x": "EntityDefinition"}',
+            SetupAI__Thread__c = testChat.Id
         );
         Test.stopTest();
 
         //Verify results
-        Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
-                                 FROM SetupAI__Message__c 
-                                 WHERE SetupAI__Thread__c = :testChat.Id
-                                 ORDER BY Id];
+        SetupAI__Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
+                                          FROM SetupAI__Message__c 
+                                          WHERE SetupAI__Thread__c = :testChat.Id
+                                          ORDER BY Id];
         System.assertEquals(4, messages.size(), 'Unexpected number of messages');
-        System.assertEquals('getToolingFields', messages[1].Function_Name__c, 'Unexpected function call');
-        System.assertEquals('assistant', messages[1].Role__c, 'Unexpected role on message');
-        System.assertEquals('function', messages[2].Role__c, 'Unexpected role on message');
-        System.assertEquals('getToolingFields', messages[2].Function_Name__c, 'Unexpected function call');
-        System.assert(messages[2].Content__c.contains('[{"type":"id","apiName":"Id","label":"Entity Definition ID"},'), 'Unexpected function content');
-        System.assertEquals('assistant', messages[3].Role__c, 'Unexpected role on message');
-        System.assert(messages[3].Content__c.contains('The EntityDefinition Tooling API type has the following fields:  1. Id: Entity Definition ID 2. DurableId:'), 'Unexpected assistant content');
+        System.assertEquals('getToolingFields', messages[1].SetupAI__Function_Name__c, 'Unexpected function call');
+        System.assertEquals('assistant', messages[1].SetupAI__Role__c, 'Unexpected role on message');
+        System.assertEquals('function', messages[2].SetupAI__Role__c, 'Unexpected role on message');
+        System.assertEquals('getToolingFields', messages[2].SetupAI__Function_Name__c, 'Unexpected function call');
+        System.assert(messages[2].SetupAI__Content__c.contains('[{"type":"id","apiName":"Id","label":"Entity Definition ID"},'), 'Unexpected function content');
+        System.assertEquals('assistant', messages[3].SetupAI__Role__c, 'Unexpected role on message');
+        System.assert(messages[3].SetupAI__Content__c.contains('The EntityDefinition Tooling API type has the following fields:  1. Id: Entity Definition ID 2. DurableId:'), 'Unexpected assistant content');
     }
 
     //Test metadataDrilldown function call
@@ -226,34 +226,34 @@ public with sharing class TestFunction {
     static void testMetadataDrilldown(){
         //Setup test
         Test.setMock(HttpCalloutMock.class, new OpenAIMock());
-        Chat__c testChat = [SELECT Id
-                            FROM Chat__c
-                            WHERE Name = :'\'SetupAI__Chat__c-Chat Layout\' page layout fields summary'
-                            LIMIT 1];
+        SetupAI__Chat__c testChat = [SELECT Id
+                                     FROM SetupAI__Chat__c
+                                     WHERE Name = :'\'SetupAI__Chat__c-Chat Layout\' page layout fields summary'
+                                     LIMIT 1];
         
         //Run test
         Test.startTest();
-        insert new Message__c(
-            Role__c = 'assistant',
-            Function_Name__c = 'metadataDrilldown',
-            Function_Arguments__c = '{  "path": "layoutSections",  "toolingQuery": "SELECT Metadata FROM Layout WHERE EntityDefinitionId = \'01I7i0000030Ciy\'"}',
-            Thread__c = testChat.Id
+        insert new SetupAI__Message__c(
+            SetupAI__Role__c = 'assistant',
+            SetupAI__Function_Name__c = 'metadataDrilldown',
+            SetupAI__Function_Arguments__c = '{  "path": "layoutSections",  "toolingQuery": "SELECT Metadata FROM Layout WHERE EntityDefinitionId = \'01I7i0000030Ciy\'"}',
+            SetupAI__Thread__c = testChat.Id
         );
         Test.stopTest();
 
         //Verify results
-        Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
-                                 FROM SetupAI__Message__c 
-                                 WHERE SetupAI__Thread__c = :testChat.Id
-                                 ORDER BY Id];
+        SetupAI__Message__c[] messages = [SELECT Name, SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c 
+                                          FROM SetupAI__Message__c 
+                                          WHERE SetupAI__Thread__c = :testChat.Id
+                                          ORDER BY Id];
         System.assertEquals(4, messages.size(), 'Unexpected number of messages');
-        System.assertEquals('metadataDrilldown', messages[1].Function_Name__c, 'Unexpected function call');
-        System.assertEquals('assistant', messages[1].Role__c, 'Unexpected role on message');
-        System.assertEquals('function', messages[2].Role__c, 'Unexpected role on message');
-        System.assertEquals('metadataDrilldown', messages[2].Function_Name__c, 'Unexpected function call');
-        System.assert(messages[2].Content__c.contains('[{"customLabel":false,"detailHeading":true,"editHeading":true,'), 'Unexpected function content');
-        System.assertEquals('assistant', messages[3].Role__c, 'Unexpected role on message');
-        System.assert(messages[3].Content__c.contains('The \'SetupAI__Chat__c-Chat Layout\' page layout has the following fields:  1. Information:'), 'Unexpected assistant content');
+        System.assertEquals('metadataDrilldown', messages[1].SetupAI__Function_Name__c, 'Unexpected function call');
+        System.assertEquals('assistant', messages[1].SetupAI__Role__c, 'Unexpected role on message');
+        System.assertEquals('function', messages[2].SetupAI__Role__c, 'Unexpected role on message');
+        System.assertEquals('metadataDrilldown', messages[2].SetupAI__Function_Name__c, 'Unexpected function call');
+        System.assert(messages[2].SetupAI__Content__c.contains('[{"customLabel":false,"detailHeading":true,"editHeading":true,'), 'Unexpected function content');
+        System.assertEquals('assistant', messages[3].SetupAI__Role__c, 'Unexpected role on message');
+        System.assert(messages[3].SetupAI__Content__c.contains('The \'SetupAI__Chat__c-Chat Layout\' page layout has the following fields:  1. Information:'), 'Unexpected assistant content');
     }
 
     

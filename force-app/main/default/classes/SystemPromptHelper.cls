@@ -12,8 +12,8 @@ public with sharing class SystemPromptHelper {
     
     //Get System Prompt
     public static String getPrompt(String label){
-        return [SELECT Content__c
-                FROM System_Prompt__mdt
+        return [SELECT SetupAI__Content__c
+                FROM SetupAI__System_Prompt__mdt
                 WHERE MasterLabel = :label
                 WITH SECURITY_ENFORCED].Content__c;
     }

@@ -22,9 +22,9 @@ public with sharing class Controller {
                 if(chatId == null){
                     return initialize(content);
                 }else{
-                    insert new Message__c(Thread__c = chatId,
-                                          Content__c = content,
-                                          Role__c = 'user');
+                    insert new SetupAI__Message__c(SetupAI__Thread__c = chatId,
+                                                   SetupAI__Content__c = content,
+                                                   SetupAI__Role__c = 'user');
                     return null;
                 }
             }else{
@@ -37,18 +37,18 @@ public with sharing class Controller {
     
     //Creates Chat and System message before inserting first chat message
     private static String initialize(String firstMessage){
-        Chat__c chat = generateChat(firstMessage);
+        SetupAI__Chat__c chat = generateChat(firstMessage);
         insert chat;
-        insert new Message__c(
-            Role__c = 'user',
-            Content__c = firstMessage,
-            Thread__c = chat.Id
+        insert new SetupAI__Message__c(
+            SetupAI__Role__c = 'user',
+            SetupAI__Content__c = firstMessage,
+            SetupAI__Thread__c = chat.Id
         );
         return chat.Id;
     }
 
     //Creates initial Chat__c record
-    private static Chat__c generateChat(String message){
+    private static SetupAI__Chat__c generateChat(String message){
         //Submit request to generate header
         String header = ChatInterface.chat(
             new ChatRequest.ChatMessage[]{
@@ -67,8 +67,8 @@ public with sharing class Controller {
             false
         ).content;
         //Save chat record
-        return new Chat__c(
-            Running__c = true,
+        return new SetupAI__Chat__c(
+            SetupAI__Running__c = true,
             Name = header
         );
     }
@@ -82,27 +82,27 @@ public with sharing class Controller {
     public static MessageWrapper[] getMessages(String chatId){
         try {
             MessageWrapper[] toReturn = new MessageWrapper[]{};
-            Message__c[] msgObj = [SELECT Content__c, Role__c 
-                                   FROM Message__c 
-                                   WHERE Thread__c = :chatId 
-                                   AND Function_Name__c = null 
-                                   AND Role__c != 'function'
-                                   AND Role__c != 'system'
+            Message__c[] msgObj = [SELECT SetupAI__Content__c, SetupAI__Role__c 
+                                   FROM SetupAI__Message__c 
+                                   WHERE SetupAI__Thread__c = :chatId 
+                                   AND SetupAI__Function_Name__c = null 
+                                   AND SetupAI__Role__c != 'function'
+                                   AND SetupAI__Role__c != 'system'
                                    WITH SECURITY_ENFORCED
                                    ORDER BY CreatedDate ASC];
             for(Message__c msg : msgObj){
                 MessageWrapper returnObj = new MessageWrapper();
-                if(msg.Role__c == 'user'){
+                if(msg.SetupAI__Role__c == 'user'){
                     returnObj.containerClass = OUTBOUND_CONTAINER_CLASS;
                     returnObj.msgClass = OUTBOUND_MESSAGE_CLASS;
                     returnObj.id = msg.Id;
-                    returnObj.text = msg.Content__c;
+                    returnObj.text = msg.SetupAI__Content__c;
                 }
-                if(msg.Role__c == 'assistant' || msg.Role__c == 'error'){
+                if(msg.SetupAI__Role__c == 'assistant' || msg.SetupAI__Role__c == 'error'){
                     returnObj.containerClass = INBOUND_CONTAINER_CLASS;
                     returnObj.msgClass = INBOUND_MESSAGE_CLASS;
                     returnObj.id = msg.Id;
-                    returnObj.text = (msg.Role__c == 'error' ? 'ERROR: ' : '' ) + msg.Content__c;
+                    returnObj.text = (msg.SetupAI__Role__c == 'error' ? 'ERROR: ' : '' ) + msg.SetupAI__Content__c;
                 }
                 if(returnObj.text != null){
                     toReturn.add(returnObj);
@@ -133,7 +133,7 @@ public with sharing class Controller {
         try {
             if(chatId != null){
                 return [SELECT Name
-                        FROM Chat__c
+                        FROM SetupAI__Chat__c
                         WHERE Id =: chatId
                         WITH SECURITY_ENFORCED].Name;
             }else{

@@ -50,15 +50,15 @@ public with sharing class ChatRequest {
             this.content = content;
         }
         public ChatMessage(Message__c message){
-            this.role = message.Role__c;
-            this.content = message.Content__c;
-            if(message.Function_Name__c != null){
+            this.role = message.SetupAI__Role__c;
+            this.content = message.SetupAI__Content__c;
+            if(message.SetupAI__Function_Name__c != null){
                 if(this.role == 'assistant'){
                     this.function_call = new ChatMessageFunctionCall();
-                    this.function_call.name = message.Function_Name__c;
-                    this.function_call.arguments = message.Function_Arguments__c;
+                    this.function_call.name = message.SetupAI__Function_Name__c;
+                    this.function_call.arguments = message.SetupAI__Function_Arguments__c;
                 }else{
-                    this.name = message.Function_Name__c;
+                    this.name = message.SetupAI__Function_Name__c;
                 }
             }
         }
@@ -78,13 +78,13 @@ public with sharing class ChatRequest {
     public class ChatFunction {
         public ChatFunction(Function__mdt function){
             this.name = function.MasterLabel;
-            this.description = function.Description__c;
-            if(function.Properties__r != null){
+            this.description = function.SetupAI__Description__c;
+            if(function.SetupAI__Properties__r != null){
                 this.required = new String[]{};
                 Map<String,Property> properties = new Map<String,Property>();
-                for(Function_Property__mdt prop : function.Properties__r){
+                for(Function_Property__mdt prop : function.SetupAI__Properties__r){
                     properties.put(prop.MasterLabel,new Property(prop));
-                    if(prop.Required__c)this.required.add(prop.MasterLabel);
+                    if(prop.SetupAI__Required__c)this.required.add(prop.MasterLabel);
                 }
                 this.parameters = new Parameters('object',properties);
             }
@@ -106,9 +106,9 @@ public with sharing class ChatRequest {
     //Represents properties passed in as Parameters into ChatFunction
     public class Property {
         public Property(Function_Property__mdt prop){
-            this.type = prop.Type__c;
-            this.description = prop.Description__c;
-            this.enum_x = prop.Enumerated_Values__c?.split('\n');
+            this.type = prop.SetupAI__Type__c;
+            this.description = prop.SetupAI__Description__c;
+            this.enum_x = prop.SetupAI__Enumerated_Values__c?.split('\n');
         }
         public String type;
         public String description;

@@ -9,13 +9,13 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
     public class MessageTriggerHandlerException extends Exception{}
 
     //Cache platform events for test coverage
-    public static Async_Error__e[] asyncErrorsPublished = new Async_Error__e[]{};
+    public static SetupAI__Async_Error__e[] asyncErrorsPublished = new SetupAI__Async_Error__e[]{};
 
     //Message beind handled
-    public Message__c newMessage;
+    public SetupAI__Message__c newMessage;
 
     //Constructor
-    public MessageTriggerHandler(Message__c newMessage) {
+    public MessageTriggerHandler(SetupAI__Message__c newMessage) {
         this.newMessage = newMessage;
     }
 
@@ -23,15 +23,15 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
     public void execute(QueueableContext context){
         if(!Callout.testSetup){
             try{
-                switch on this.newMessage.Role__c {
+                switch on this.newMessage.SetupAI__Role__c {
                     when 'user','function'{
                         //Get entire thread
-                        Message__c[] entireThread = [SELECT Role__c, Content__c, Function_Name__c, Function_Arguments__c
-                                                    FROM Message__c
-                                                    WHERE Thread__c =:this.newMessage.Thread__c
-                                                    AND Role__c !=:'error'
-                                                    WITH SECURITY_ENFORCED
-                                                    ORDER BY Name];
+                        SetupAI__Message__c[] entireThread = [SELECT SetupAI__Role__c, SetupAI__Content__c, SetupAI__Function_Name__c, SetupAI__Function_Arguments__c
+                                                              FROM SetupAI__Message__c
+                                                              WHERE SetupAI__Thread__c =:this.newMessage.Thread__c
+                                                              AND SetupAI__Role__c !=:'error'
+                                                              WITH SECURITY_ENFORCED
+                                                              ORDER BY Name];
                         //Get AI Response
                         ChatRequest.ChatMessage aiResponse = ChatInterface.chat(
                             MessageConvertor.convert(entireThread),
@@ -41,18 +41,18 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
                         //Check message create permissions
                         if(CRUD.createMessage()){
                             //Insert for next queueable
-                            insert MessageConvertor.convert(aiResponse, this.newMessage.Thread__c);
+                            insert MessageConvertor.convert(aiResponse, this.newMessage.SetupAI__Thread__c);
                         }else{
                             throw new MessageTriggerHandlerException(Label.Create_Message_Access);
                         }
                     }
                     when 'assistant','error'{
-                        if(this.newMessage.Function_Name__c != null){
-                            Function.execute(this.newMessage.Function_Name__c,
-                                            this.newMessage.Function_Arguments__c,
-                                            this.newMessage.Thread__c);
-                        }else if(this.newMessage.Content__c != null && this.newMessage.Content__c != 'null'){
-                            Message_Notice__e notice = new Message_Notice__e(Chat_Id__c = this.newMessage.Thread__c);
+                        if(this.newMessage.SetupAI__Function_Name__c != null){
+                            Function.execute(this.newMessage.SetupAI__Function_Name__c,
+                                             this.newMessage.SetupAI__Function_Arguments__c,
+                                             this.newMessage.SetupAI__Thread__c);
+                        }else if(this.newMessage.SetupAI__Content__c != null && this.newMessage.SetupAI__Content__c != 'null'){
+                            SetupAI__Message_Notice__e notice = new SetupAI__Message_Notice__e(Chat_Id__c = this.newMessage.SetupAI__Thread__c);
                             Database.SaveResult results = EventBus.publish(notice);
                         }
                     }
@@ -61,8 +61,8 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
                     }
                 }
             }catch(Exception ex){
-                Async_Error__e notice = new Async_Error__e(SetupAI__Error_Content__c = ex.getMessage(),
-                                                           Chat_Id__c = this.newMessage.Thread__c);
+                SetupAI__Async_Error__e notice = new Async_Error__e(SetupAI__Error_Content__c = ex.getMessage(),
+                                                                    SetupAI__Chat_Id__c = this.newMessage.SetupAI__Thread__c);
                 Database.SaveResult results = EventBus.publish(notice);
                 asyncErrorsPublished.add(notice);
             }
