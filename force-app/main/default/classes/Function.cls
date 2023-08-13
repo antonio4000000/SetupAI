@@ -35,10 +35,10 @@ public with sharing class Function {
         }catch(Exception ex){
             content = ex.getMessage();
         }
-        insert new SetupAI__Message__c(SetupAI__Thread__c = chatId,
-                                       SetupAI__Role__c = 'function',
-                                       SetupAI__Content__c = content,
-                                       SetupAI__Function_Name__c = name);
+        insert new Message__c(Thread__c = chatId,
+                                       Role__c = 'function',
+                                       Content__c = content,
+                                       Function_Name__c = name);
     }
     
     //Execute SOQL Query

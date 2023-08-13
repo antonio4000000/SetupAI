@@ -20,7 +20,7 @@ public with sharing class Callout {
 
     public static String execute(String namedCred, String endpoint, String method, String body, Map<String, String> headers){
         //Retrieve endpoint with friendly name
-        Endpoint__mdt e = [SELECT SetupAI__Endpoint__c FROM SetupAI__Endpoint__mdt WHERE MasterLabel = :endpoint WITH SECURITY_ENFORCED];
+        Endpoint__mdt e = [SELECT Endpoint__c FROM Endpoint__mdt WHERE MasterLabel = :endpoint WITH SECURITY_ENFORCED];
         return execute(
             'callout:' + namedCred + e.Endpoint__c, 
             method, 
@@ -41,7 +41,6 @@ public with sharing class Callout {
 
     //Execute callouts
     private static String execute(String completeURL, String method, String body, Map<String, String> headers){
-        System.debug(body);
         if(!testSetup){
             //Construct callout
             HttpRequest req = new HttpRequest();

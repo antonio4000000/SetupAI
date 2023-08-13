@@ -8,11 +8,11 @@ public with sharing class ToolingAPI {
 
     //Get endpoint metadata
     public static String getEndpoint(String name){
-        SetupAI__Endpoint__mdt endpoint = [SELECT SetupAI__Endpoint__c
-                                           FROM SetupAI__Endpoint__mdt
+        Endpoint__mdt endpoint = [SELECT Endpoint__c
+                                           FROM Endpoint__mdt
                                            WHERE DeveloperName =:name
                                            WITH SECURITY_ENFORCED];
-        return endpoint.SetupAI__Endpoint__c;
+        return endpoint.Endpoint__c;
     }
 
     //Retrieve all SObjects from Tooling API
