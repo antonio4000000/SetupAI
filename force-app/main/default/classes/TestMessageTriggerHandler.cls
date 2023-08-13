@@ -9,16 +9,19 @@ public with sharing class TestMessageTriggerHandler {
     
     @testSetup
     static void testSetup(){
-        Callout.testSetup = true;
-        //Inser dummy chat
-        SetupAI__Chat__c testChat = TestDataFactory.getChat('Get User Id');
-        insert testChat;
-        //Insert dummy messages
-        insert new SetupAI__Message__c(
-            SetupAI__Role__c = 'user',
-            SetupAI__Content__c = 'What is my user Id?',
-            SetupAI__Thread__c = testChat.Id
-        );
+        User testUser = TestDataFactory.createTestUser();
+        System.runAs(testUser){
+            Callout.testSetup = true;
+            //Inser dummy chat
+            SetupAI__Chat__c testChat = TestDataFactory.getChat('Get User Id');
+            insert testChat;
+            //Insert dummy messages
+            insert new SetupAI__Message__c(
+                SetupAI__Role__c = 'user',
+                SetupAI__Content__c = 'What is my user Id?',
+                SetupAI__Thread__c = testChat.Id
+            );
+        }
     }
 
     //Tests Assistant calling a function
@@ -29,14 +32,20 @@ public with sharing class TestMessageTriggerHandler {
         SetupAI__Chat__c testChat = [SELECT Id
                                      FROM SetupAI__Chat__c
                                      LIMIT 1];
+        //Get Test user
+        User testUser = [SELECT Id
+                        FROM User
+                        WHERE FirstName = :'SetupAI'];
         
         //Run test
         Test.startTest();
-        insert new SetupAI__Message__c(
-            SetupAI__Role__c = 'assistant',
-            SetupAI__Function_Name__c = 'getUserId',
-            SetupAI__Thread__c = testChat.Id
-        );
+        System.runAs(testUser){
+            insert new SetupAI__Message__c(
+                SetupAI__Role__c = 'assistant',
+                SetupAI__Function_Name__c = 'getUserId',
+                SetupAI__Thread__c = testChat.Id
+            );
+        }
         Test.stopTest();
 
         //Verify results
@@ -62,14 +71,20 @@ public with sharing class TestMessageTriggerHandler {
         SetupAI__Chat__c testChat = [SELECT Id
                                      FROM SetupAI__Chat__c
                                      LIMIT 1];
-        
+        //Get Test user
+        User testUser = [SELECT Id
+                        FROM User
+                        WHERE FirstName = :'SetupAI'];
+
         //Run test
         Test.startTest();
-        insert new SetupAI__Message__c(
-            SetupAI__Role__c = 'assistant',
-            SetupAI__Function_Name__c = 'getUserId',
-            SetupAI__Thread__c = testChat.Id
-        );
+        System.runAs(testUser){
+            insert new SetupAI__Message__c(
+                SetupAI__Role__c = 'assistant',
+                SetupAI__Function_Name__c = 'getUserId',
+                SetupAI__Thread__c = testChat.Id
+            );
+        }
         Test.stopTest();
 
         //Verify results
@@ -93,14 +108,20 @@ public with sharing class TestMessageTriggerHandler {
         SetupAI__Chat__c testChat = [SELECT Id
                                      FROM SetupAI__Chat__c
                                      LIMIT 1];
-        
+        //Get Test user
+        User testUser = [SELECT Id
+                        FROM User
+                        WHERE FirstName = :'SetupAI'];
+
         //Run test
         Test.startTest();
-        insert new SetupAI__Message__c(
-            SetupAI__Role__c = 'HEY',
-            SetupAI__Content__c = 'hey',
-            SetupAI__Thread__c = testChat.Id
-        );
+        System.runAs(testUser){
+            insert new SetupAI__Message__c(
+                SetupAI__Role__c = 'HEY',
+                SetupAI__Content__c = 'hey',
+                SetupAI__Thread__c = testChat.Id
+            );
+        }
         Test.stopTest();
 
         //Verify results

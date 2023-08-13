@@ -6,10 +6,34 @@
 
 @isTest
 public with sharing class TestDataFactory {
+
+    //Create User to run code as
+    public static User createTestUser(){
+        Profile sysAdmin = [SELECT Id FROM Profile WHERE Name = :'System Administrator'];
+        User testUser = new User(
+            FirstName = 'SetupAI',
+            LastName = 'User',
+            Alias = 'setup',
+            Email = 'setupai-user' + Utils.getRandom() + '@setupai.com',
+            Username = 'setupai-user' + Utils.getRandom() + '@setupai.com',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US',
+            ProfileId = sysAdmin.Id,
+            TimeZoneSidKey = 'America/Chicago'
+        );
+        insert testUser;
+        PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'SetupAI'];
+        insert new PermissionSetAssignment(
+            AssigneeId = testUser.id, 
+            PermissionSetId = ps.Id
+        );
+        return testUser;
+    }
     
     //Generate Chat__c record along with related Message__c records
     public static SetupAI__Chat__c createCompleteChat(){
-        Chat__c newChat = getChat('Chat object API name request');
+        SetupAI__Chat__c newChat = getChat('Chat object API name request');
         insert newChat;
         insert getMessages(newChat.Id);
         return newChat;

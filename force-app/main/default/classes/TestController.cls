@@ -9,8 +9,11 @@ public with sharing class TestController {
     
     @testSetup
     static void testSetup(){
-        Callout.testSetup = true;
-        Chat__c testChat = TestDataFactory.createCompleteChat();
+        User testUser = TestDataFactory.createTestUser();
+        System.runAs(testUser){
+            Callout.testSetup = true;
+            Chat__c testChat = TestDataFactory.createCompleteChat();
+        }
     }
 
     @isTest
@@ -19,10 +22,17 @@ public with sharing class TestController {
         SetupAI__Chat__c testChat = [SELECT Id
                                      FROM SetupAI__Chat__c
                                      LIMIT 1];
+        //Get Test user
+        User testUser = [SELECT Id
+                         FROM User
+                         WHERE FirstName = :'SetupAI'];
         
         //Run test
         Test.startTest();
-        Controller.MessageWrapper[] messages = Controller.getMessages(testChat.Id);
+        Controller.MessageWrapper[] messages;
+        System.runAs(testUser){
+            messages = Controller.getMessages(testChat.Id);
+        }
         Test.stopTest();
         
         //Verify results
@@ -41,10 +51,17 @@ public with sharing class TestController {
         SetupAI__Chat__c testChat = [SELECT Id, Name
                                      FROM SetupAI__Chat__c
                                      LIMIT 1];
+        //Get Test user
+        User testUser = [SELECT Id
+                        FROM User
+                        WHERE FirstName = :'SetupAI'];
 
         //Run test
         Test.startTest();
-        String chatName = Controller.getChatSummary(testChat.Id);
+        String chatName;
+        System.runAs(testUser){ 
+            chatName = Controller.getChatSummary(testChat.Id);
+        }
         Test.stopTest();
 
         //Verify results
@@ -55,10 +72,17 @@ public with sharing class TestController {
     static void testSubmitMessageNew(){
         //Setup test
         Test.setMock(HttpCalloutMock.class, new OpenAIMock());
+        //Get Test user
+        User testUser = [SELECT Id
+                        FROM User
+                        WHERE FirstName = :'SetupAI'];
 
         //Run test
         Test.startTest();
-        String results = Controller.submitMessage('Hi there', null);
+        String results;
+        System.runAs(testUser){  
+            results = Controller.submitMessage('Hi there', null);
+        }
         Test.stopTest();
 
         //Verify results
@@ -84,10 +108,17 @@ public with sharing class TestController {
         SetupAI__Chat__c testChat = [SELECT Id
                                      FROM SetupAI__Chat__c
                                      LIMIT 1];
+        //Get Test user
+        User testUser = [SELECT Id
+                        FROM User
+                        WHERE FirstName = :'SetupAI'];
         
         //Run test
         Test.startTest();
-        String results = Controller.submitMessage('Thank you very much', testChat.Id);
+        String results;
+        System.runAs(testUser){  
+            results = Controller.submitMessage('Thank you very much', testChat.Id);
+        }
         Test.stopTest();
 
         //Verify results

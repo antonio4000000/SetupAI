@@ -32,4 +32,11 @@ public class Utils {
                 WHERE Name = :nameOfFile].Body.toString();
     }
 
+    //Generate random number string
+    public static String getRandom(){
+        String hashString = '1000' + String.valueOf(Datetime.now().formatGMT('yyyy-MM-dd HH:mm:ss.SSS'));
+        Blob hash = Crypto.generateDigest('MD5', Blob.valueOf(hashString));
+        return EncodingUtil.convertToHex(hash);
+    }
+
 }

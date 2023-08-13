@@ -9,41 +9,44 @@ public with sharing class TestFunction {
     
     @testSetup
     static void testSetup(){
-        Callout.testSetup = true;
-        //Insert test Account
-        Account testAccount = new Account(Name = 'Test Account',
-                                          AccountNumber = '1234');
-        insert testAccount;
-        //SOQL
-        TestDataFactory.createChatWithFirstMessage(
-            /** Summary */  'Query Account',
-            /** User */     'What is the Account number of the account named \'Test Account\'?'
-        );
-        //Tooling SOQL
-        TestDataFactory.createChatWithFirstMessage(
-            /** Summary */  'MessageTriggerHandler Apex Class Summary',
-            /** User */     'Summarize the MessageTriggerHandler Apex class'
-        );
-        //getToolingObjects
-        TestDataFactory.createChatWithFirstMessage(
-            /** Summary */  'Accessible objects through Tooling API summary',
-            /** User */     'What objects are accessible to me through the Tooling API?'
-        );
-        //getFields
-        TestDataFactory.createChatWithFirstMessage(
-            /** Summary */  'Chat object fields summary',
-            /** User */     'What fields are available on the SetupAI__Chat__c object?'
-        );
-        //getToolingFields
-        TestDataFactory.createChatWithFirstMessage(
-            /** Summary */  'EntityDefinition Tooling API type fields summary',
-            /** User */     'What fields are on the EntityDefinition Tooling API type?'
-        );
-        //metadataDrilldown
-        TestDataFactory.createChatWithFirstMessage(
-            /** Summary */  '\'SetupAI__Chat__c-Chat Layout\' page layout fields summary',
-            /** User */     'What fields are on the \'SetupAI__Chat__c-Chat Layout\' page layout?'
-        );
+        User testUser = TestDataFactory.createTestUser();
+        System.runAs(testUser){
+            Callout.testSetup = true;
+            //Insert test Account
+            Account testAccount = new Account(Name = 'Test Account',
+                                            AccountNumber = '1234');
+            insert testAccount;
+            //SOQL
+            TestDataFactory.createChatWithFirstMessage(
+                /** Summary */  'Query Account',
+                /** User */     'What is the Account number of the account named \'Test Account\'?'
+            );
+            //Tooling SOQL
+            TestDataFactory.createChatWithFirstMessage(
+                /** Summary */  'MessageTriggerHandler Apex Class Summary',
+                /** User */     'Summarize the MessageTriggerHandler Apex class'
+            );
+            //getToolingObjects
+            TestDataFactory.createChatWithFirstMessage(
+                /** Summary */  'Accessible objects through Tooling API summary',
+                /** User */     'What objects are accessible to me through the Tooling API?'
+            );
+            //getFields
+            TestDataFactory.createChatWithFirstMessage(
+                /** Summary */  'Chat object fields summary',
+                /** User */     'What fields are available on the SetupAI__Chat__c object?'
+            );
+            //getToolingFields
+            TestDataFactory.createChatWithFirstMessage(
+                /** Summary */  'EntityDefinition Tooling API type fields summary',
+                /** User */     'What fields are on the EntityDefinition Tooling API type?'
+            );
+            //metadataDrilldown
+            TestDataFactory.createChatWithFirstMessage(
+                /** Summary */  '\'SetupAI__Chat__c-Chat Layout\' page layout fields summary',
+                /** User */     'What fields are on the \'SetupAI__Chat__c-Chat Layout\' page layout?'
+            );
+        }
     }
 
     //Test SOQL query function call
@@ -55,15 +58,21 @@ public with sharing class TestFunction {
                                      FROM SetupAI__Chat__c
                                      WHERE Name = :'Query Account'
                                      LIMIT 1];
+        //Get Test user
+        User testUser = [SELECT Id
+                        FROM User
+                        WHERE FirstName = :'SetupAI'];
         
         //Run test
         Test.startTest();
-        insert new SetupAI__Message__c(
-            SetupAI__Role__c = 'assistant',
-            SetupAI__Function_Name__c = 'soql',
-            SetupAI__Function_Arguments__c = '{"type":"data","query":"SELECT AccountNumber FROM Account WHERE Name = \'Test Account\'"}',
-            SetupAI__Thread__c = testChat.Id
-        );
+        System.runAs(testUser){
+            insert new SetupAI__Message__c(
+                SetupAI__Role__c = 'assistant',
+                SetupAI__Function_Name__c = 'soql',
+                SetupAI__Function_Arguments__c = '{"type":"data","query":"SELECT AccountNumber FROM Account WHERE Name = \'Test Account\'"}',
+                SetupAI__Thread__c = testChat.Id
+            );
+        }
         Test.stopTest();
         
         //Verify results
@@ -90,15 +99,21 @@ public with sharing class TestFunction {
                                      FROM SetupAI__Chat__c
                                      WHERE Name = :'MessageTriggerHandler Apex Class Summary'
                                      LIMIT 1];
+        //Get Test user
+        User testUser = [SELECT Id
+                        FROM User
+                        WHERE FirstName = :'SetupAI'];
         
         //Run test
         Test.startTest();
-        insert new SetupAI__Message__c(
-            SetupAI__Role__c = 'assistant',
-            SetupAI__Function_Name__c = 'soql',
-            SetupAI__Function_Arguments__c = '{"type":"tooling","query":"SELECT Name, Body FROM ApexClass WHERE Name = \'MessageTriggerHandler\'"}',
-            SetupAI__Thread__c = testChat.Id
-        );
+        System.runAs(testUser){
+            insert new SetupAI__Message__c(
+                SetupAI__Role__c = 'assistant',
+                SetupAI__Function_Name__c = 'soql',
+                SetupAI__Function_Arguments__c = '{"type":"tooling","query":"SELECT Name, Body FROM ApexClass WHERE Name = \'MessageTriggerHandler\'"}',
+                SetupAI__Thread__c = testChat.Id
+            );
+        }
         Test.stopTest();
         
         //Verify results
@@ -125,15 +140,21 @@ public with sharing class TestFunction {
                                      FROM SetupAI__Chat__c
                                      WHERE Name = :'Accessible objects through Tooling API summary'
                                      LIMIT 1];
+        //Get Test user
+        User testUser = [SELECT Id
+                        FROM User
+                        WHERE FirstName = :'SetupAI'];
         
         //Run test
         Test.startTest();
-        insert new SetupAI__Message__c(
-            SetupAI__Role__c = 'assistant',
-            SetupAI__Function_Name__c = 'getToolingObjects',
-            SetupAI__Function_Arguments__c = '{}',
-            SetupAI__Thread__c = testChat.Id
-        );
+        System.runAs(testUser){
+            insert new SetupAI__Message__c(
+                SetupAI__Role__c = 'assistant',
+                SetupAI__Function_Name__c = 'getToolingObjects',
+                SetupAI__Function_Arguments__c = '{}',
+                SetupAI__Thread__c = testChat.Id
+            );
+        }
         Test.stopTest();
         
         //Verify results
@@ -160,15 +181,21 @@ public with sharing class TestFunction {
                             FROM Chat__c
                             WHERE Name = :'Chat object fields summary'
                             LIMIT 1];
+        //Get Test user
+        User testUser = [SELECT Id
+                        FROM User
+                        WHERE FirstName = :'SetupAI'];
         
         //Run test
         Test.startTest();
-        insert new SetupAI__Message__c(
-            SetupAI__Role__c = 'assistant',
-            SetupAI__Function_Name__c = 'getFields',
-            SetupAI__Function_Arguments__c = '{"object_x": "SetupAI__Chat__c"}',
-            SetupAI__Thread__c = testChat.Id
-        );
+        System.runAs(testUser){
+            insert new SetupAI__Message__c(
+                SetupAI__Role__c = 'assistant',
+                SetupAI__Function_Name__c = 'getFields',
+                SetupAI__Function_Arguments__c = '{"object_x": "SetupAI__Chat__c"}',
+                SetupAI__Thread__c = testChat.Id
+            );
+        }
         Test.stopTest();
 
         //Verify results
@@ -195,15 +222,21 @@ public with sharing class TestFunction {
                             FROM SetupAI__Chat__c
                             WHERE Name = :'EntityDefinition Tooling API type fields summary'
                             LIMIT 1];
+        //Get Test user
+        User testUser = [SELECT Id
+                        FROM User
+                        WHERE FirstName = :'SetupAI'];
         
         //Run test
         Test.startTest();
-        insert new SetupAI__Message__c(
-            SetupAI__Role__c = 'assistant',
-            SetupAI__Function_Name__c = 'getToolingFields',
-            SetupAI__Function_Arguments__c = '{"object_x": "EntityDefinition"}',
-            SetupAI__Thread__c = testChat.Id
-        );
+        System.runAs(testUser){
+            insert new SetupAI__Message__c(
+                SetupAI__Role__c = 'assistant',
+                SetupAI__Function_Name__c = 'getToolingFields',
+                SetupAI__Function_Arguments__c = '{"object_x": "EntityDefinition"}',
+                SetupAI__Thread__c = testChat.Id
+            );
+        }
         Test.stopTest();
 
         //Verify results
@@ -230,15 +263,21 @@ public with sharing class TestFunction {
                                      FROM SetupAI__Chat__c
                                      WHERE Name = :'\'SetupAI__Chat__c-Chat Layout\' page layout fields summary'
                                      LIMIT 1];
+        //Get Test user
+        User testUser = [SELECT Id
+                        FROM User
+                        WHERE FirstName = :'SetupAI'];
         
         //Run test
         Test.startTest();
-        insert new SetupAI__Message__c(
-            SetupAI__Role__c = 'assistant',
-            SetupAI__Function_Name__c = 'metadataDrilldown',
-            SetupAI__Function_Arguments__c = '{  "path": "layoutSections",  "toolingQuery": "SELECT Metadata FROM Layout WHERE EntityDefinitionId = \'01I7i0000030Ciy\'"}',
-            SetupAI__Thread__c = testChat.Id
-        );
+        System.runAs(testUser){
+            insert new SetupAI__Message__c(
+                SetupAI__Role__c = 'assistant',
+                SetupAI__Function_Name__c = 'metadataDrilldown',
+                SetupAI__Function_Arguments__c = '{  "path": "layoutSections",  "toolingQuery": "SELECT Metadata FROM Layout WHERE EntityDefinitionId = \'01I7i0000030Ciy\'"}',
+                SetupAI__Thread__c = testChat.Id
+            );
+        }
         Test.stopTest();
 
         //Verify results
