@@ -96,7 +96,7 @@ export default class NewChatOverrideLWC extends LightningElement {
     handleSubscribe() {
         // Callback invoked whenever a new event message is received
         const messageCallback = (response) => {
-            if(response.data.payload.Chat_Id__c == this.recordId){
+            if(response.data.payload.SetupAI__Chat_Id__c == this.recordId){
                 this.isLoading = true;
                 this.retrieveMessages();
             }
@@ -110,8 +110,8 @@ export default class NewChatOverrideLWC extends LightningElement {
 
         //Handle error subscription
         const errorCallback = (response) => {
-            if(response.data.payload.Chat_Id__c == this.recordId){
-                this.displayError(JSON.parse(JSON.stringify(response.data.payload.Error_Content__c)));
+            if(response.data.payload.SetupAI__Chat_Id__c == this.recordId){
+                this.displayError(JSON.parse(JSON.stringify(response.data.payload.SetupAI__Error_Content__c)));
             }
         }
         subscribe(this.errorChannelName, -1, errorCallback).then(response => {
