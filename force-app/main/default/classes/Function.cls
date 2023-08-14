@@ -35,10 +35,13 @@ public with sharing class Function {
         }catch(Exception ex){
             content = ex.getMessage();
         }
-        insert new Message__c(Thread__c = chatId,
-                                       Role__c = 'function',
-                                       Content__c = content,
-                                       Function_Name__c = name);
+        //Check message create permissions
+        if(CRUD.createMessage()){
+            insert new Message__c(Thread__c = chatId,
+                                  Role__c = 'function',
+                                  Content__c = content,
+                                  Function_Name__c = name);
+        }
     }
     
     //Execute SOQL Query

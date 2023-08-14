@@ -4,7 +4,7 @@
  * Description:     Helper Apex methods
 */
 
-public class Utils {
+public with sharing class Utils {
 
     //Checks if specified value is a primitive data type
     public static Boolean isPrimitive(Object value){
