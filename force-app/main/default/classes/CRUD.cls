@@ -6,7 +6,7 @@
 
 public with sharing class CRUD {
     
-    //Validates creation of SetupAI__Chat__c records
+    //Validates creation of Chat__c records
     public static Boolean createChat(){
         return (
             Chat__c.SObjectType.getDescribe().isCreateable() &&
@@ -15,7 +15,7 @@ public with sharing class CRUD {
         );
     }
 
-    //Validates creation of SetupAI__Message__c records
+    //Validates creation of Message__c records
     public static Boolean createMessage(){
         return (
             Message__c.SObjectType.getDescribe().isCreateable() &&

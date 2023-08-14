@@ -9,8 +9,8 @@ public with sharing class ChatInterface {
     //Get Model name for given abbreviation
     private static String getModel(String modelAbbr){
         return [SELECT MasterLabel 
-                FROM SetupAI__Model__mdt
-                WHERE SetupAI__Abbreviation__c = :modelAbbr
+                FROM Model__mdt
+                WHERE Abbreviation__c = :modelAbbr
                 WITH SECURITY_ENFORCED].MasterLabel;
     }
 

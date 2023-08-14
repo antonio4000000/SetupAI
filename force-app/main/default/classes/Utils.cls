@@ -4,7 +4,7 @@
  * Description:     Helper Apex methods
 */
 
-public class Utils {
+public with sharing class Utils {
 
     //Checks if specified value is a primitive data type
     public static Boolean isPrimitive(Object value){
@@ -30,6 +30,13 @@ public class Utils {
         return [SELECT Body
                 FROM StaticResource 
                 WHERE Name = :nameOfFile].Body.toString();
+    }
+
+    //Generate random number string
+    public static String getRandom(){
+        String hashString = '1000' + String.valueOf(Datetime.now().formatGMT('yyyy-MM-dd HH:mm:ss.SSS'));
+        Blob hash = Crypto.generateDigest('MD5', Blob.valueOf(hashString));
+        return EncodingUtil.convertToHex(hash);
     }
 
 }

@@ -27,11 +27,11 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
                     when 'user','function'{
                         //Get entire thread
                         Message__c[] entireThread = [SELECT Role__c, Content__c, Function_Name__c, Function_Arguments__c
-                                                    FROM Message__c
-                                                    WHERE Thread__c =:this.newMessage.Thread__c
-                                                    AND Role__c !=:'error'
-                                                    WITH SECURITY_ENFORCED
-                                                    ORDER BY Name];
+                                                              FROM Message__c
+                                                              WHERE Thread__c =:this.newMessage.Thread__c
+                                                              AND Role__c !=:'error'
+                                                              WITH SECURITY_ENFORCED
+                                                              ORDER BY Name];
                         //Get AI Response
                         ChatRequest.ChatMessage aiResponse = ChatInterface.chat(
                             MessageConvertor.convert(entireThread),
@@ -49,8 +49,8 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
                     when 'assistant','error'{
                         if(this.newMessage.Function_Name__c != null){
                             Function.execute(this.newMessage.Function_Name__c,
-                                            this.newMessage.Function_Arguments__c,
-                                            this.newMessage.Thread__c);
+                                             this.newMessage.Function_Arguments__c,
+                                             this.newMessage.Thread__c);
                         }else if(this.newMessage.Content__c != null && this.newMessage.Content__c != 'null'){
                             Message_Notice__e notice = new Message_Notice__e(Chat_Id__c = this.newMessage.Thread__c);
                             Database.SaveResult results = EventBus.publish(notice);
@@ -61,8 +61,8 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
                     }
                 }
             }catch(Exception ex){
-                Async_Error__e notice = new Async_Error__e(SetupAI__Error_Content__c = ex.getMessage(),
-                                                           Chat_Id__c = this.newMessage.Thread__c);
+                Async_Error__e notice = new Async_Error__e(Error_Content__c = ex.getMessage(),
+                                                                    Chat_Id__c = this.newMessage.Thread__c);
                 Database.SaveResult results = EventBus.publish(notice);
                 asyncErrorsPublished.add(notice);
             }

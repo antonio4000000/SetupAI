@@ -6,6 +6,30 @@
 
 @isTest
 public with sharing class TestDataFactory {
+
+    //Create User to run code as
+    public static User createTestUser(){
+        Profile sysAdmin = [SELECT Id FROM Profile WHERE Name = :'System Administrator'];
+        User testUser = new User(
+            FirstName = 'SetupAI',
+            LastName = 'User',
+            Alias = 'setup',
+            Email = 'setupai-user' + Utils.getRandom() + '@setupai.com',
+            Username = 'setupai-user' + Utils.getRandom() + '@setupai.com',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US',
+            ProfileId = sysAdmin.Id,
+            TimeZoneSidKey = 'America/Chicago'
+        );
+        insert testUser;
+        PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'SetupAI'];
+        insert new PermissionSetAssignment(
+            AssigneeId = testUser.id, 
+            PermissionSetId = ps.Id
+        );
+        return testUser;
+    }
     
     //Generate Chat__c record along with related Message__c records
     public static Chat__c createCompleteChat(){
@@ -42,8 +66,8 @@ public with sharing class TestDataFactory {
         return new Message__c[]{
             getMessage(chatId, 'user', 'What is the api name of the Chat object?', null, null),
             getMessage(chatId, 'assistant', null, 'soql', '{  "query": "SELECT Id, QualifiedAPIName FROM EntityDefinition WHERE MasterLabel = \'Chat\'"}'),
-            getMessage(chatId, 'function', '[{"attributes":{"type":"EntityDefinition","url":"/services/data/v58.0/sobjects/EntityDefinition/01I03000000qaL6"},"Id":"000000000000000AAA","QualifiedApiName":"SetupAI__Chat__c","DurableId":"01I03000000qaL6"}]', 'soql', null),
-            getMessage(chatId, 'assistant', 'The API name of the Chat object is "SetupAI__Chat__c".', null, null)
+            getMessage(chatId, 'function', '[{"attributes":{"type":"EntityDefinition","url":"/services/data/v58.0/sobjects/EntityDefinition/01I03000000qaL6"},"Id":"000000000000000AAA","QualifiedApiName":"Chat__c","DurableId":"01I03000000qaL6"}]', 'soql', null),
+            getMessage(chatId, 'assistant', 'The API name of the Chat object is "Chat__c".', null, null)
         };
     }
 

@@ -41,7 +41,6 @@ public with sharing class Callout {
 
     //Execute callouts
     private static String execute(String completeURL, String method, String body, Map<String, String> headers){
-        System.debug(body);
         if(!testSetup){
             //Construct callout
             HttpRequest req = new HttpRequest();
