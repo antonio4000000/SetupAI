@@ -18,11 +18,11 @@ public with sharing class Callout {
     //Http for sending requests
     public static Http h = new Http();
 
-    public static String execute(String namedCred, String endpoint, String method, String body, Map<String, String> headers){
+    public static String execute(String endpoint, String method, String body, Map<String, String> headers){
         //Retrieve endpoint with friendly name
         Endpoint__mdt e = [SELECT Endpoint__c FROM Endpoint__mdt WHERE MasterLabel = :endpoint WITH SECURITY_ENFORCED];
-        return execute(
-            'callout:' + namedCred + e.Endpoint__c, 
+        return execute_i(
+            e.Endpoint__c, 
             method, 
             body, 
             headers
@@ -31,16 +31,17 @@ public with sharing class Callout {
 
     //Call this Salesforce org
     public static String internalExecute(String endpoint, String method, String body, Map<String, String> headers){
-        return execute(
+        headers.put('Authorization','Bearer ' + UserInfo.getSessionId());
+        return execute_i(
             URL.getSalesforceBaseUrl().toExternalForm() + endpoint, 
             method, 
             body, 
-            new Map<String, String>{'Authorization'=>'Bearer ' + UserInfo.getSessionId()}
+            headers
         );
     }
 
     //Execute callouts
-    private static String execute(String completeURL, String method, String body, Map<String, String> headers){
+    private static String execute_i(String completeURL, String method, String body, Map<String, String> headers){
         if(!testSetup){
             //Construct callout
             HttpRequest req = new HttpRequest();
