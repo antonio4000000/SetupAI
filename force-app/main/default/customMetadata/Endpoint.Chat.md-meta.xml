@@ -4,6 +4,6 @@
     <protected>true</protected>
     <values>
         <field>Endpoint__c</field>
-        <value xsi:type="xsd:string">/v1/chat/completions</value>
+        <value xsi:type="xsd:string">https://api.openai.com/v1/chat/completions</value>
     </values>
 </CustomMetadata>

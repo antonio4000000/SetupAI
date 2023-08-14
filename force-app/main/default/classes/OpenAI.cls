@@ -10,13 +10,12 @@ public with sharing class OpenAI {
     public static ChatResponse chat(ChatRequest req){
         try{
             return(ChatResponse)JSON.deserialize(Callout.execute(
-                /** Named Credential */     'SetupAI__OpenAI_Legacy', 
                 /** Endpoint */             'Chat',
                 /** Method */               'POST',
                 /** Body */                 req.serialize(),
                 /** Headers */              new Map<String, String>{
                                                 'Content-Type'=>'application/json',
-                                                'Authorization'=>'Bearer {!$Credential.Password}'
+                                                'Authorization'=>'Bearer '+CalloutSecurity.getOpenAIKey()
                                             }
             ).replace('"object":', '"object_x":'),ChatResponse.class);
         }catch(Exception ex){
