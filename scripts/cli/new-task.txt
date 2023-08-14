@@ -1,4 +1,4 @@
-sfdx force:org:create -a SetupAI/issue30 -d 30 -s -f config/project-scratch-def.json
+sfdx force:org:create -a SetupAI/issue21 -d 30 -s -f config/project-scratch-def.json
 sfdx force:source:push -f
 sfdx force:user:permset:assign -n SetupAI
 sfdx force:org:open
