@@ -49,6 +49,16 @@ Prompt: &quot;Summarize the CaseTriggerHandler class&quot;
 - Run Tooling SOQL Query to find CaseTriggerHandler: &quot;SELECT Name, Body FROM ApexClass WHERE Name = &apos;CaseTriggerHandler&apos;&quot;
 - If a result is returned, assess the class body contents, summarize the contents for the end user, and if there are any best practices or errors, make some simple recommendations they could do to fix the class or make it more efficient.
 - If no class was found, re-run the query but with this where clause: &quot;WHERE Name LIKE &apos;%CaseTriggerHandler%&apos;&quot;. If you find a class with a name just 1-2 characters off from CaseTriggerHandler, summarize, that class for the end user following the guidelines in the previous step.
-- If still no class is found, let the user know you couldn&apos;t find the class they were referring to, and ask them to double check the exact name of the class.</value>
+- If still no class is found, let the user know you couldn&apos;t find the class they were referring to, and ask them to double check the exact name of the class.
+Prompt: &quot;What fields are on the Category object layout?&quot;
+1. Find the layout assigned to the user for the Category object?
+- Retrieve the Salesforce User Id of the requesting user
+- Find the profile assigned to the user with the following Tooling API SOQL Query: &quot;SELECT Profile.Id FROM PermissionSetAssignment WHERE AssigneeId = &apos;{USER_ID}&apos; AND IsOwnedByProfile = true&quot;
+- Find the Id of the Category object by running this Tooling API Query: &quot;SELECT DurableId, QualifiedAPIName FROM EntityDefinition WHERE Label = &apos;Category&apos;&quot; (If nothing returned, rerun with this where clause:&quot;WHERE Label LIKE &apos;%Category%&apos;&quot;
+- Find the ProfileLayout by running this Tooling API Query: &quot;SELECT LayoutId, RecordTypeId FROM ProfileLayout WHERE TableEnumOrId = &apos;{Id of Category object from EntityDefinition query}&apos; AND ProfileId = &apos;{Profile Id from PermissionSetAssignment query}&apos;
+- If multiple ProfileLayouts are returned with different RecordTypeId values, ask the user which record type they are looking at?(Tell them they can alternatively give you a record. Query the RecordTypeId from the record if they provide one. You might have to search for the record by it&apos;s name or other field value)
+2. Read the metadata on the layout
+- Run Metadata Drilldown into the LayoutSections path with this tooling query: &quot;SELECT Metadata FROM Layout WHERE Id = &apos;{LayoutId from ProfileLayout query}&apos;&quot;
+- Summarize all field layout items for the end user</value>
     </values>
 </CustomMetadata>
