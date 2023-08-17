@@ -46,8 +46,20 @@ export default class NewChatOverrideLWC extends LightningElement {
         setTimeout(() => {
             this.fadeAnimation = '';
         }, 400);
+    
         this.template.querySelector('.chat-messages').scrollTop = this.template.querySelector('.chat-messages').scrollHeight;
-    }     
+    
+        // Manually insert the processed HTML for each message
+        const messageElems = this.template.querySelectorAll('.message-content');
+        this.messages.forEach((message, index) => {
+            if (message.msgClass.includes('inbound')) {
+                messageElems[index].innerHTML = message.text;
+            } else {
+                messageElems[index].textContent = message.text; // This ensures other messages remain as-is
+            }
+        });
+    }
+        
 
     //Handle user input updates
     handleInputChange(event) {
@@ -82,7 +94,13 @@ export default class NewChatOverrideLWC extends LightningElement {
     retrieveMessages(){
         getMessages({chatId: this.recordId})
             .then((result) => {
-                this.messages = result;
+                this.messages = result.map(message => {
+                    // Convert markdown to HTML only for the inbound messages
+                    if (message.msgClass.includes('inbound')) {
+                        message.text = this.markdownToHTML(message.text);
+                    }
+                    return message;
+                });
                 //If last message is not user submitted, hide loading wheel
                 this.isLoading = this.messages[this.messages.length-1].msgClass.includes('outbound');
             })
@@ -136,6 +154,12 @@ export default class NewChatOverrideLWC extends LightningElement {
         if(event.keyCode === 13){
             this.submit();
         }
+    }
+
+    // Converts markdown link [label](url) to HTML anchor tags
+    markdownToHTML(inputStr) {
+        const regex = /\[([^\[]+)\]\(([^\)]+)\)/g;
+        return inputStr.replace(regex, (match, label, url) => `<a href="${url}" target="_blank">${label}</a>`);
     }
 
 }
