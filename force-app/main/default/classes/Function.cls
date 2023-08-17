@@ -31,6 +31,9 @@ public with sharing class Function {
                 when 'metadataDrilldown'{
                     content = metadataDrilldown(FunctionParam.parseMetadataDrilldown(arguments));
                 }
+                when 'getURL'{
+                    content = Url.getOrgDomainUrl().toExternalForm();
+                }
             }
         }catch(Exception ex){
             content = ex.getMessage();
