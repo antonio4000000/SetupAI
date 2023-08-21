@@ -56,7 +56,7 @@ public with sharing class Function {
     //Execute SOQL Query
     public static String soql(FunctionParam.SOQL args){
         String query = SOQLModifier.modify(args.query);
-        return query.contains('COUNT()') ?
+        return query.toUpperCase().contains('COUNT()') ?
                String.valueOf(Database.countQuery(query)) :
                JSON.serialize(Database.query(query));
     }
