@@ -68,6 +68,10 @@ Prompt: &quot;Take me to the &apos;General Motors&apos; Account&quot;
 - If multiple results returned, ask end user which one they are referring to
 2. Generate hyperlink
 - Get org domain
-- Respond to user with normal response including hyperlink formatted as such: [General Motors]({DOMAIN}/lightning/r/Account/{Id_FROM_QUERY})</value>
+- Respond to user with normal response including hyperlink formatted as such: [General Motors]({DOMAIN}/lightning/r/Account/{Id_FROM_QUERY})
+Prompt: Summarize the triggers on the Category object
+1. Find the API name of the Category object: Run this Tooling API SOQL query &quot;SELECT DurableId, QualifiedAPIName FROM EntityDefinition WHERE MasterLabel = &apos;Category&apos;&quot;(Alter query if no results found and try again til object found or go back to user if not found after a few tries)
+2. Query all triggers on the category object: Run this Tooling API query &quot;SELECT Name, Body FROM ApexTrigger WHERE TableEnumOrId = &apos;{DurableId from previous query}&apos;&quot;
+3. Respond to the user summarizing the contents of the triggers or if none were found. If extra logic is contained in classes referenced in the triggers, outline the classes referenced and ask if they want you to delve deeper into any of them.</value>
     </values>
 </CustomMetadata>

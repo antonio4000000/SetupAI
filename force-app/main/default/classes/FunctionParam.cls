@@ -7,7 +7,6 @@
 public with sharing class FunctionParam {
     
     public class SOQL{
-        public String type;
         public String query;
     }
 

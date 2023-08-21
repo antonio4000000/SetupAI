@@ -16,6 +16,9 @@ public with sharing class Function {
                 when 'soql' {
                     content = soql(FunctionParam.parseSOQL(arguments));
                 }
+                when 'toolingQuery' {
+                    content = toolingQuery(FunctionParam.parseSOQL(arguments));
+                }
                 when 'getToolingObjects'{
                     content = getToolingObjects();
                 }
@@ -50,14 +53,14 @@ public with sharing class Function {
     //Execute SOQL Query
     public static String soql(FunctionParam.SOQL args){
         String query = SOQLModifier.modify(args.query);
-        switch on args.type {
-            when 'tooling'{
-                return ToolingAPI.query(args.query);
-            }
-            when else {//if null, default to 'data'
-                return JSON.serialize(Database.query(args.query));
-            }
-        }
+        return query.contains('COUNT()') ?
+               String.valueOf(Database.countQuery(query)) :
+               JSON.serialize(Database.query(query));
+    }
+
+    //Execute SOQL Query on Tooling API
+    public static String toolingQuery(FunctionParam.SOQL args){
+        return ToolingAPI.query(args.query);
     }
 
     //Return list of all Tooling API objects
