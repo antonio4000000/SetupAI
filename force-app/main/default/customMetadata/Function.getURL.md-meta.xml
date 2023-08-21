@@ -4,6 +4,6 @@
     <protected>true</protected>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Returns URL including custom domain for the org the user is currently logged into.</value>
+        <value xsi:type="xsd:string">Pass a short description of the page you are trying to retrieve the URL for. Another bot will return the URL for that page in the org. Be as detailed as possible(object API names, record Ids or names, components in setup to view, etc.)</value>
     </values>
 </CustomMetadata>
