@@ -39,4 +39,16 @@ public with sharing class Utils {
         return EncodingUtil.convertToHex(hash);
     }
 
+    //Wrapper for URL__mdt settings
+    public class InternalEndpoint{
+        public String name;
+        public String endpoint;
+        public String details;
+        public InternalEndpoint(URL__mdt settings){
+            this.name = settings.MasterLabel;
+            this.endpoint = settings.Endpoint__c;
+            this.details = settings.Details__c;
+        }
+    }
+
 }

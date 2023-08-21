@@ -46,6 +46,10 @@ public with sharing class OpenAIMock implements HttpCalloutMock {
     private static Map<String, String> metadataMap = new Map<String, String>{
         'Conversation'=>'{"id": "chatcmpl-7mS5UxYpY5UwpX1DHEchc30i4J1J9","object": "chat.completion","created": 1691782068,"model": "gpt-3.5-turbo-0613","choices": [{"index": 0,"message": {"role": "assistant","content": "The \'Chat__c-Chat Layout\' page layout has the following fields:  1. Information: - Name (Required) - Running__c (Edit)  2. Pricing Info: - Total_3_5_Prompt_Tokens__c (Readonly) - Total_4_Prompt_Tokens__c (Readonly) - Total_Cost__c (Readonly) - Total_3_5_Completion_Tokens__c (Readonly) - Total_4_Completion_Tokens__c (Readonly)  3. System Information: - CreatedById (Readonly) - LastModifiedById (Readonly)  4. Custom Links: - No custom links are included in this layout."},"finish_reason": "stop"}],"usage": {"prompt_tokens": 3534,"completion_tokens": 164,"total_tokens": 3698}}'
     };
+    //User Request: 'What is my URL?'
+    private static Map<String, String> getURLMap = new Map<String, String>{
+        'Conversation'=>'{"id": "chatcmpl-7odzye7KvNVWVWCIwSFqeJWNydRXm","object": "chat.completion","created": 1692304510,"model": "gpt-3.5-turbo-0613","choices": [{"index": 0,"message": {"role": "assistant","content": "Your URL is ' + URL.getOrgDomainUrl().toExternalForm() + '."},"finish_reason": "stop"}],"usage": {"prompt_tokens": 2604,"completion_tokens": 21,"total_tokens": 2625}}'
+    };
 
     //------------------Map requests to responses------------------------
     
@@ -67,6 +71,7 @@ public with sharing class OpenAIMock implements HttpCalloutMock {
                                     req.getBody().contains('What fields are available on the Chat__c object?') ? getFieldsMap : 
                                     req.getBody().contains('What fields are on the EntityDefinition Tooling API type?') ? getToolingFieldsMap : 
                                     req.getBody().contains('What fields are on the \'Chat__c-Chat Layout\' page layout?') ? metadataMap : 
+                                    req.getBody().contains('What is my URL?') ? getURLMap : 
                                     new Map<String, String>{}
             ).replace('{USERID}', UserInfo.getUserId())
         );
@@ -78,7 +83,6 @@ public with sharing class OpenAIMock implements HttpCalloutMock {
     //Get response for a given request
     private static String getResponseBody(String body, Map<String, String> responseMap){
         return body.contains('You are a Salesforce chatbot label maker.') ? responseMap.get('LabelMaker') :
-               body.contains('A Salesforce admin is asking another chatbot a question about their Salesforce org.') ? responseMap.get('SystemPromptHelper') :
                body.contains('"functions":') ? 
                     !body.contains('"role":"function"') && body.contains('"function_call":') ?
                     responseMap.get('FunctionCall') :

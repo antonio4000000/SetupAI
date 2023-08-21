@@ -16,6 +16,9 @@ public with sharing class Function {
                 when 'soql' {
                     content = soql(FunctionParam.parseSOQL(arguments));
                 }
+                when 'toolingQuery' {
+                    content = toolingQuery(FunctionParam.parseSOQL(arguments));
+                }
                 when 'getToolingObjects'{
                     content = getToolingObjects();
                 }
@@ -30,6 +33,12 @@ public with sharing class Function {
                 }
                 when 'metadataDrilldown'{
                     content = metadataDrilldown(FunctionParam.parseMetadataDrilldown(arguments));
+                }
+                when 'getURL'{
+                    content = Url.getOrgDomainUrl().toExternalForm();
+                }
+                when 'getEndpoints'{
+                    content = getEndpoints();
                 }
             }
         }catch(Exception ex){
@@ -47,14 +56,14 @@ public with sharing class Function {
     //Execute SOQL Query
     public static String soql(FunctionParam.SOQL args){
         String query = SOQLModifier.modify(args.query);
-        switch on args.type {
-            when 'tooling'{
-                return ToolingAPI.query(args.query);
-            }
-            when else {//if null, default to 'data'
-                return JSON.serialize(Database.query(args.query));
-            }
-        }
+        return query.contains('COUNT()') ?
+               String.valueOf(Database.countQuery(query)) :
+               JSON.serialize(Database.query(query));
+    }
+
+    //Execute SOQL Query on Tooling API
+    public static String toolingQuery(FunctionParam.SOQL args){
+        return ToolingAPI.query(args.query);
     }
 
     //Return list of all Tooling API objects
@@ -130,6 +139,16 @@ public with sharing class Function {
         }else{
             throw new FunctionException(Label.Metadata_Not_Found);
         }
+    }
+
+    //Return serialized list of all URL__mdt records
+    public static String getEndpoints(){
+        Utils.InternalEndpoint[] toReturn = new Utils.InternalEndpoint[]{};
+        for(URL__mdt url : [SELECT MasterLabel, Endpoint__c, Details__c
+                            FROM URL__mdt]){
+            toReturn.add(new Utils.InternalEndpoint(url));
+        }
+        return JSON.serialize(toReturn);
     }
 
 }

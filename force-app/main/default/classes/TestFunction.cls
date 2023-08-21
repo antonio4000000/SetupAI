@@ -46,6 +46,11 @@ public with sharing class TestFunction {
                 /** Summary */  '\'Chat__c-Chat Layout\' page layout fields summary',
                 /** User */     'What fields are on the \'Chat__c-Chat Layout\' page layout?'
             );
+            //getURL
+            TestDataFactory.createChatWithFirstMessage(
+                /** Summary */  'URL retrieval request',
+                /** User */     'What is my URL?'
+            );
         }
     }
 
@@ -290,6 +295,47 @@ public with sharing class TestFunction {
             System.assert(messages[2].Content__c.contains('[{"customLabel":false,"detailHeading":true,"editHeading":true,'), 'Unexpected function content');
             System.assertEquals('assistant', messages[3].Role__c, 'Unexpected role on message');
             System.assert(messages[3].Content__c.contains('The \'Chat__c-Chat Layout\' page layout has the following fields:  1. Information:'), 'Unexpected assistant content');
+        }
+    }
+
+    //Test getURL function call
+    @isTest
+    static void testGetURL(){
+        //Setup test
+        Test.setMock(HttpCalloutMock.class, new OpenAIMock());
+        Chat__c testChat = [SELECT Id
+                            FROM Chat__c
+                            WHERE Name = :'URL retrieval request'
+                            LIMIT 1];
+        //Get Test user
+        User testUser = [SELECT Id
+                        FROM User
+                        WHERE FirstName = :'SetupAI'];
+
+        System.runAs(testUser){
+            //Run test
+            Test.startTest();
+            insert new Message__c(
+                Role__c = 'assistant',
+                Function_Name__c = 'getURL',
+                Function_Arguments__c = '{}',
+                Thread__c = testChat.Id
+            );
+            Test.stopTest();
+
+            //Verify results
+            Message__c[] messages = [SELECT Name, Role__c, Content__c, Function_Name__c, Function_Arguments__c 
+                                            FROM Message__c 
+                                            WHERE Thread__c = :testChat.Id
+                                            ORDER BY Id];
+            System.assertEquals(4, messages.size(), 'Unexpected number of messages');
+            System.assertEquals('getURL', messages[1].Function_Name__c, 'Unexpected function call');
+            System.assertEquals('assistant', messages[1].Role__c, 'Unexpected role on message');
+            System.assertEquals('function', messages[2].Role__c, 'Unexpected role on message');
+            System.assertEquals('getURL', messages[2].Function_Name__c, 'Unexpected function call');
+            System.assert(messages[2].Content__c.contains(Url.getOrgDomainUrl().toExternalForm()), 'Unexpected function content');
+            System.assertEquals('assistant', messages[3].Role__c, 'Unexpected role on message');
+            System.assert(messages[3].Content__c.contains('Your URL is ' + Url.getOrgDomainUrl().toExternalForm() + '.'), 'Unexpected assistant content');
         }
     }
 

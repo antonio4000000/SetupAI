@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>gpt-3.5-turbo-16k</label>
+    <label>getURL</label>
     <protected>true</protected>
     <values>
-        <field>Abbreviation__c</field>
-        <value xsi:type="xsd:string">gpt-3</value>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">Returns URL including custom domain for the org the user is currently logged into.</value>
     </values>
 </CustomMetadata>
