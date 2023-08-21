@@ -37,6 +37,9 @@ public with sharing class Function {
                 when 'getURL'{
                     content = Url.getOrgDomainUrl().toExternalForm();
                 }
+                when 'getEndpoints'{
+                    content = getEndpoints();
+                }
             }
         }catch(Exception ex){
             content = ex.getMessage();
@@ -136,6 +139,11 @@ public with sharing class Function {
         }else{
             throw new FunctionException(Label.Metadata_Not_Found);
         }
+    }
+
+    //Return serialized list of all URL__mdt records
+    public static String getEndpoints(){
+        return '';
     }
 
 }
