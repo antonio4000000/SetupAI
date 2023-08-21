@@ -143,7 +143,12 @@ public with sharing class Function {
 
     //Return serialized list of all URL__mdt records
     public static String getEndpoints(){
-        return '';
+        Utils.InternalEndpoint[] toReturn = new Utils.InternalEndpoint[]{};
+        for(URL__mdt url : [SELECT MasterLabel, Endpoint__c, Details__c
+                            FROM URL__mdt]){
+            toReturn.add(new Utils.InternalEndpoint(url));
+        }
+        return JSON.serialize(toReturn);
     }
 
 }
