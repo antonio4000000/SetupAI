@@ -116,6 +116,8 @@ public with sharing class Function {
         //Verify record list returns only one record
         if(recordsList.size() > 1){
             throw new FunctionException(Label.Multiple_Metadata_Records);
+        }else if(recordsList.size() == 0){
+            throw new FunctionException(Label.No_Metadata_Records);
         }
         //Deserialize first item in record list
         Map<String, Object> resultsJSON = (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(recordsList[0]));

@@ -4,6 +4,6 @@
     <protected>true</protected>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Get list of fields on a given SObject that can be returned in SOQL queries</value>
+        <value xsi:type="xsd:string">Get list of fields on a given SObject that can be returned in SOQL queries. (Just gives label, api name and data type. For additional field information run a toolingQuery on FieldDefinition)</value>
     </values>
 </CustomMetadata>

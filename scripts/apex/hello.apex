@@ -1,3 +1,3 @@
 System.debug(
-    Url.getOrgDomainUrl().toExternalForm()
+    ToolingAPI.query('SELECT Metadata FROM Layout WHERE Name LIKE \'%Account Marketing%\'')
 );

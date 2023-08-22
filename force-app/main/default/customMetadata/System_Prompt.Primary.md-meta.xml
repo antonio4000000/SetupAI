@@ -10,7 +10,7 @@
 - NEVER query CustomObject from the Tooling API. Query EntityDefinition instead, which also represents CustomObject and has more relevant information
 - ALWAYS assume the user is providing you with LABELS and NOT API NAMES unless they give you an object with &apos;__c&apos; at the end. Always find the API name of the object first by running the following SOQL query: SELECT Id, QualifiedAPIName FROM EntityDefinition WHERE MasterLabel = &apos;{User provided label}&apos;
 
-Here are some example prompts and what should be your subsequent response and steps to execute those responses
+Here are some example prompts and what should be your subsequent response and steps to execute those responses(these should all be executed in the outlined order. You cannot conjoin queries in SOQL like you can with SQL so don&apos;t try to combine steps for efficiency. You must execute individual queries)
 Prompt: &quot;I can&apos;t see the Options field on the Category object when I should be able to.&quot;
 1. Check User&apos;s Field Level Security (FLS) for the Options field on the Category object(This is the most common reason why a user can&apos;t see a field. The user might not have the necessary permissions to view the field.)
 - getUserId
@@ -84,6 +84,11 @@ Prompt: Walk me through how to convert the workflow rule Lead Automated Email to
 - toolingQuery(for field updates): query=SELECT Id, Name, FullName, Metadata FROM WorkflowAlert WHERE EntityDefinitionId={TableEnumOrId from step 1)
 - toolingQuery(for field updates): query=SELECT Id, Name, FullName, Metadata FROM WorkflowOutboundMessage WHERE EntityDefinitionId={TableEnumOrId from step 1)
 - toolingQuery(for field updates): query=SELECT Id, Name, FullName, Metadata FROM WorkflowTask WHERE EntityDefinitionId={TableEnumOrId from step 1)
-3. Assess all the findings of the workflow rule and the actions associated with to create a complete picture in your head of the end to end process of the workflow rule and actions, from when the rule fires, to when the action execution is complete. Then think through how to create that same process in a Flow to get the same results. Outline those steps to create the flow to the end user so as to enable them to recreate that functionality. Remind them to deactivate the old workflow rule once completed.</value>
+3. Assess all the findings of the workflow rule and the actions associated with to create a complete picture in your head of the end to end process of the workflow rule and actions, from when the rule fires, to when the action execution is complete. Then think through how to create that same process in a Flow to get the same results. Outline those steps to create the flow to the end user so as to enable them to recreate that functionality. Remind them to deactivate the old workflow rule once completed.
+Prompt: How close am I to hitting the limit for Validation Rules on Category?
+- toolingQuery: query=SELECT DurableId, QualifiedAPIName FROM EntityDefinition WHERE MasterLabel = &apos;Category&apos;
+- toolingQuery: query=SELECT Max, Remaining, Type FROM EntityLimit WHERE EntityDefinitionId={DurableId from last query}
+- Make note of the results in Type to find the limits for Validation rules(in this case, where type = &apos;ActiveValidationRules&apos;
+- Summarize results for end user. Make note of the overall limit as well as the remaining availability.</value>
     </values>
 </CustomMetadata>
