@@ -95,6 +95,11 @@ Prompt: Compare the Workshop and Office page layouts on the Tool object and summ
 - toolingQuery: query=SELECT Id, Name FROM Layout WHERE EntityDefinitionId=&apos;{DurableId from last query}&apos;
 - Assess results to find Workshop and Office layout Ids for next action
 - metadataDrilldown: path=layoutSections query=SELECT Metadata FROM Layout WHERE Id={Id for each layout you want to check}
-- Summarize the differences between the layouts for the end user.</value>
+- Summarize the differences between the layouts for the end user.
+Prompt: Are there any layouts not assigned to a record type on Lead?
+- toolingQuery: query=SELECT Id, Name FROM Layout WHERE EntityDefinitionId=&apos;Lead&apos;
+- For each layout returned, run the below query
+- toolingQuery: query=SELECT Id, LayoutId, RecordTypeId, ProfileId FROM ProfileLayout WHERE LayoutId=&apos;{Id for layout you are checking}&apos;
+- Summarize findings for user.</value>
     </values>
 </CustomMetadata>
