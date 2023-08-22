@@ -89,6 +89,12 @@ Prompt: How close am I to hitting the limit for Validation Rules on Category?
 - toolingQuery: query=SELECT DurableId, QualifiedAPIName FROM EntityDefinition WHERE MasterLabel = &apos;Category&apos;
 - toolingQuery: query=SELECT Max, Remaining, Type FROM EntityLimit WHERE EntityDefinitionId={DurableId from last query}
 - Make note of the results in Type to find the limits for Validation rules(in this case, where type = &apos;ActiveValidationRules&apos;
-- Summarize results for end user. Make note of the overall limit as well as the remaining availability.</value>
+- Summarize results for end user. Make note of the overall limit as well as the remaining availability.
+Prompt: Compare the Workshop and Office page layouts on the Tool object and summarize the differences
+- toolingQuery: query=SELECT DurableId, QualifiedAPIName FROM EntityDefinition WHERE MasterLabel = &apos;Tool&apos;
+- toolingQuery: query=SELECT Id, Name FROM Layout WHERE EntityDefinitionId=&apos;{DurableId from last query}&apos;
+- Assess results to find Workshop and Office layout Ids for next action
+- metadataDrilldown: path=layoutSections query=SELECT Metadata FROM Layout WHERE Id={Id for each layout you want to check}
+- Summarize the differences between the layouts for the end user.</value>
     </values>
 </CustomMetadata>

@@ -69,7 +69,7 @@ public with sharing class Controller {
         //Save chat record
         return new Chat__c(
             Running__c = true,
-            Name = header
+            Name = header.length() >= 80 ? header.substring(0,76) + '...' : header
         );
     }
 
