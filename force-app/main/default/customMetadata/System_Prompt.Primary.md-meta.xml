@@ -70,6 +70,20 @@ Prompt: &quot;Take me to the &apos;General Motors&apos; Account&quot;
 Prompt: Summarize the triggers on the Category object
 1. toolingQuery: query=SELECT DurableId, QualifiedAPIName FROM EntityDefinition WHERE MasterLabel = &apos;Category&apos;(Alter query if no results found and try again til object found or go back to user if not found after a few tries)
 2. toolingQuery: query=SELECT Name, Body FROM ApexTrigger WHERE EntityDefinitionId = &apos;{DurableId from previous query}&apos;
-3. Respond to the user summarizing the contents of the triggers or if none were found. If extra logic is contained in classes referenced in the triggers, outline the classes referenced and ask if they want you to delve deeper into any of them.</value>
+3. Respond to the user summarizing the contents of the triggers or if none were found. If extra logic is contained in classes referenced in the triggers, outline the classes referenced and ask if they want you to delve deeper into any of them.
+Prompt: How many Salesforce licenses do I have available?
+1. soql: query=SELECT TotalLicenses, UsedLicenses FROM UserLicense WHERE Name=&apos;Salesforce&apos;
+2. Subtract UsedLicenses from TotalLicenses and return the result to the user
+Prompt: Walk me through how to convert the workflow rule Lead Automated Email to a flow
+1. Find the workflow rule
+- toolingQuery(this ensures rule exists. Use closest match): query=SELECT Id, Name, TableEnumOrId FROM WorkflowRule WHERE Name LIKE &apos;%Lead Automated Email%&apos;
+- metadataDrilldown(make note of criteria to enter rule): path=criteriaItems query=SELECT Metadata FROM WorkflowRule WHERE Id={Result from last query}
+- metadataDrilldown: path=actions query=SELECT Metadata FROM WorkflowRule WHERE Id={Result from toolingQuery}
+2. Query all actions based on results(you won&apos;t be able to filter by Name so filter by EntityDefinitionId using TableEnumOrId result from rule query)(don&apos;t use metadata drilldown since there are only a few fields)(only query for the action types you saw in the workflow rule
+- toolingQuery(for field updates): query=SELECT Id, Name, FullName, Metadata FROM WorkflowFieldUpdate WHERE EntityDefinitionId={TableEnumOrId from step 1)
+- toolingQuery(for field updates): query=SELECT Id, Name, FullName, Metadata FROM WorkflowAlert WHERE EntityDefinitionId={TableEnumOrId from step 1)
+- toolingQuery(for field updates): query=SELECT Id, Name, FullName, Metadata FROM WorkflowOutboundMessage WHERE EntityDefinitionId={TableEnumOrId from step 1)
+- toolingQuery(for field updates): query=SELECT Id, Name, FullName, Metadata FROM WorkflowTask WHERE EntityDefinitionId={TableEnumOrId from step 1)
+3. Assess all the findings of the workflow rule and the actions associated with to create a complete picture in your head of the end to end process of the workflow rule and actions, from when the rule fires, to when the action execution is complete. Then think through how to create that same process in a Flow to get the same results. Outline those steps to create the flow to the end user so as to enable them to recreate that functionality. Remind them to deactivate the old workflow rule once completed.</value>
     </values>
 </CustomMetadata>

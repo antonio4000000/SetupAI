@@ -124,7 +124,10 @@ public with sharing class Function {
             //Get metadata from query
             String metadata = JSON.serialize(resultsJSON.get('Metadata'));
             //Get value at specified path
-            String pathValue = JSONHelper.getJSONValue(metadata, args.path);
+            String pathValue = JSONHelper.getJSONValue(
+                metadata, 
+                args.path.remove('Metadata.')
+            );
             //If object, just return keys
             if(pathValue.startsWith('{') && pathValue.endsWith('}')){
                 Map<String, Object> metadataJSON = (Map<String, Object>)JSON.deserializeUntyped(pathValue);
