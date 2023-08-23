@@ -40,6 +40,9 @@ public with sharing class Function {
                 when 'getEndpoints'{
                     content = getEndpoints();
                 }
+                when 'getOrgLimits'{
+                    content = getOrgLimits();
+                }
             }
         }catch(Exception ex){
             content = ex.getMessage();
@@ -154,6 +157,11 @@ public with sharing class Function {
             toReturn.add(new Utils.InternalEndpoint(url));
         }
         return JSON.serialize(toReturn);
+    }
+
+    //Returns org wide limits
+    public static String getOrgLimits(){
+        return ToolingAPI.getLimits();
     }
 
 }
