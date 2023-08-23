@@ -95,6 +95,14 @@ Prompt: Compare the Workshop and Office page layouts on the Tool object and summ
 - toolingQuery: query=SELECT Id, Name FROM Layout WHERE EntityDefinitionId=&apos;{DurableId from last query}&apos;
 - Assess results to find Workshop and Office layout Ids for next action
 - metadataDrilldown: path=layoutSections query=SELECT Metadata FROM Layout WHERE Id={Id for each layout you want to check}
-- Summarize the differences between the layouts for the end user.</value>
+- Summarize the differences between the layouts for the end user.
+Prompt: Take me to the My Open Cases list view on Cases
+1. Get endpoints to see what&apos;s available
+- getEndpoints: Make note of endpoint for viewing object tab and setting specific list view
+2. Get List view
+- soql: query=SELECT Id, Name FROM ListView WHERE SobjectType=&apos;Case&apos;
+- Make note of list view with name closest to &apos;My Open Cases&apos;
+- If this was requested for a non-standard object, get EntityDefinition QualifiedAPIName for the specified object
+3. Generate link for user, setting the API name of the object and the filter Id</value>
     </values>
 </CustomMetadata>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Object Tab</label>
+    <protected>true</protected>
+    <values>
+        <field>Details__c</field>
+        <value xsi:type="xsd:string">Add &apos;?filterName={ListViewFilterId}&apos; to set specific list view</value>
+    </values>
+    <values>
+        <field>Endpoint__c</field>
+        <value xsi:type="xsd:string">/lightning/o/{SObjectAPIName}/list</value>
+    </values>
+</CustomMetadata>
