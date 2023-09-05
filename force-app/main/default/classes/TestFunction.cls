@@ -418,6 +418,7 @@ public with sharing class TestFunction {
                                      FROM Message__c 
                                      WHERE Thread__c = :testChat.Id
                                      ORDER BY Id];
+                                     //TODO: Still erroring out
             System.assertEquals(4, messages.size(), 'Unexpected number of messages');
             System.assertEquals('getOrgLimits', messages[1].Function_Name__c, 'Unexpected function call');
             System.assertEquals('assistant', messages[1].Role__c, 'Unexpected role on message');
