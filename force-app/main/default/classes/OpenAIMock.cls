@@ -50,6 +50,14 @@ public with sharing class OpenAIMock implements HttpCalloutMock {
     private static Map<String, String> getURLMap = new Map<String, String>{
         'Conversation'=>'{"id": "chatcmpl-7odzye7KvNVWVWCIwSFqeJWNydRXm","object": "chat.completion","created": 1692304510,"model": "gpt-3.5-turbo-0613","choices": [{"index": 0,"message": {"role": "assistant","content": "Your URL is ' + URL.getOrgDomainUrl().toExternalForm() + '."},"finish_reason": "stop"}],"usage": {"prompt_tokens": 2604,"completion_tokens": 21,"total_tokens": 2625}}'
     };
+    //User Request: 'Take me to the Expire All Passwords screen'
+    private static Map<String, String> getEndpointsMap = new Map<String, String>{
+        'Conversation'=>'{"id": "chatcmpl-7vVpKlDyov7fe69diV9aJREsz3HDI","object": "chat.completion","created": 1693941394,"model": "gpt-3.5-turbo-0613","choices": [{"index": 0,"message": {"role": "assistant","content": "Sure! Here is the link to the \\"Expire All Passwords\\" screen:[Expire All Passwords](/lightning/setup/SecurityExpirePasswords/home)"},"finish_reason": "stop"}],"usage": {"prompt_tokens": 3921,"completion_tokens": 36,"total_tokens": 3957}}'
+    };
+    //User Request: 'How much file storage do I have left?'
+    private static Map<String, String> getOrgLimitsMap = new Map<String, String>{
+        'Conversation'=>'{"id": "chatcmpl-7vWGo1zCJOXFOcoXQVjBgQACxztpF","object": "chat.completion","created": 1693943098,"model": "gpt-3.5-turbo-0613","choices": [{"index": 0,"message": {"role": "assistant","content": "You currently have 50 MB of file storage remaining."},"finish_reason": "stop"}],"usage": {"prompt_tokens": 3631,"completion_tokens": 12,"total_tokens": 3643}}'
+    };
 
     //------------------Map requests to responses------------------------
     
@@ -72,6 +80,8 @@ public with sharing class OpenAIMock implements HttpCalloutMock {
                                     req.getBody().contains('What fields are on the EntityDefinition Tooling API type?') ? getToolingFieldsMap : 
                                     req.getBody().contains('What fields are on the \'Chat__c-Chat Layout\' page layout?') ? metadataMap : 
                                     req.getBody().contains('What is my URL?') ? getURLMap : 
+                                    req.getBody().contains('Take me to the Expire All Passwords screen') ? getEndpointsMap : 
+                                    req.getBody().contains('How much file storage do I have left?') ? getOrgLimitsMap : 
                                     new Map<String, String>{}
             ).replace('{USERID}', UserInfo.getUserId())
         );
