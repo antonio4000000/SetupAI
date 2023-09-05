@@ -40,6 +40,9 @@ public with sharing class Function {
                 when 'getEndpoints'{
                     content = getEndpoints();
                 }
+                when 'getOrgLimits'{
+                    content = getOrgLimits();
+                }
             }
         }catch(Exception ex){
             content = ex.getMessage();
@@ -56,7 +59,7 @@ public with sharing class Function {
     //Execute SOQL Query
     public static String soql(FunctionParam.SOQL args){
         String query = SOQLModifier.modify(args.query);
-        return query.contains('COUNT()') ?
+        return query.toUpperCase().contains('COUNT()') ?
                String.valueOf(Database.countQuery(query)) :
                JSON.serialize(Database.query(query));
     }
@@ -116,6 +119,8 @@ public with sharing class Function {
         //Verify record list returns only one record
         if(recordsList.size() > 1){
             throw new FunctionException(Label.Multiple_Metadata_Records);
+        }else if(recordsList.size() == 0){
+            throw new FunctionException(Label.No_Metadata_Records);
         }
         //Deserialize first item in record list
         Map<String, Object> resultsJSON = (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(recordsList[0]));
@@ -124,7 +129,10 @@ public with sharing class Function {
             //Get metadata from query
             String metadata = JSON.serialize(resultsJSON.get('Metadata'));
             //Get value at specified path
-            String pathValue = JSONHelper.getJSONValue(metadata, args.path);
+            String pathValue = JSONHelper.getJSONValue(
+                metadata, 
+                args.path.remove('Metadata.')
+            );
             //If object, just return keys
             if(pathValue.startsWith('{') && pathValue.endsWith('}')){
                 Map<String, Object> metadataJSON = (Map<String, Object>)JSON.deserializeUntyped(pathValue);
@@ -149,6 +157,11 @@ public with sharing class Function {
             toReturn.add(new Utils.InternalEndpoint(url));
         }
         return JSON.serialize(toReturn);
+    }
+
+    //Returns org wide limits
+    public static String getOrgLimits(){
+        return ToolingAPI.getLimits();
     }
 
 }

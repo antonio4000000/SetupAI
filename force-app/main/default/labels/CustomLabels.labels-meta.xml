@@ -40,4 +40,12 @@
         <shortDescription>Multiple Metadata Records</shortDescription>
         <value>Metadata query returned multiple records. Ensure your query only returns one record.</value>
     </labels>
+    <labels>
+        <fullName>No_Metadata_Records</fullName>
+        <categories>Errors</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No Metadata Records</shortDescription>
+        <value>Tooling Query returned no records</value>
+    </labels>
 </CustomLabels>

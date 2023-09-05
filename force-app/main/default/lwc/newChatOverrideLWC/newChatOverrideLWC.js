@@ -53,9 +53,10 @@ export default class NewChatOverrideLWC extends LightningElement {
         const messageElems = this.template.querySelectorAll('.message-content');
         this.messages.forEach((message, index) => {
             if (message.msgClass.includes('inbound')) {
+                // Only insert the already processed/sanitized text
                 messageElems[index].innerHTML = message.text;
             } else {
-                messageElems[index].textContent = message.text; // This ensures other messages remain as-is
+                messageElems[index].textContent = message.text; 
             }
         });
     }
@@ -98,6 +99,8 @@ export default class NewChatOverrideLWC extends LightningElement {
                     // Convert markdown to HTML only for the inbound messages
                     if (message.msgClass.includes('inbound')) {
                         message.text = this.markdownToHTML(message.text);
+                    } else {
+                        message.text = this.escapeHTML(message.text); // Ensure outbound messages are escaped as well
                     }
                     return message;
                 });
@@ -161,5 +164,23 @@ export default class NewChatOverrideLWC extends LightningElement {
         const regex = /\[([^\[]+)\]\(([^\)]+)\)/g;
         return inputStr.replace(regex, (match, label, url) => `<a href="${url}" target="_blank">${label}</a>`);
     }
+
+    // This function escapes dangerous characters from the input string
+    escapeHTML(str) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(str));
+        return div.innerHTML;
+    }
+
+    // Converts markdown link [label](url) to HTML anchor tags
+    markdownToHTML(inputStr) {
+        // First, escape any HTML in the input string
+        let escapedStr = this.escapeHTML(inputStr);
+        
+        // Next, replace markdown links with HTML links
+        const regex = /\[([^\[]+)\]\(([^\)]+)\)/g;
+        return escapedStr.replace(regex, (match, label, url) => `<a href="${url}" target="_blank">${label}</a>`);
+    }
+
 
 }

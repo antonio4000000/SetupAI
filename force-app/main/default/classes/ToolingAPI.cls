@@ -9,9 +9,9 @@ public with sharing class ToolingAPI {
     //Get endpoint metadata
     public static String getEndpoint(String name){
         Endpoint__mdt endpoint = [SELECT Endpoint__c
-                                           FROM Endpoint__mdt
-                                           WHERE DeveloperName =:name
-                                           WITH SECURITY_ENFORCED];
+                                  FROM Endpoint__mdt
+                                  WHERE DeveloperName =:name
+                                  WITH SECURITY_ENFORCED];
         return endpoint.Endpoint__c;
     }
 
@@ -52,6 +52,16 @@ public with sharing class ToolingAPI {
     public static String query(String query){
         return Callout.internalExecute(
             getEndpoint('Tooling') + 'query?q=' + EncodingUtil.urlEncode(query, 'UTF-8'), 
+            'GET', 
+            null, 
+            new Map<String, String>{'Content-Type'=>'application/json'}
+        );
+    }
+
+    //Get Salesforce org-wide limits
+    public static String getLimits(){
+        return Callout.internalExecute(
+            getEndpoint('Limits'), 
             'GET', 
             null, 
             new Map<String, String>{'Content-Type'=>'application/json'}

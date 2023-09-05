@@ -4,6 +4,6 @@
     <protected>true</protected>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Get list of URL endpoints you can redirect the user to in the org with details around ids that can be passed in.</value>
+        <value xsi:type="xsd:string">Get list of URL endpoints you can redirect the user to in the org with details around ids that can be passed in. YOU ARE RESPONSIBLE FOR UPDATING URL TO INCLUDE SPECIFIED IDS AND API NAMES. NOT THE END USER. DO NOT ASK THE END USER TO MODIFY THE URLS BECAUSE THEY DO NOT HAVE THE ABILITY TO DO SO.</value>
     </values>
 </CustomMetadata>

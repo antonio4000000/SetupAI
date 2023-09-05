@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>getFields</label>
+    <label>getOrgLimits</label>
     <protected>true</protected>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Get list of fields on a given SObject that can be returned in SOQL queries. (Just gives label, api name and data type. For additional field information run a toolingQuery on FieldDefinition)</value>
+        <value xsi:type="xsd:string">Returns limitations on org wide settings for a given org, such as api requests, async jobs, file storage, email, and other settings. (Don&apos;t use this for object specific limits. For those run toolingQuery on EntityLimit)</value>
     </values>
 </CustomMetadata>

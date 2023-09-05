@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Setup Object Details</label>
+    <protected>true</protected>
+    <values>
+        <field>Details__c</field>
+        <value xsi:type="xsd:string">If standard object, replace {OBJECTID} with object API name. If custom object, use DurableId on EntityDefinition for given object.</value>
+    </values>
+    <values>
+        <field>Endpoint__c</field>
+        <value xsi:type="xsd:string">/lightning/setup/ObjectManager/{OBJECTID}/Details/view</value>
+    </values>
+</CustomMetadata>
