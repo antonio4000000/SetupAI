@@ -8,6 +8,7 @@ force-app/main/default/workflows
 workflows
 force-app/main/default/objects/Lead
 
+
 # LWC configuration files
 **/jsconfig.json
 **/.eslintrc.json
