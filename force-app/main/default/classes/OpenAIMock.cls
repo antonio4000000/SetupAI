@@ -64,7 +64,7 @@ public with sharing class OpenAIMock implements HttpCalloutMock {
     //Handle callout
     public HttpResponse respond(HttpRequest req){
         //If tooling call, return immmediately
-        if(req.getEndpoint().contains(ToolingAPI.getEndpoint('Tooling'))) return ToolingAPIMock.getToolingResponse(req);
+        if(req.getEndpoint().contains(ToolingAPI.getEndpoint('Tooling')) || req.getEndpoint().contains(ToolingAPI.getEndpoint('Limits'))) return ToolingAPIMock.getToolingResponse(req);
         //Generate OpanAI Response
         HttpResponse response = new HttpResponse();
         response.setBody(
