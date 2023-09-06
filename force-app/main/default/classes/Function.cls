@@ -153,7 +153,8 @@ public with sharing class Function {
     public static String getEndpoints(){
         Utils.InternalEndpoint[] toReturn = new Utils.InternalEndpoint[]{};
         for(URL__mdt url : [SELECT MasterLabel, Endpoint__c, Details__c
-                            FROM URL__mdt]){
+                            FROM URL__mdt
+                            WITH SECURITY_ENFORCED]){
             toReturn.add(new Utils.InternalEndpoint(url));
         }
         return JSON.serialize(toReturn);

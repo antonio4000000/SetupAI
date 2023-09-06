@@ -37,14 +37,18 @@ public with sharing class Controller {
     
     //Creates Chat and System message before inserting first chat message
     private static String initialize(String firstMessage){
-        Chat__c chat = generateChat(firstMessage);
-        insert chat;
-        insert new Message__c(
-            Role__c = 'user',
-            Content__c = firstMessage,
-            Thread__c = chat.Id
-        );
-        return chat.Id;
+        if(CRUD.createChat() && CRUD.createMessage()){
+            Chat__c chat = generateChat(firstMessage);
+            insert chat;
+            insert new Message__c(
+                Role__c = 'user',
+                Content__c = firstMessage,
+                Thread__c = chat.Id
+            );
+            return chat.Id;
+        }else{
+            throw new AuraHandledException(Label.Create_Chat_Access);
+        }
     }
 
     //Creates initial Chat__c record
