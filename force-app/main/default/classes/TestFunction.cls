@@ -51,6 +51,16 @@ public with sharing class TestFunction {
                 /** Summary */  'URL retrieval request',
                 /** User */     'What is my URL?'
             );
+            //getEndpoints
+            TestDataFactory.createChatWithFirstMessage(
+                /** Summary */  'Go to Expire All Passwords screen',
+                /** User */     'Take me to the Expire All Passwords screen'
+            );
+            //getOrgLimits
+            TestDataFactory.createChatWithFirstMessage(
+                /** Summary */  'File storage usage summary',
+                /** User */     'How much file storage do I have left?'
+            );
         }
     }
 
@@ -336,6 +346,86 @@ public with sharing class TestFunction {
             System.assert(messages[2].Content__c.contains(Url.getOrgDomainUrl().toExternalForm()), 'Unexpected function content');
             System.assertEquals('assistant', messages[3].Role__c, 'Unexpected role on message');
             System.assert(messages[3].Content__c.contains('Your URL is ' + Url.getOrgDomainUrl().toExternalForm() + '.'), 'Unexpected assistant content');
+        }
+    }
+
+    @isTest
+    static void testGetEndpoints(){
+        //Setup test
+        Test.setMock(HttpCalloutMock.class, new OpenAIMock());
+        Chat__c testChat = [SELECT Id
+                            FROM Chat__c
+                            WHERE Name = :'Go to Expire All Passwords screen'
+                            LIMIT 1];
+        //Get Test user
+        User testUser = [SELECT Id
+                        FROM User
+                        WHERE FirstName = :'SetupAI'];
+        
+        System.runAs(testUser){
+            //Run test
+            Test.startTest();
+            insert new Message__c(
+                Role__c = 'assistant',
+                Function_Name__c = 'getEndpoints',
+                Function_Arguments__c = '{}',
+                Thread__c = testChat.Id
+            );
+            Test.stopTest();
+
+            //Verify results
+            Message__c[] messages = [SELECT Name, Role__c, Content__c, Function_Name__c, Function_Arguments__c 
+                                     FROM Message__c 
+                                     WHERE Thread__c = :testChat.Id
+                                     ORDER BY Id];
+            System.assertEquals(4, messages.size(), 'Unexpected number of messages');
+            System.assertEquals('getEndpoints', messages[1].Function_Name__c, 'Unexpected function call');
+            System.assertEquals('assistant', messages[1].Role__c, 'Unexpected role on message');
+            System.assertEquals('function', messages[2].Role__c, 'Unexpected role on message');
+            System.assertEquals('getEndpoints', messages[2].Function_Name__c, 'Unexpected function call');
+            System.assert(messages[2].Content__c.contains('{"name":"Apex Triggers","endpoint":"/lightning/setup/ApexTriggers/home","details":null}'), 'Unexpected function content');
+            System.assertEquals('assistant', messages[3].Role__c, 'Unexpected role on message');
+            System.assertEquals('Sure! Here is the link to the "Expire All Passwords" screen:[Expire All Passwords](/lightning/setup/SecurityExpirePasswords/home)', messages[3].Content__c, 'Unexpected assistant content');
+        }
+    }
+
+    @isTest
+    static void testGetOrgLimits(){
+        //Setup test
+        Test.setMock(HttpCalloutMock.class, new OpenAIMock());
+        Chat__c testChat = [SELECT Id
+                            FROM Chat__c
+                            WHERE Name = :'File storage usage summary'
+                            LIMIT 1];
+        //Get Test user
+        User testUser = [SELECT Id
+                        FROM User
+                        WHERE FirstName = :'SetupAI'];
+        
+        System.runAs(testUser){
+            //Run test
+            Test.startTest();
+            insert new Message__c(
+                Role__c = 'assistant',
+                Function_Name__c = 'getOrgLimits',
+                Function_Arguments__c = '{}',
+                Thread__c = testChat.Id
+            );
+            Test.stopTest();
+
+            //Verify results
+            Message__c[] messages = [SELECT Name, Role__c, Content__c, Function_Name__c, Function_Arguments__c 
+                                     FROM Message__c 
+                                     WHERE Thread__c = :testChat.Id
+                                     ORDER BY Id];
+            System.assertEquals(4, messages.size(), 'Unexpected number of messages');
+            System.assertEquals('getOrgLimits', messages[1].Function_Name__c, 'Unexpected function call');
+            System.assertEquals('assistant', messages[1].Role__c, 'Unexpected role on message');
+            System.assertEquals('function', messages[2].Role__c, 'Unexpected role on message');
+            System.assertEquals('getOrgLimits', messages[2].Function_Name__c, 'Unexpected function call');
+            System.assert(messages[2].Content__c.contains('"FileStorageMB":{"Max":50,"Remaining":50}'), 'Unexpected function content');
+            System.assertEquals('assistant', messages[3].Role__c, 'Unexpected role on message');
+            System.assertEquals('You currently have 50 MB of file storage remaining.', messages[3].Content__c, 'Unexpected assistant content');
         }
     }
 
