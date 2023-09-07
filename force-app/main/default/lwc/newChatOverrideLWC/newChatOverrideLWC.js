@@ -22,8 +22,8 @@ export default class NewChatOverrideLWC extends LightningElement {
     //Platform event handling to display new messages
     subscription = {};
     errorSubscription = {};
-    @api channelName = '/event/Message_Notice__e';
-    @api errorChannelName = '/event/Async_Error__e';
+    @api channelName = '/event/SetupAI__Message_Notice__e';
+    @api errorChannelName = '/event/SetupAI__Async_Error__e';
 
     //On component load, retrieve messages
     connectedCallback(){
@@ -93,6 +93,7 @@ export default class NewChatOverrideLWC extends LightningElement {
 
     //Retrieve messages from chat records
     retrieveMessages(){
+        console.log('retrieving messages')
         getMessages({chatId: this.recordId})
             .then((result) => {
                 this.messages = result.map(message => {
@@ -104,6 +105,7 @@ export default class NewChatOverrideLWC extends LightningElement {
                     }
                     return message;
                 });
+                console.log(result);
                 //If last message is not user submitted, hide loading wheel
                 this.isLoading = this.messages[this.messages.length-1].msgClass.includes('outbound');
             })
