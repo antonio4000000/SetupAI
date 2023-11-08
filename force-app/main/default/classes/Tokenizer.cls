@@ -45,13 +45,15 @@ public with sharing class Tokenizer {
 
     // Method to update current token usage
     public static void updateUsage(Integer newTokens) {
-        getUsage(); // Ensure usage is initialized
-        // Set the new value to the custom setting field
-        usage.SetupAI__Tokens_Used__c += newTokens;
-        
-        // Perform the upsert DML operation
-        upsert usage;
-        // Clear the static variable so that it will be re-queried the next time it's accessed
-        usage = null;
+        if(Database.countQuery('SELECT COUNT() FROM SetupAI__Internal_API_Secret__mdt') == 0){
+            getUsage(); // Ensure usage is initialized
+            // Set the new value to the custom setting field
+            usage.SetupAI__Tokens_Used__c += newTokens;
+            
+            // Perform the upsert DML operation
+            upsert usage;
+            // Clear the static variable so that it will be re-queried the next time it's accessed
+            usage = null;
+        }
     }
 }
