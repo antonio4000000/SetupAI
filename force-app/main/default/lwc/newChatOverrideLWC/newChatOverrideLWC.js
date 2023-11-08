@@ -102,7 +102,6 @@ export default class NewChatOverrideLWC extends LightningElement {
                     }
                     return message;
                 });
-                console.log(result);
                 //If last message is not user submitted, hide loading wheel
                 this.isLoading = this.messages[this.messages.length-1]?.msgClass?.includes('outbound');
             })
