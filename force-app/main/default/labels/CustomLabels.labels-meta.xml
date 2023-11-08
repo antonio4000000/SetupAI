@@ -22,7 +22,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Max Tokens Exceeded</shortDescription>
-        <value>You&apos;ve exceeded the maximum number of tokens you&apos;re allowed for this month.</value>
+        <value>You&apos;ve exceeded your monthly token allowance for this month. You can bypass this limitation by following the instructions on the &apos;Use your own API token&apos; page.</value>
     </labels>
     <labels>
         <fullName>Metadata_Not_Found</fullName>

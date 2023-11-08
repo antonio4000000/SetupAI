@@ -3,6 +3,8 @@ import { subscribe } from 'lightning/empApi';
 import getMessages from '@salesforce/apex/Controller.getMessages';
 import submitMessage from '@salesforce/apex/Controller.submitMessage';
 import getChatSummary from '@salesforce/apex/Controller.getChatSummary';
+import maxExceeded from '@salesforce/apex/Tokenizer.maxExceeded';
+import maxExceededLabel from '@salesforce/label/c.Max_Tokens_Exceeded';
 
 export default class NewChatOverrideLWC extends LightningElement {
 
@@ -18,6 +20,12 @@ export default class NewChatOverrideLWC extends LightningElement {
     @track fadeAnimation = 'fade-in'
     //Chat summary
     @track title = 'New Chat';
+    //Determines if max tokens exceeded for this month
+    @track isMaxExceeded = false;
+    //Custom labels
+    @track label = {
+        maxExceededLabel
+    }
 
     //Platform event handling to display new messages
     subscription = {};
@@ -38,6 +46,17 @@ export default class NewChatOverrideLWC extends LightningElement {
                 })
         } 
         this.handleSubscribe();
+        this.checkTokenUsage();
+    }
+    
+    checkTokenUsage() {
+        maxExceeded()
+            .then((result) => {
+                this.isMaxExceeded = result;
+            })
+            .catch((error) => {
+                this.displayError(error.body.message);
+            });
     }
 
     //On component rendered
