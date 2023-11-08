@@ -5,10 +5,15 @@
 */
 
 public with sharing class OpenAI {
+
+    public class OpenAIException extends Exception{}
     
     //Send Chat thread and returns generated response
     public static ChatResponse chat(ChatRequest req){
         try{
+            if(Tokenizer.maxExceeded()){
+                throw new OpenAIException(Label.Max_Tokens_Exceeded);
+            }
             return(ChatResponse)JSON.deserialize(Callout.execute(
                 /** Endpoint */             'Chat',
                 /** Method */               'POST',

@@ -38,6 +38,7 @@ public with sharing class ChatInterface {
         );
         //Submit request
         ChatResponse res = OpenAI.chat(req);
+        Tokenizer.updateUsage(res.usage.total_tokens);
         //Return response from assistant
         ChatRequest.ChatMessage toReturn = res?.choices[0]?.message;
         if(toReturn != null){

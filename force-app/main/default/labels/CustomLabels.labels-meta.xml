@@ -17,12 +17,12 @@
         <value>You do not have the ability to create new messages. Please contact your administrator.</value>
     </labels>
     <labels>
-        <fullName>Unexpected_Role</fullName>
+        <fullName>Max_Tokens_Exceeded</fullName>
         <categories>Errors</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Unexpected Role</shortDescription>
-        <value>Invalid message saved: Unexpected role</value>
+        <shortDescription>Max Tokens Exceeded</shortDescription>
+        <value>You&apos;ve exceeded the maximum number of tokens you&apos;re allowed for this month.</value>
     </labels>
     <labels>
         <fullName>Metadata_Not_Found</fullName>
@@ -31,6 +31,14 @@
         <protected>true</protected>
         <shortDescription>Metadata Not Found</shortDescription>
         <value>Metadata not found in query results. Make sure to include &apos;Metadata&apos; as part of the SELECT clause.</value>
+    </labels>
+    <labels>
+        <fullName>Multiple_Internal_Keys</fullName>
+        <categories>Errors</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Multiple Internal Keys</shortDescription>
+        <value>Multiple records were saved to the Internal API Secret Custom Metadata Type. Please only save one record.</value>
     </labels>
     <labels>
         <fullName>Multiple_Metadata_Records</fullName>
@@ -47,5 +55,13 @@
         <protected>true</protected>
         <shortDescription>No Metadata Records</shortDescription>
         <value>Tooling Query returned no records</value>
+    </labels>
+    <labels>
+        <fullName>Unexpected_Role</fullName>
+        <categories>Errors</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Unexpected Role</shortDescription>
+        <value>Invalid message saved: Unexpected role</value>
     </labels>
 </CustomLabels>
