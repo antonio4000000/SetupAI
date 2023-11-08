@@ -34,8 +34,7 @@ export default class NewChatOverrideLWC extends LightningElement {
                     this.title = result != null ? result : this.title;
                 })
                 .catch(error => {
-                    console.log(error.body.message);
-                    this.displayError(error.body.message);
+                    this.displayError(error);
                 })
         } 
         this.handleSubscribe();
@@ -51,7 +50,7 @@ export default class NewChatOverrideLWC extends LightningElement {
     
         // Manually insert the processed HTML for each message
         const messageElems = this.template.querySelectorAll('.message-content');
-        this.messages.forEach((message, index) => {
+        this.messages?.forEach((message, index) => {
             if (message.msgClass.includes('inbound')) {
                 // Only insert the already processed/sanitized text
                 messageElems[index].innerHTML = message.text;
@@ -85,15 +84,13 @@ export default class NewChatOverrideLWC extends LightningElement {
                     this.retrieveMessages();
                 })
                 .catch(error => {
-                    console.log(error.body.message);
-                    this.displayError(error.body.message);
+                    this.displayError(error);
                 })
         }
     }
 
     //Retrieve messages from chat records
     retrieveMessages(){
-        console.log('retrieving messages')
         getMessages({chatId: this.recordId})
             .then((result) => {
                 this.messages = result.map(message => {
@@ -107,11 +104,10 @@ export default class NewChatOverrideLWC extends LightningElement {
                 });
                 console.log(result);
                 //If last message is not user submitted, hide loading wheel
-                this.isLoading = this.messages[this.messages.length-1].msgClass.includes('outbound');
+                this.isLoading = this.messages[this.messages.length-1]?.msgClass?.includes('outbound');
             })
             .catch((error) => {
-                console.log(error.body.message);
-                this.displayError(error.body.message);
+                this.displayError(error);
             });
     }
 
@@ -144,12 +140,12 @@ export default class NewChatOverrideLWC extends LightningElement {
     }
 
     //Displays error message on screen
-    displayError(message){
+    displayError(errorMessage){
         this.messages.push({
             msgClass: 'slds-chat-message__text slds-chat-message__text_inbound',
             containerClass: 'slds-chat-listitem slds-chat-listitem_inbound',
             id: 0,
-            text: message
+            text: errorMessage?.body?.message || errorMessage
         });
         this.isLoading = false;
     }
