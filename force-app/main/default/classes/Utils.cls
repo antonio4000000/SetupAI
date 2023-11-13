@@ -51,4 +51,14 @@ public with sharing class Utils {
         }
     }
 
+    //Returns model to use in chats
+    public static String getModel(){
+        SetupAI__Internal_API_Secret__mdt internalSecret = [SELECT Model__c 
+                                                            FROM SetupAI__Internal_API_Secret__mdt 
+                                                            LIMIT 1];
+        return internalSecret == null || internalSecret.Model__c == null || internalSecret.Model__c == '' ? 
+               'gpt-3' :
+               internalSecret.Model__c;
+    }
+
 }
