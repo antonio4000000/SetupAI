@@ -8,8 +8,8 @@ public with sharing class SOQLModifier {
     
     //Call this method to modify queries and ensure standardization and clean information
     public static String modify(String query){
-        if(!query.contains('LIMIT')) query = limitQuery(query);
         if(query.contains('FROM PermissionSet') || query.contains('FROM PermissionSetAssignment')) query = removeProfilePermSets(query);
+        if(!query.contains('LIMIT')) query = limitQuery(query);
         return query;
     }
 
