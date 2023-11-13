@@ -35,7 +35,7 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
                         //Get AI Response
                         ChatRequest.ChatMessage aiResponse = ChatInterface.chat(
                             MessageConvertor.convert(entireThread),
-                            'gpt-3',
+                            Utils.getModel(),
                             true
                         );
                         //Check message create permissions
