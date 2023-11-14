@@ -4,22 +4,8 @@
     <externalId>false</externalId>
     <fieldManageability>SubscriberControlled</fieldManageability>
     <label>Model</label>
+    <length>255</length>
     <required>true</required>
-    <type>Picklist</type>
-    <valueSet>
-        <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>gpt-3</fullName>
-                <default>true</default>
-                <label>gpt-3</label>
-            </value>
-            <value>
-                <fullName>gpt-4</fullName>
-                <default>false</default>
-                <label>gpt-4</label>
-            </value>
-        </valueSetDefinition>
-    </valueSet>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

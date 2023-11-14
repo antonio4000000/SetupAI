@@ -6,6 +6,9 @@
 
 public with sharing class Utils {
 
+    //Default model for chats
+    public static FINAL String DEFAULT_MODEL = 'gpt-3.5-turbo-16k';
+
     //Checks if specified value is a primitive data type
     public static Boolean isPrimitive(Object value){
         return value instanceof Boolean || value instanceof String || value instanceof Integer ||
@@ -51,6 +54,8 @@ public with sharing class Utils {
         }
     }
 
+    
+
     //Returns model to use in chats
     public static String getModel(){
         try{
@@ -58,11 +63,11 @@ public with sharing class Utils {
                                                                 FROM SetupAI__Internal_API_Secret__mdt 
                                                                 LIMIT 1];
             return internalSecret == null || internalSecret.Model__c == null || internalSecret.Model__c == '' ? 
-                'gpt-3' :
+                DEFAULT_MODEL :
                 internalSecret.Model__c;
         }catch(Exception ex){
             if(ex.getMessage().contains('List has no rows for assignment to SObject')){
-                return 'gpt-3';
+                return DEFAULT_MODEL;
             }else{
                 throw ex;
             }

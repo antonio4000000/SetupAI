@@ -6,14 +6,6 @@
 
 public with sharing class ChatInterface {
 
-    //Get Model name for given abbreviation
-    private static String getModel(String modelAbbr){
-        return [SELECT MasterLabel 
-                FROM Model__mdt
-                WHERE Abbreviation__c = :modelAbbr
-                WITH SECURITY_ENFORCED].MasterLabel;
-    }
-
     //Retrieve defined functions and return them formatted
     private static ChatRequest.ChatFunction[] getFunctions(){
         ChatRequest.ChatFunction[] toReturn = new ChatRequest.ChatFunction[]{};
@@ -31,7 +23,7 @@ public with sharing class ChatInterface {
     public static ChatRequest.ChatMessage chat(ChatRequest.ChatMessage[] messages, String model, Boolean includeFunctions){
         //Construct request
         ChatRequest req = new ChatRequest(
-            /** model */            getModel(model == null ? 'gpt-3' : model),
+            /** model */            model,
             /** temperature */      0,
             /** messages */         messages,
             /** functions */        includeFunctions ? getFunctions() : null
