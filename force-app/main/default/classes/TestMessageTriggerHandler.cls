@@ -11,6 +11,7 @@ public with sharing class TestMessageTriggerHandler {
     static void testSetup(){
         User testUser = TestDataFactory.createTestUser();
         System.runAs(testUser){
+            Tokenizer.getUsage();
             Callout.testSetup = true;
             //Inser dummy chat
             Chat__c testChat = TestDataFactory.getChat('Get User Id');

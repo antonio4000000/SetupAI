@@ -11,6 +11,7 @@ public with sharing class TestFunction {
     static void testSetup(){
         User testUser = TestDataFactory.createTestUser();
         System.runAs(testUser){
+            Tokenizer.getUsage();
             Callout.testSetup = true;
             //Insert test Account
             Account testAccount = new Account(Name = 'Test Account',
