@@ -62,7 +62,7 @@ public with sharing class MessageTriggerHandler implements Queueable, Database.A
                 }
             }catch(Exception ex){
                 Async_Error__e notice = new Async_Error__e(Error_Content__c = ex.getMessage(),
-                                                                    Chat_Id__c = this.newMessage.Thread__c);
+                                                           Chat_Id__c = this.newMessage.Thread__c);
                 Database.SaveResult results = EventBus.publish(notice);
                 asyncErrorsPublished.add(notice);
             }

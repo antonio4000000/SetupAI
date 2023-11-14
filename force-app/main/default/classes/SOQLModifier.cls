@@ -20,7 +20,7 @@ public with sharing class SOQLModifier {
 
     //Appends IsOwnedByProfile=false to PermissionSet queries
     public static String removeProfilePermSets(String query){
-        if(query.contains('FROM PermissionSet') && !query.contains('IsOwnedByProfile')){
+        if(query.contains('FROM PermissionSet ') && !query.contains('IsOwnedByProfile')){
             query = query + (query.contains('WHERE') ? ' AND ' : ' WHERE ') + 'IsOwnedByProfile = false';
         }
         if(query.contains('FROM PermissionSetAssignment') && !query.contains('IsOwnedByProfile')){
