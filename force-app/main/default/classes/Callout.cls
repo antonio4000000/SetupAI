@@ -13,7 +13,7 @@ public with sharing class Callout {
     public class CalloutException extends Exception{}
 
     //Error codes for error handling
-    public static Set<Integer> errorCodes = new Set<Integer>{400,401,402,403,404,405};
+    public static Set<Integer> errorCodes = new Set<Integer>{400,401,402,403,404,405,500};
     
     //Http for sending requests
     public static Http h = new Http();

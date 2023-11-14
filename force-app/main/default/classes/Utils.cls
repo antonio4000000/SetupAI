@@ -54,8 +54,6 @@ public with sharing class Utils {
         }
     }
 
-    
-
     //Returns model to use in chats
     public static String getModel(){
         try{

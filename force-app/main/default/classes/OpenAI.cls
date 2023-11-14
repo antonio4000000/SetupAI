@@ -24,13 +24,18 @@ public with sharing class OpenAI {
                                             }
             ).replace('"object":', '"object_x":'),ChatResponse.class);
         }catch(Exception ex){
-            return new ChatResponse(
-                new ChatRequest.ChatMessage(
-                    'error',
-                    ex.getMessage()
-                )
-            );
+            return getError(ex.getMessage());
         }
+    }
+
+    //Format error message in chat
+    public static ChatResponse getError(String errorMessage){
+        return new ChatResponse(
+            new ChatRequest.ChatMessage(
+                'error',
+                errorMessage
+            )
+        );
     }
 
 }

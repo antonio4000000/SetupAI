@@ -32,7 +32,9 @@ public with sharing class ChatInterface {
         ChatResponse res = OpenAI.chat(req);
         if(res?.usage?.total_tokens != null){ Tokenizer.updateUsage(res.usage.total_tokens); }
         //Return response from assistant
-        ChatRequest.ChatMessage toReturn = res?.choices[0]?.message;
+        ChatRequest.ChatMessage toReturn = res?.choices != null && res?.choices.size() > 0 ?
+                                           res?.choices[0]?.message :
+                                           OpenAI.getError('Invalid response from server').choices[0].message;
         if(toReturn != null){
             //Copy tokens down so they can be saved to records later
             toReturn.completionTokens = res?.usage?.completion_tokens;

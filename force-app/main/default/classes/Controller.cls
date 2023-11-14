@@ -67,7 +67,7 @@ public with sharing class Controller {
                     message
                 )
             }, 
-            'gpt-3',
+            Utils.getModel(),
             false
         ).content;
         //Save chat record
