@@ -12,7 +12,6 @@ public class PostInstall implements InstallHandler {
             SetupAI__Token_Usage__c usage = new SetupAI__Token_Usage__c();
             usage.SetupOwnerId = UserInfo.getOrganizationId();
             usage.SetupAI__Month__c = Date.today().month();
-            usage.SetupAI__Tokens_Used__c = 0;
             upsert usage;
         }
     }
