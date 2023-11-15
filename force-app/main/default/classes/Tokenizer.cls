@@ -28,8 +28,8 @@ public with sharing class Tokenizer {
 
     private static void resetMonthlyUsage() {
         usage.SetupAI__Month__c = Date.today().month();
-        FeatureManager.setInputTokens(0);
-        FeatureManager.setOutputTokens(0);
+        if(FeatureManager.inputTokens() != 0){FeatureManager.setInputTokens(0);}
+        if(FeatureManager.outputTokens() != 0){FeatureManager.setOutputTokens(0);}
         upsert usage; // Perform DML operation to save the reset
         usage = null; // Clear the static variable so that it is re-queried with the new values next time
     }
@@ -44,8 +44,8 @@ public with sharing class Tokenizer {
     // Method to update current token usage
     public static void updateUsage(Integer inputTokens, Integer outputTokens) {
         if(!FeatureManager.isUnlimited()){
-            FeatureManager.setInputTokens(inputTokens);
-            FeatureManager.setOutputTokens(outputTokens);
+            FeatureManager.setInputTokens(inputTokens + FeatureManager.inputTokens());
+            FeatureManager.setOutputTokens(outputTokens + FeatureManager.outputTokens());
         }
     }
 }
