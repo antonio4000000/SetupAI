@@ -56,20 +56,13 @@ public with sharing class Utils {
 
     //Returns model to use in chats
     public static String getModel(){
-        try{
-            SetupAI__Internal_API_Secret__mdt internalSecret = [SELECT Model__c 
-                                                                FROM SetupAI__Internal_API_Secret__mdt 
-                                                                LIMIT 1];
-            return internalSecret == null || internalSecret.Model__c == null || internalSecret.Model__c == '' ? 
-                DEFAULT_MODEL :
-                internalSecret.Model__c;
-        }catch(Exception ex){
-            if(ex.getMessage().contains('List has no rows for assignment to SObject')){
-                return DEFAULT_MODEL;
-            }else{
-                throw ex;
-            }
+        if(!FeatureManager.isUnlimited()){
+            return DEFAULT_MODEL;
         }
+        SetupAI__GPT_Settings__c settings = SetupAI__GPT_Settings__c.getOrgDefaults();
+        return settings == null || settings.Model__c == null || settings.Model__c == '' ? 
+               DEFAULT_MODEL :
+               settings.Model__c;
     }
 
 }
