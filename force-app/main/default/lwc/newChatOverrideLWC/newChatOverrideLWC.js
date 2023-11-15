@@ -177,9 +177,26 @@ export default class NewChatOverrideLWC extends LightningElement {
 
     // Converts markdown link [label](url) to HTML anchor tags
     markdownToHTML(inputStr) {
-        const regex = /\[([^\[]+)\]\(([^\)]+)\)/g;
-        return inputStr.replace(regex, (match, label, url) => `<a href="${url}" target="_blank">${label}</a>`);
+        // Convert markdown links to HTML hyperlinks
+        const linksRegex = /\[([^\[]+)\]\(([^\)]+)\)/g;
+        inputStr = inputStr.replace(linksRegex, (match, label, url) => `<a href="${url}" target="_blank">${label}</a>`);
+    
+        // Convert markdown bold text to HTML bold
+        const boldRegex = /\*\*([^*]+)\*\*/g;
+        inputStr = inputStr.replace(boldRegex, (match, text) => `<strong>${text}</strong>`);
+    
+        // Convert markdown inline code to HTML code
+        const inlineCodeRegex = /`([^`]+)`/g;
+        inputStr = inputStr.replace(inlineCodeRegex, (match, code) => `<code>${code}</code>`);
+    
+        // Convert markdown multiline code blocks to HTML preformatted code
+        // Note that this regex uses the 's' flag to allow for multiline matching
+        const blockCodeRegex = /```([\s\S]+?)```/g;
+        inputStr = inputStr.replace(blockCodeRegex, (match, code) => `<pre><code>${code}</code></pre>`);
+    
+        return inputStr;
     }
+    
 
     // This function escapes dangerous characters from the input string
     escapeHTML(str) {
@@ -189,14 +206,14 @@ export default class NewChatOverrideLWC extends LightningElement {
     }
 
     // Converts markdown link [label](url) to HTML anchor tags
-    markdownToHTML(inputStr) {
-        // First, escape any HTML in the input string
-        let escapedStr = this.escapeHTML(inputStr);
+    // markdownToHTML(inputStr) {
+    //     // First, escape any HTML in the input string
+    //     let escapedStr = this.escapeHTML(inputStr);
         
-        // Next, replace markdown links with HTML links
-        const regex = /\[([^\[]+)\]\(([^\)]+)\)/g;
-        return escapedStr.replace(regex, (match, label, url) => `<a href="${url}" target="_blank">${label}</a>`);
-    }
+    //     // Next, replace markdown links with HTML links
+    //     const regex = /\[([^\[]+)\]\(([^\)]+)\)/g;
+    //     return escapedStr.replace(regex, (match, label, url) => `<a href="${url}" target="_blank">${label}</a>`);
+    // }
 
 
 }
