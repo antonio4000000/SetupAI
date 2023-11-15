@@ -64,4 +64,12 @@
         <shortDescription>Unexpected Role</shortDescription>
         <value>Invalid message saved: Unexpected role</value>
     </labels>
+    <labels>
+        <fullName>No_Key_Saved</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No Key Saved</shortDescription>
+        <value>You must set an API key on your GPT settings with the Unlimited license type. See help for how to do this.</value>
+    </labels>
 </CustomLabels>

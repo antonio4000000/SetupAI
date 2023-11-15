@@ -10,19 +10,18 @@ public with sharing class CalloutSecurity {
     
     //Retrieve OpenAI API Key
     public static String getOpenAIKey(){
-        Integer count = Database.countQuery('SELECT COUNT() FROM SetupAI__Internal_API_Secret__mdt');
-        if(count == 0){
+        if(FeatureManager.isUnlimited()){
+            SetupAI__GPT_Settings__c settings = SetupAI__GPT_Settings__c.getOrgDefaults();
+            if(settings != null && settings.API_Key__c != null){
+                return settings.API_Key__c;
+            }else{
+                throw new CalloutSecurityException(Label.No_Key_Saved);
+            }
+        }else{
             return [SELECT Key__c
                     FROM API_Secret__mdt
                     WHERE MasterLabel = :'Default'
                     WITH SECURITY_ENFORCED].Key__c;
-        }else if(count > 1){
-            throw new CalloutSecurityException(Label.Multiple_Internal_Keys);
-        }else{
-            return [SELECT Key__c
-                    FROM SetupAI__Internal_API_Secret__mdt
-                    WITH SECURITY_ENFORCED
-                    LIMIT 1].Key__c;
         }
     }
 
