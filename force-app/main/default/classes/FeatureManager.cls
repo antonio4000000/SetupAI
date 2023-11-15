@@ -19,6 +19,16 @@ public with sharing class FeatureManager {
         return System.FeatureManagement.checkPackageIntegerValue('tokenSpendLimit');
     }
 
+    //Get cost of input tokens
+    public static Integer inputTokenCost(){
+        return System.FeatureManagement.checkPackageIntegerValue('inputTokenCost');
+    }
+
+    //Get cost of output tokens
+    public static Integer outputTokenCost(){
+        return System.FeatureManagement.checkPackageIntegerValue('outputTokenCost');
+    }
+
     //<<<<<------------LMO to Subscriber--------------------
 
     //-----------------Subscriber to LMO--------------->>>>>
@@ -44,5 +54,10 @@ public with sharing class FeatureManager {
     }
 
     //<<<<<------------Subscriber to LMO--------------------
+
+    public static Double amountSpent(){
+        return ((inputTokens()/1000) * (.0001*inputTokenCost())) +
+               ((outputTokens()/1000) * (.0001*outputTokenCost()));
+    }
 
 }

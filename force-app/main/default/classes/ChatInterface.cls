@@ -30,7 +30,10 @@ public with sharing class ChatInterface {
         );
         //Submit request
         ChatResponse res = OpenAI.chat(req);
-        if(res?.usage?.total_tokens != null){ Tokenizer.updateUsage(res.usage.total_tokens); }
+        Tokenizer.updateUsage(
+            res?.usage?.prompt_tokens != null ? res.usage.prompt_tokens : 0,
+            res?.usage?.completion_tokens != null ? res.usage.completion_tokens : 0
+        );
         //Return response from assistant
         ChatRequest.ChatMessage toReturn = res?.choices != null && res?.choices.size() > 0 ?
                                            res?.choices[0]?.message :

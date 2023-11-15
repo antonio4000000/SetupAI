@@ -1,3 +1,1 @@
-System.debug(
-    System.FeatureManagement.checkPackageBooleanValue('unlimited')
-);
+FeatureManager.setInputTokens(0);
