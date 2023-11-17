@@ -37,13 +37,13 @@ public with sharing class Tokenizer {
     @AuraEnabled(cacheable=true)
     //Lets you know if max tokens exceeded
     public static Boolean maxExceeded(){
-        return !FeatureManager.isUnlimited() &&
+        return !CalloutSecurity.customKeySaved() &&
                FeatureManager.amountSpent() >= FeatureManager.tokenLimit();
     }
 
     // Method to update current token usage
     public static void updateUsage(Integer inputTokens, Integer outputTokens) {
-        if(!FeatureManager.isUnlimited()){
+        if(!CalloutSecurity.customKeySaved()){
             FeatureManager.setInputTokens(inputTokens + FeatureManager.inputTokens());
             FeatureManager.setOutputTokens(outputTokens + FeatureManager.outputTokens());
         }

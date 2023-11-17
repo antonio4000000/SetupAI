@@ -10,19 +10,20 @@ public with sharing class CalloutSecurity {
     
     //Retrieve OpenAI API Key
     public static String getOpenAIKey(){
-        if(FeatureManager.isUnlimited()){
-            SetupAI__GPT_Settings__c settings = SetupAI__GPT_Settings__c.getOrgDefaults();
-            if(settings != null && settings.API_Key__c != null){
-                return settings.API_Key__c;
-            }else{
-                throw new CalloutSecurityException(Label.No_Key_Saved);
-            }
+        if(customKeySaved()){
+            return SetupAI__GPT_Settings__c.getOrgDefaults().API_Key__c;
         }else{
             return [SELECT Key__c
                     FROM API_Secret__mdt
                     WHERE MasterLabel = :'Default'
                     WITH SECURITY_ENFORCED].Key__c;
         }
+    }
+
+    //Returns true if a custom API key was saved
+    public static Boolean customKeySaved(){
+        SetupAI__GPT_Settings__c settings = SetupAI__GPT_Settings__c.getOrgDefaults();
+        return settings != null && settings.API_Key__c != null;
     }
 
 }

@@ -9,11 +9,6 @@ public with sharing class FeatureManager {
     
     //-----------------LMO to Subscriber--------------->>>>>
 
-    //Returns true if unlimited license type is subscribed to.
-    public static Boolean isUnlimited(){
-        return System.FeatureManagement.checkPackageBooleanValue('unlimited');
-    }
-
     //Get total dollar amount token purchases are limited to
     public static Integer tokenLimit(){
         return System.FeatureManagement.checkPackageIntegerValue('tokenSpendLimit');

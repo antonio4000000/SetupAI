@@ -56,13 +56,14 @@ public with sharing class Utils {
 
     //Returns model to use in chats
     public static String getModel(){
-        if(!FeatureManager.isUnlimited()){
+        if(CalloutSecurity.customKeySaved()){
+            SetupAI__GPT_Settings__c settings = SetupAI__GPT_Settings__c.getOrgDefaults();
+            return settings == null || settings.Model__c == null || settings.Model__c == '' ? 
+                   DEFAULT_MODEL :
+                   settings.Model__c;
+        }else{
             return DEFAULT_MODEL;
         }
-        SetupAI__GPT_Settings__c settings = SetupAI__GPT_Settings__c.getOrgDefaults();
-        return settings == null || settings.Model__c == null || settings.Model__c == '' ? 
-               DEFAULT_MODEL :
-               settings.Model__c;
     }
 
 }
