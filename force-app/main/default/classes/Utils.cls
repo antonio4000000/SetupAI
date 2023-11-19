@@ -7,9 +7,10 @@
 public with sharing class Utils {
 
     //Default model for chats
-    public static FINAL String DEFAULT_MODEL = [SELECT Model__c
+    public static FINAL String DEFAULT_MODEL = [SELECT SetupAI__Model__c
                                                 FROM SetupAI__API_Secret__mdt
-                                                WHERE MasterLabel =:'Default'].Model__c;
+                                                WHERE MasterLabel =:'Default'
+                                                WITH SECURITY_ENFORCED].Model__c;
 
     //Checks if specified value is a primitive data type
     public static Boolean isPrimitive(Object value){

@@ -71,13 +71,13 @@ public with sharing class TestFunction {
         //Setup test
         Test.setMock(HttpCalloutMock.class, new OpenAIMock());
         Chat__c testChat = [SELECT Id
-                                     FROM Chat__c
-                                     WHERE Name = :'Query Account'
-                                     LIMIT 1];
+                            FROM Chat__c
+                            WHERE Name = :'Query Account'
+                            LIMIT 1];
         //Get Test user
         User testUser = [SELECT Id
-                        FROM User
-                        WHERE FirstName = :'SetupAI'];
+                         FROM User
+                         WHERE FirstName = :'SetupAI'];
         System.runAs(testUser){
             //Run test
             Test.startTest();
