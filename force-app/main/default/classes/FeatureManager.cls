@@ -48,6 +48,16 @@ public with sharing class FeatureManager {
         System.FeatureManagement.setPackageIntegerValue('outputTokens', numberOfTokens);
     }
 
+    //Returns value for usingCustomAPIKey
+    public static Boolean usingCustomAPIKey(){
+        return System.FeatureManagement.checkPackageBooleanValue('usingCustomAPIKey');
+    }
+
+    //Sets number of outputTokens
+    public static void setUsingCustomAPIKey(Boolean newValue){
+        System.FeatureManagement.setPackageBooleanValue('usingCustomAPIKey', newValue);
+    }
+
     //<<<<<------------Subscriber to LMO--------------------
 
     public static Double amountSpent(){
