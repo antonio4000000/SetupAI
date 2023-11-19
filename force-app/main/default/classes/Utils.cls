@@ -35,7 +35,8 @@ public with sharing class Utils {
     public static String getStaticResource(String nameOfFile){
         return [SELECT Body
                 FROM StaticResource 
-                WHERE Name = :nameOfFile].Body.toString();
+                WHERE Name = :nameOfFile
+                WITH SECURITY_ENFORCED].Body.toString();
     }
 
     //Generate random number string
