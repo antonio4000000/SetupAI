@@ -11,8 +11,16 @@ public with sharing class CalloutSecurity {
     //Retrieve OpenAI API Key
     public static String getOpenAIKey(){
         if(customKeySaved()){
+            //If parameter to send to LMO doesn't match, fix it
+            if(!FeatureManager.usingCustomAPIKey()){
+                FeatureManager.setUsingCustomAPIKey(true);
+            }
             return SetupAI__GPT_Settings__c.getOrgDefaults().API_Key__c;
         }else{
+            //If parameter to send to LMO doesn't match, fix it
+            if(FeatureManager.usingCustomAPIKey()){
+                FeatureManager.setUsingCustomAPIKey(false);
+            }
             return [SELECT Key__c
                     FROM API_Secret__mdt
                     WHERE MasterLabel = :'Default'
