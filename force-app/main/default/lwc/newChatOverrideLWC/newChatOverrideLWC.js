@@ -197,23 +197,11 @@ export default class NewChatOverrideLWC extends LightningElement {
         return inputStr;
     }
     
-
     // This function escapes dangerous characters from the input string
     escapeHTML(str) {
         var div = document.createElement('div');
         div.appendChild(document.createTextNode(str));
         return div.innerHTML;
     }
-
-    // Converts markdown link [label](url) to HTML anchor tags
-    // markdownToHTML(inputStr) {
-    //     // First, escape any HTML in the input string
-    //     let escapedStr = this.escapeHTML(inputStr);
-        
-    //     // Next, replace markdown links with HTML links
-    //     const regex = /\[([^\[]+)\]\(([^\)]+)\)/g;
-    //     return escapedStr.replace(regex, (match, label, url) => `<a href="${url}" target="_blank">${label}</a>`);
-    // }
-
 
 }
