@@ -69,7 +69,7 @@ public with sharing class Controller {
             }, 
             Utils.getModel(),
             false
-        ).content;
+        ).content.removeStart('"').removeEnd('"');
         //Save chat record
         return new Chat__c(
             Running__c = true,
