@@ -35,6 +35,10 @@ export default class NewChatOverrideLWC extends LightningElement {
 
     //On component load, retrieve messages
     connectedCallback(){
+        // eslint-disable-next-line @lwc/lwc/no-async-operation
+        setTimeout(() => {
+            this.fadeAnimation = '';
+        }, 400);
         if(this.recordId){
             this.retrieveMessages();
             getChatSummary({chatId:this.recordId})
@@ -58,27 +62,6 @@ export default class NewChatOverrideLWC extends LightningElement {
                 this.displayError(error.body.message);
             });
     }
-
-    //On component rendered
-    renderedCallback() {
-        setTimeout(() => {
-            this.fadeAnimation = '';
-        }, 400);
-    
-        this.template.querySelector('.chat-messages').scrollTop = this.template.querySelector('.chat-messages').scrollHeight;
-    
-        // Manually insert the processed HTML for each message
-        const messageElems = this.template.querySelectorAll('.message-content');
-        this.messages?.forEach((message, index) => {
-            if (message.msgClass.includes('inbound')) {
-                // Only insert the already processed/sanitized text
-                messageElems[index].innerHTML = message.text;
-            } else {
-                messageElems[index].textContent = message.text; 
-            }
-        });
-    }
-        
 
     //Handle user input updates
     handleInputChange(event) {
@@ -112,28 +95,26 @@ export default class NewChatOverrideLWC extends LightningElement {
     retrieveMessages(){
         getMessages({chatId: this.recordId})
             .then((result) => {
-                this.messages = result.map(message => {
-                    // Convert markdown to HTML only for the inbound messages
-                    if (message.msgClass.includes('inbound')) {
-                        message.text = this.markdownToHTML(message.text);
-                    } else {
-                        message.text = this.escapeHTML(message.text); // Ensure outbound messages are escaped as well
-                    }
-                    return message;
-                });
+                this.messages = result;
                 //If last message is not user submitted, hide loading wheel
                 this.isLoading = this.messages[this.messages.length-1]?.msgClass?.includes('outbound');
+                this.updateScrollPosition();
             })
             .catch((error) => {
                 this.displayError(error);
             });
     }
 
+    // Logic to adjust scroll position
+    updateScrollPosition() {
+        this.template.querySelector('.chat-messages').scrollTop = this.template.querySelector('.chat-messages').scrollHeight;
+    }
+
     // Handles subscribe button click
     handleSubscribe() {
         // Callback invoked whenever a new event message is received
         const messageCallback = (response) => {
-            if(response.data.payload.SetupAI__Chat_Id__c == this.recordId){
+            if(response.data.payload.SetupAI__Chat_Id__c === this.recordId){
                 this.isLoading = true;
                 this.retrieveMessages();
             }
@@ -147,7 +128,7 @@ export default class NewChatOverrideLWC extends LightningElement {
 
         //Handle error subscription
         const errorCallback = (response) => {
-            if(response.data.payload.SetupAI__Chat_Id__c == this.recordId){
+            if(response.data.payload.SetupAI__Chat_Id__c === this.recordId){
                 this.displayError(JSON.parse(JSON.stringify(response.data.payload.SetupAI__Error_Content__c)));
             }
         }
@@ -173,35 +154,6 @@ export default class NewChatOverrideLWC extends LightningElement {
         if(event.keyCode === 13){
             this.submit();
         }
-    }
-
-    // Converts markdown link [label](url) to HTML anchor tags
-    markdownToHTML(inputStr) {
-        // Convert markdown links to HTML hyperlinks
-        const linksRegex = /\[([^\[]+)\]\(([^\)]+)\)/g;
-        inputStr = inputStr.replace(linksRegex, (match, label, url) => `<a href="${url}" target="_blank">${label}</a>`);
-    
-        // Convert markdown bold text to HTML bold
-        const boldRegex = /\*\*([^*]+)\*\*/g;
-        inputStr = inputStr.replace(boldRegex, (match, text) => `<strong>${text}</strong>`);
-    
-        // Convert markdown inline code to HTML code
-        const inlineCodeRegex = /`([^`]+)`/g;
-        inputStr = inputStr.replace(inlineCodeRegex, (match, code) => `<code>${code}</code>`);
-    
-        // Convert markdown multiline code blocks to HTML preformatted code
-        // Note that this regex uses the 's' flag to allow for multiline matching
-        const blockCodeRegex = /```([\s\S]+?)```/g;
-        inputStr = inputStr.replace(blockCodeRegex, (match, code) => `<pre><code>${code}</code></pre>`);
-    
-        return inputStr;
-    }
-    
-    // This function escapes dangerous characters from the input string
-    escapeHTML(str) {
-        var div = document.createElement('div');
-        div.appendChild(document.createTextNode(str));
-        return div.innerHTML;
     }
 
 }
