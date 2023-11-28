@@ -4,7 +4,7 @@
  * Description: Post-install script creates first custom metadata record upon installation.
 */
 
-public class PostInstall implements InstallHandler {
+public with sharing class PostInstall implements InstallHandler {
     
     //Create default custom setting if it doesn't exist
     public void onInstall(InstallContext context){

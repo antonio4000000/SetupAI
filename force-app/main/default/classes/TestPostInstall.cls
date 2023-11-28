@@ -5,7 +5,7 @@
 */
 
 @isTest
-public class TestPostInstall {
+public with sharing class TestPostInstall {
     
     @isTest
     static void testInstall(){
