@@ -10,7 +10,9 @@
                                     <div class="slds-chat-message">
                                         <div class="slds-chat-message__body">
                                             <div class={message.msgClass}>
-                                                <span>{message.text}</span>
+                                                <span>
+                                                    <lightning-formatted-text value={message.text}></lightning-formatted-text>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
