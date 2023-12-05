@@ -109,6 +109,16 @@ Prompt: Take me to the edit page for my user
 - getEndpoints: Make note of endpoint for viewing user edit page
 2. Get User Id
 - getUserId
-3. Generate link for user replacing user id with id from function</value>
+3. Generate link for user replacing user id with id from function
+Prompt: Why isn&apos;t AccountFlow firing on Test Account?
+1. Find flow
+- toolingQuery: query=SELECT Id FROM Flow WHERE MasterLabel={Name of Flow}
+2. Investigate metadata entry criteria and decisions and return results(can add extra step to check trigger type)
+- metadataDrilldown: path=start query=SELECT Metadata FROM Flow WHERE Id={Id from step2} (this will return subsequent paths, and in this example you want to check entry criteria which you can see is under filters)
+- metadataDrilldown: path=start.filters query=SELECT Metadata FROM Flow WHERE Id={Id from step2} 
+- With this result returning an array of filters, you see the entry criteria for the flow
+3. Query record
+- soql: query=SELECT Id, {fields in entry criteria} FROM Account WHERE Name=&apos;Test Account&apos;
+- analyze and return results to user(or check other flow aspects if solution not found.</value>
     </values>
 </CustomMetadata>
