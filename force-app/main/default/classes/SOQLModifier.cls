@@ -5,10 +5,13 @@
  */
 
 public with sharing class SOQLModifier {
+
+    //Fields to add to query for profile permission sets
+    public static String[] profileFields = new String[]{'IsOwnedByProfile','ProfileId'};
     
     //Call this method to modify queries and ensure standardization and clean information
     public static String modify(String query){
-        if(query.contains('FROM PermissionSet') || query.contains('FROM PermissionSetAssignment')) query = removeProfilePermSets(query);
+        if(query.contains('FROM PermissionSet') || query.contains('FROM PermissionSetAssignment')) query = addProfileFields(query);
         if(!query.contains('LIMIT')) query = limitQuery(query);
         return query;
     }
@@ -18,13 +21,27 @@ public with sharing class SOQLModifier {
         return query + ' LIMIT 50';
     }
 
-    //Appends IsOwnedByProfile=false to PermissionSet queries
-    public static String removeProfilePermSets(String query){
+    //Add profile fields to query to execute so AI is aware of profile permission sets
+    public static String addProfileFields(String query){
         if(query.contains('FROM PermissionSet ') && !query.contains('IsOwnedByProfile')){
-            query = query + (query.contains('WHERE') ? ' AND ' : ' WHERE ') + 'IsOwnedByProfile = false';
+            String newFields = '';
+            for(String field : profileFields){
+                if(!query.contains(field)){
+                    newFields = newFields + ', ' + field;
+                }
+            }
+            String[] queryParts = query.split(' FROM PermissionSet ');
+            query = queryParts[0] + newFields + ' FROM PermissionSet ' + (queryParts[1] != null ? queryParts[1] : '');
         }
         if(query.contains('FROM PermissionSetAssignment') && !query.contains('IsOwnedByProfile')){
-            query = query + (query.contains('WHERE') ? ' AND ' : ' WHERE ') + 'PermissionSet.IsOwnedByProfile = false';
+            String newFields = '';
+            for(String field : profileFields){
+                if(!query.contains(field)){
+                    newFields = newFields + ', PermissionSet.' + field;
+                }
+            }
+            String[] queryParts = query.split(' FROM PermissionSetAssignment');
+            query = queryParts[0] + newFields + ' FROM PermissionSetAssignment' + (queryParts[1] != null ? queryParts[1] : '');
         }
         return query;
     }

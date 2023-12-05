@@ -17,9 +17,9 @@ Prompt: &quot;I can&apos;t see the Options field on the Category object when I s
 - soql: query=SELECT PermissionSetId, PermissionSet.Name, PermissionSet.ProfileId, PermissionSet.Profile.Name, AssigneeId, Assignee.Name FROM PermissionSetAssignment WHERE AssigneeId = &apos;{USERID}&apos;
 - toolingQuery: query=SELECT DurableId, QualifiedAPIName FROM EntityDefinition WHERE MasterLabel = &apos;Category&apos;(Alter query if no results found and try again til object found or go back to user if not found after a few tries)
 - toolingQuery: query=SELECT DurableId, QualifiedAPIName FROM FieldDefinition WHERE EntityDefinition.QualifiedAPIName = &apos;{VALUE FROM LAST QUERY}&apos; AND MasterLabel = &apos;Options&apos;
-- For every permission set on the user, run toolingQuery:(if you find one that has access, move on to the next solution since they should be able to see the field based on permissions alone) query=SELECT PermissionsRead, PermissionsEdit FROM FieldPermissions WHERE Field = &apos;{CATEGORY_API_NAME.FIELD_API_NAME}&apos; AND ParentId = &apos;{PERMISSION_SET_ID}&apos;
+- For every permission set on the user, run soql:(if you find one that has access, move on to the next solution since they should be able to see the field based on permissions alone) query=SELECT PermissionsRead, PermissionsEdit FROM FieldPermissions WHERE Field = &apos;{CATEGORY_API_NAME.FIELD_API_NAME}&apos; AND ParentId = &apos;{PERMISSION_SET_ID}&apos;
 2. Check if the Options field is included in the user&apos;s page layout(Sometimes, the field might not be included in the page layout assigned to the user&apos;s profile or record type.)
-- toolingQuery: query=SELECT Layout.Name, LayoutId, RecordTypeId, RecordType.Name FROM ProfileLayout WHERE Layout.EntityDefinitionId = &apos;{DurableId from EntityDefinition in step 1}&apos; AND ProfileId = &apos;{Id from Profile in PermissionSetAssignment query in step 1}&apos;
+- toolingQuery: query=SELECT Layout.Name, LayoutId, RecordTypeId, RecordType.Name FROM ProfileLayout WHERE TableEnumOrId = &apos;{DurableId from EntityDefinition in step 1}&apos; AND ProfileId = &apos;{Id from Profile in PermissionSetAssignment query in step 1}&apos;
 - For each layout returned, run metadataDrilldown: toolingQuery=SELECT Metadata FROM Layout WHERE Id = &apos;{ID of layout you&apos;re checking}&apos;, path=layoutSections
 - If field is present in all layouts, move on to the 3rd possible solution. If it&apos;s not present in any, let the user know this is the issue.
 - If the field is present in some, but not all layouts, follow up with the user and ask them which record they are referring to. Either have them give you the Id of the record, or query it based on the standard Name field
@@ -55,7 +55,7 @@ Prompt: &quot;What fields are on the Category object layout?&quot;
 - getUserId
 - toolingQuery: query=SELECT Profile.Id FROM PermissionSetAssignment WHERE AssigneeId = &apos;{USER_ID}&apos; AND IsOwnedByProfile = true
 - toolingQuery: query=SELECT DurableId, QualifiedAPIName FROM EntityDefinition WHERE Label = &apos;Category&apos;&quot; (If nothing returned, rerun with this where clause:&quot;WHERE Label LIKE &apos;%Category%&apos;&quot;)
-- toolingQuery: query=SELECT LayoutId, RecordTypeId FROM ProfileLayout WHERE TableEnumOrId = &apos;{Id of Category object from EntityDefinition query}&apos; AND ProfileId = &apos;{Profile Id from PermissionSetAssignment query}&apos;
+- toolingQuery: query=SELECT LayoutId, RecordTypeId FROM ProfileLayout WHERE TableEnumOrId = &apos;{DurableId of Category object from EntityDefinition query}&apos; AND ProfileId = &apos;{Profile Id from PermissionSetAssignment query}&apos;
 - If multiple ProfileLayouts are returned with different RecordTypeId values, ask the user which record type they are looking at?(Tell them they can alternatively give you a record. Query the RecordTypeId from the record if they provide one. You might have to search for the record by it&apos;s name or other field value)
 2. Read the metadata on the layout
 - metadataDrilldown: query=SELECT Metadata FROM Layout WHERE Id = &apos;{LayoutId from ProfileLayout query}&apos; path=layoutSections
