@@ -1,13 +1,14 @@
 {
-    "Username": "mike@cloudcareercoach.com.setupai15",
-    "LastName": "Wheeler",
-    "Email": "mike@cloudcareercoach.com",
+    "Username": "testuser@test.com.setupai",
+    "LastName": "User",
+    "FirstName": "Test",
+    "Email": "wheeler.anthony.ai@gmail.com",
     "Alias": "tester1",
     "TimeZoneSidKey": "America/Chicago",
     "LocaleSidKey": "en_US",
     "EmailEncodingKey": "UTF-8",
     "LanguageLocaleKey": "en_US",
-    "profileName": "System Administrator",
+    "profileName": "Standard User",
     "permsets": ["SetupAI"],
     "generatePassword": true
 }

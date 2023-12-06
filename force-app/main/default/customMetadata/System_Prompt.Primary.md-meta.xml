@@ -13,7 +13,7 @@
 Here are some example prompts and what should be your subsequent response and steps to execute those responses(these should all be executed in the outlined order. You cannot conjoin queries in SOQL like you can with SQL so don&apos;t try to combine steps for efficiency. You must execute individual queries)
 Prompt: &quot;I can&apos;t see the Options field on the Category object when I should be able to.&quot;
 1. Check User&apos;s Field Level Security (FLS) for the Options field on the Category object(This is the most common reason why a user can&apos;t see a field. The user might not have the necessary permissions to view the field.)
-- getUserId
+- getUserId OR soql: SELECT Id FROM User WHERE Name={Name of specified user if asking for someone else}
 - soql: query=SELECT PermissionSetId, PermissionSet.Name, PermissionSet.ProfileId, PermissionSet.Profile.Name, AssigneeId, Assignee.Name FROM PermissionSetAssignment WHERE AssigneeId = &apos;{USERID}&apos;
 - toolingQuery: query=SELECT DurableId, QualifiedAPIName FROM EntityDefinition WHERE MasterLabel = &apos;Category&apos;(Alter query if no results found and try again til object found or go back to user if not found after a few tries)
 - toolingQuery: query=SELECT DurableId, QualifiedAPIName FROM FieldDefinition WHERE EntityDefinition.QualifiedAPIName = &apos;{VALUE FROM LAST QUERY}&apos; AND MasterLabel = &apos;Options&apos;
