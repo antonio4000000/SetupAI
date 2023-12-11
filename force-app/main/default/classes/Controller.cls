@@ -23,8 +23,8 @@ public with sharing class Controller {
                     return initialize(content);
                 }else{
                     insert new Message__c(Thread__c = chatId,
-                                                   Content__c = content,
-                                                   Role__c = 'user');
+                                          Content__c = Utils.sanitizeHtml(content),
+                                          Role__c = 'user');
                     return null;
                 }
             }else{
@@ -42,7 +42,7 @@ public with sharing class Controller {
             insert chat;
             insert new Message__c(
                 Role__c = 'user',
-                Content__c = firstMessage,
+                Content__c = Utils.sanitizeHtml(firstMessage),
                 Thread__c = chat.Id
             );
             return chat.Id;
@@ -100,13 +100,13 @@ public with sharing class Controller {
                     returnObj.containerClass = OUTBOUND_CONTAINER_CLASS;
                     returnObj.msgClass = OUTBOUND_MESSAGE_CLASS;
                     returnObj.id = msg.Id;
-                    returnObj.text = msg.Content__c;
+                    returnObj.text = Utils.sanitizeHtml(msg.Content__c);
                 }
                 if(msg.Role__c == 'assistant' || msg.Role__c == 'error'){
                     returnObj.containerClass = INBOUND_CONTAINER_CLASS;
                     returnObj.msgClass = INBOUND_MESSAGE_CLASS;
                     returnObj.id = msg.Id;
-                    returnObj.text = (msg.Role__c == 'error' ? 'ERROR: ' : '' ) + msg.Content__c;
+                    returnObj.text = (msg.Role__c == 'error' ? 'ERROR: ' : '' ) + Utils.sanitizeHtml(msg.Content__c);
                 }
                 if(returnObj.text != null){
                     toReturn.add(returnObj);
@@ -147,5 +147,6 @@ public with sharing class Controller {
             throw new AuraHandledException(e.getMessage());
         }
     }
+    
 
 }

@@ -51,7 +51,7 @@ public with sharing class Function {
         if(CRUD.createMessage()){
             insert new Message__c(Thread__c = chatId,
                                   Role__c = 'function',
-                                  Content__c = content,
+                                  Content__c = Utils.sanitizeHtml(content),
                                   Function_Name__c = name);
         }
     }

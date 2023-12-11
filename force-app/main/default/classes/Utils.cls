@@ -70,4 +70,18 @@ public with sharing class Utils {
         }
     }
 
+    //Prevents HTML from displaying in chat
+    public static String sanitizeHtml(String input) {
+        if (String.isEmpty(input)) {
+            return input;
+        }
+        // Escape all HTML entities
+        String sanitized = input.escapeHtml4();
+        // Unescape specific characters for readability
+        sanitized = sanitized.replace('&#39;', '\'') // Apostrophe
+                             .replace('&quot;', '"') // Double Quote
+                             .replace('&amp;', '&');  // Ampersand
+        return sanitized;
+    }
+
 }
