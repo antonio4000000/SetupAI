@@ -1,0 +1,3660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZAP Scanning Report</title>
+<link
+	href="2023-12-15-ZAP-Report-/normalize/normalize.css" rel="stylesheet">
+<link
+	href="2023-12-15-ZAP-Report-/themes/original/main.css" rel="stylesheet">
+<link
+	href="2023-12-15-ZAP-Report-/themes/original/colors.css" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<h1>ZAP Scanning Report</h1>
+		<p>
+			<span>Generated with</span> <a href="https://zaproxy.org"><img
+				src="2023-12-15-ZAP-Report-/zap32x32.png" alt="The ZAP logo" class="zap-logo">ZAP</a>
+			<span>on Fri 15 Dec 2023, at 21:20:47</span>
+		</p>
+		<p>ZAP Version: 2.14.0</p>
+	</header>
+
+	<main>
+
+		<section id="contents" class="contents">
+			<h2>Contents</h2>
+			<nav>
+				<ol>
+					<li><a
+						href="#about-this-report">About this report</a>
+						<ol>
+							
+							<li><a
+								href="#report-parameters">Report parameters</a></li>
+						</ol></li>
+					<data-th-block>
+					<li><a
+						href="#summaries">Summaries</a>
+						<ol>
+							<li><a
+								href="#risk-confidence-counts">Alert counts by risk and confidence</a></li>
+							<li><a
+								href="#site-risk-counts">Alert counts by site and risk</a></li>
+							<li><a
+								href="#alert-type-counts">Alert counts by alert type</a></li>
+						</ol></li>
+					<li><a
+						href="#alerts">Alerts</a>
+						<ol>
+							
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-3-confidence-3"><span>Risk</span>=<span
+									class="risk-level">High</span>, <span>Confidence</span>=<span
+									class="confidence-level">High</span> <span>(1)</span></a></li>
+							
+							<li><a
+								href="#alerts--risk-3-confidence-2"><span>Risk</span>=<span
+									class="risk-level">High</span>, <span>Confidence</span>=<span
+									class="confidence-level">Medium</span> <span>(5)</span></a></li>
+							
+							
+							  
+							
+							
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-2-confidence-2"><span>Risk</span>=<span
+									class="risk-level">Medium</span>, <span>Confidence</span>=<span
+									class="confidence-level">Medium</span> <span>(2)</span></a></li>
+							
+							
+							  
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-1-confidence-3"><span>Risk</span>=<span
+									class="risk-level">Low</span>, <span>Confidence</span>=<span
+									class="confidence-level">High</span> <span>(1)</span></a></li>
+							
+							<li><a
+								href="#alerts--risk-1-confidence-2"><span>Risk</span>=<span
+									class="risk-level">Low</span>, <span>Confidence</span>=<span
+									class="confidence-level">Medium</span> <span>(2)</span></a></li>
+							
+							<li><a
+								href="#alerts--risk-1-confidence-1"><span>Risk</span>=<span
+									class="risk-level">Low</span>, <span>Confidence</span>=<span
+									class="confidence-level">Low</span> <span>(1)</span></a></li>
+							  
+							
+							
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-0-confidence-2"><span>Risk</span>=<span
+									class="risk-level">Informational</span>, <span>Confidence</span>=<span
+									class="confidence-level">Medium</span> <span>(2)</span></a></li>
+							
+							<li><a
+								href="#alerts--risk-0-confidence-1"><span>Risk</span>=<span
+									class="risk-level">Informational</span>, <span>Confidence</span>=<span
+									class="confidence-level">Low</span> <span>(1)</span></a></li>
+							  
+						</ol></li>
+					<li><a
+						href="#appendix">Appendix</a>
+						<ol>
+							<li><a
+								href="#alert-types">Alert types</a></li>
+						</ol></li>
+					</data-th-block>
+				</ol>
+			</nav>
+		</section>
+
+		<section
+			id="about-this-report" class="about-this-report">
+			<h2>About this report</h2>
+
+			
+
+			<section
+				id="report-parameters">
+				<h3>Report parameters</h3>
+				<div class="report-parameters--container">
+					<h4>Contexts</h4>
+					
+					
+					<p>No contexts were selected, so all contexts were included by default.</p>
+					  
+
+					<h4>Sites</h4>
+					
+					<p>The following sites were included:</p>
+					<ul class="sites-list">
+						<li><span class="site">https://api.openai.com</span></li>
+					</ul>
+					
+					<p>(If no sites were selected, all sites were included by default.)</p>
+					<p>An included site must also be within one of the included contexts for its data to be included in the report.</p>
+
+					<h4>Risk levels</h4>
+					<p>
+						<span>Included</span>:
+						 
+						<span class="included-risk-codes"><span class="risk-level">High</span>, <span class="risk-level">Medium</span>, <span class="risk-level">Low</span>, <span class="risk-level">Informational</span></span>
+					</p>
+					<p>
+						<span>Excluded</span>:
+						 <span>None</span>
+						
+					</p>
+
+					<h4>Confidence levels</h4>
+					<p>
+						<span>Included</span>:
+						
+						
+						<span class="included-confidence-codes"><span class="confidence-level">User Confirmed</span>, <span class="confidence-level">High</span>, <span class="confidence-level">Medium</span>, <span class="confidence-level">Low</span></span>
+					</p>
+					<p>
+						<span>Excluded</span>:
+						
+						
+						<span class="included-confidence-codes"> <span class="confidence-level">User Confirmed</span>, <span class="confidence-level">High</span>, <span class="confidence-level">Medium</span>, <span class="confidence-level">Low</span>, <span class="confidence-level">False Positive</span></span>
+					</p>
+				</div>
+			</section>
+		</section>
+
+		
+		<section>
+			
+		</section>
+		
+		<section id="summaries" class="summaries">
+			<h2>Summaries</h2>
+
+			<section
+				id="risk-confidence-counts">
+				<h3>Alert counts by risk and confidence</h3>
+				<table class="risk-confidence-counts-table">
+					<caption>
+						<p>This table shows the number of alerts for each level of risk and confidence included in the report.</p>
+						<p>(The percentages in brackets represent the count as a percentage of the total number of alerts included in the report, rounded to one decimal place.)</p>
+					</caption>
+					<colgroup>
+						<col>
+						<col>
+					</colgroup>
+					<colgroup>
+						<col
+							style="width: 14.0%"><col
+							style="width: 14.0%"><col
+							style="width: 14.0%"><col
+							style="width: 14.0%">
+						<col style="width: 14.0%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="2" rowspan="2"></td>
+							<th scope="colgroup"
+								colspan="5">Confidence</th>
+						</tr>
+						<tr>
+							<th scope="col">User Confirmed</th>
+							<th scope="col">High</th>
+							<th scope="col">Medium</th>
+							<th scope="col">Low</th>
+							<th scope="col">Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="rowgroup"
+								rowspan="5">Risk</th>
+							<th scope="row">High</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(6.7%)</span></td>
+							<td><span>5</span><br> <span
+								class="additional-info-percentages">(33.3%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>6</span><br> <span class="additional-info-percentages">(40.0%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Medium</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(13.3%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>2</span><br> <span class="additional-info-percentages">(13.3%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Low</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(6.7%)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(13.3%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(6.7%)</span></td>
+							<td><span>4</span><br> <span class="additional-info-percentages">(26.7%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Informational</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(13.3%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(6.7%)</span></td>
+							<td><span>3</span><br> <span class="additional-info-percentages">(20.0%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row">Total</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(13.3%)</span></td>
+							<td><span>11</span><br> <span
+								class="additional-info-percentages">(73.3%)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(13.3%)</span></td>
+							<td><span>15</span><br> <span
+								class="additional-info-percentages">(100%)</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section
+				id="site-risk-counts">
+				<h3>Alert counts by site and risk</h3>
+				<table class="site-risk-counts-table">
+					<caption>
+						<p>This table shows, for each site for which one or more alerts were raised, the number of alerts raised at each risk level.</p>
+						<p>Alerts with a confidence level of &quot;False Positive&quot; have been excluded from these counts.</p>
+						<p>(The numbers in brackets are the number of alerts raised for the site at or above that risk level.)</p>
+					</caption>
+					<colgroup>
+						<col>
+						<col>
+					</colgroup>
+					<colgroup>
+						<col
+							style="width: 16.25%"><col
+							style="width: 16.25%"><col
+							style="width: 16.25%"><col
+							style="width: 16.25%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="2" rowspan="2"></td>
+							<th scope="colgroup" colspan="4">Risk</th>
+						</tr>
+						<tr>
+							<th scope="col">
+								<span>High</span><br>  <span
+									class="additional-info-percentages">(= High)</span>  
+							</th>
+							<th scope="col">
+								<span>Medium</span><br>   <span
+									class="additional-info-percentages">(&gt;= Medium)</span> 
+							</th>
+							<th scope="col">
+								<span>Low</span><br>   <span
+									class="additional-info-percentages">(&gt;= Low)</span> 
+							</th>
+							<th scope="col">
+								<span>Informational</span><br>   <span
+									class="additional-info-percentages">(&gt;= Informational)</span> 
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="rowgroup"
+								rowspan="1">Site</th>
+							<th scope="row">https://api.openai.com</th>
+							
+							<td><span>6</span><br> <span
+								class="additional-info-percentages">(6)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(8)</span></td>
+							<td><span>4</span><br> <span
+								class="additional-info-percentages">(12)</span></td>
+							<td><span>3</span><br> <span
+								class="additional-info-percentages">(15)</span></td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section
+				id="alert-type-counts">
+				<h3>Alert counts by alert type</h3>
+				<table class="alert-type-counts-table">
+					<caption>
+						<p>This table shows the number of alerts of each alert type, together with the alert type&#39;s risk level.</p>
+						<p>(The percentages in brackets represent each count as a percentage, rounded to one decimal place, of the total number of alerts included in this report.)</p>
+					</caption>
+					<thead>
+						<tr>
+							<th scope="col">Alert type</th>
+							<th scope="col">Risk</th>
+							<th scope="col">Count</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-0">Remote OS Command Injection</a></th>
+							<td class="risk-level">High</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(6.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-1">SQL Injection - Oracle - Time Based</a></th>
+							<td class="risk-level">High</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(6.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-2">SQL Injection - PostgreSQL - Time Based</a></th>
+							<td class="risk-level">High</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(6.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-3">SQL Injection - SQLite</a></th>
+							<td class="risk-level">High</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(6.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-4">Server Side Code Injection - PHP Code Injection</a></th>
+							<td class="risk-level">High</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(6.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-5">Server Side Template Injection</a></th>
+							<td class="risk-level">High</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(6.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-6">Cross-Domain Misconfiguration</a></th>
+							<td class="risk-level">Medium</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(6.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-7">XSLT Injection</a></th>
+							<td class="risk-level">Medium</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(6.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-8">Cookie with SameSite Attribute None</a></th>
+							<td class="risk-level">Low</td>
+							<td><span>11</span><br> <span
+								class="additional-info-percentages">(73.3%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-9">Strict-Transport-Security Header Not Set</a></th>
+							<td class="risk-level">Low</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(6.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-10">Timestamp Disclosure - Unix</a></th>
+							<td class="risk-level">Low</td>
+							<td><span>7</span><br> <span
+								class="additional-info-percentages">(46.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-11">X-Content-Type-Options Header Missing</a></th>
+							<td class="risk-level">Low</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(6.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-12">Re-examine Cache-control Directives</a></th>
+							<td class="risk-level">Informational</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(6.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-13">Session Management Response Identified</a></th>
+							<td class="risk-level">Informational</td>
+							<td><span>6</span><br> <span
+								class="additional-info-percentages">(40.0%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-14">User Agent Fuzzer</a></th>
+							<td class="risk-level">Informational</td>
+							<td><span>12</span><br> <span
+								class="additional-info-percentages">(80.0%)</span></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th scope="row">Total</th>
+							<td></td>
+							<td>15</td>
+						</tr>
+					</tfoot>
+				</table>
+			</section>
+		</section>
+
+		<section id="alerts" class="alerts">
+			<h2>Alerts</h2>
+			<ol>
+				
+				 
+				
+				
+				<li id="alerts--risk-3-confidence-3">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">High</span>, <span>Confidence</span>=<span
+							class="confidence-level">High</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://api.openai.com</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-5">Server Side Template Injection</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://api.openai.com/v1/chat/completions</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>When the user input is inserted in the template instead of being used as argument in rendering is evaluated by the template engine. Depending on the template engine it can lead to remote code execution.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>Proof found at [https://api.openai.com/v1/chat/completions] </p>
+
+<p>content:</p>
+
+<p>[{</p>
+
+<p>  &quot;id&quot;: &quot;chatcmpl-8WFS8FMRxFBjp5JLhdvllieKb5LC4&quot;,</p>
+
+<p>  &quot;object&quot;: &quot;chat.completion&quot;,</p>
+
+<p>  &quot;created&quot;: 1702696588,</p>
+
+<p>  &quot;model&quot;: &quot;gpt-4-0613&quot;,</p>
+
+<p>  &quot;choices&quot;: [</p>
+
+<p>    {</p>
+
+<p>      &quot;index&quot;: 0,</p>
+
+<p>      &quot;message&quot;: {</p>
+
+<p>        &quot;role&quot;: &quot;assistant&quot;,</p>
+
+<p>        &quot;content&quot;: &quot;zj114790zj&quot;</p>
+
+<p>      },</p>
+
+<p>      &quot;logprobs&quot;: null,</p>
+
+<p>      &quot;finish_reason&quot;: &quot;stop&quot;</p>
+
+<p>    }</p>
+
+<p>  ],</p>
+
+<p>  &quot;usage&quot;: {</p>
+
+<p>    &quot;prompt_tokens&quot;: 20,</p>
+
+<p>    &quot;completion_tokens&quot;: 6,</p>
+
+<p>    &quot;total_tokens&quot;: 26</p>
+
+<p>  },</p>
+
+<p>  &quot;system_fingerprint&quot;: null</p>
+
+<p>}</p>
+
+<p>Date: Sat, 16 Dec 2023 03:16:28 GMT</p>
+
+<p>Content-Type: application/json</p>
+
+<p>Content-Length: 451</p>
+
+<p>Connection: keep-alive</p>
+
+<p>access-control-allow-origin: *</p>
+
+<p>Cache-Control: no-cache, must-revalidate</p>
+
+<p>openai-model: gpt-4-0613</p>
+
+<p>openai-organization: adminai</p>
+
+<p>openai-processing-ms: 609</p>
+
+<p>openai-version: 2020-10-01</p>
+
+<p>strict-transport-security: max-age=15724800; includeSubDomains</p>
+
+<p>x-ratelimit-limit-requests: 5000</p>
+
+<p>x-ratelimit-limit-tokens: 80000</p>
+
+<p>x-ratelimit-limit-tokens_usage_based: 80000</p>
+
+<p>x-ratelimit-remaining-requests: 4999</p>
+
+<p>x-ratelimit-remaining-tokens: 79977</p>
+
+<p>x-ratelimit-remaining-tokens_usage_based: 79977</p>
+
+<p>x-ratelimit-reset-requests: 12ms</p>
+
+<p>x-ratelimit-reset-tokens: 17ms</p>
+
+<p>x-ratelimit-reset-tokens_usage_based: 17ms</p>
+
+<p>x-request-id: 725eb320a220868de92bd23a65e9f630</p>
+
+<p>CF-Cache-Status: DYNAMIC</p>
+
+<p>Set-Cookie: __cf_bm=b77gvFoZtRqzVeydH79s_qiV0RogA0JFgLahKebjF50-1702696588-1-AeWQID3NdL9KkF8Sy20fXY309AxL7NFaU+ZBGzUsdnCFRXHF8xjw+diTAvb6Xn9TLcPwz1vM9m4jdp5s8nFwnKI=; path=/; expires=Sat, 16-Dec-23 03:46:28 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None</p>
+
+<p>Server: cloudflare</p>
+
+<p>CF-RAY: 8363c48ace49b0ac-ATL</p>
+
+<p>alt-svc: h3=&quot;:443&quot;; ma=86400</p>
+
+<p>]</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (577 bytes)</summary>
+				
+				<pre><code>POST https://api.openai.com/v1/chat/completions HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer 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
+User-Agent: PostmanRuntime/7.35.0
+Accept: */*
+Postman-Token: 6cc5a232-e228-4b69-b2c9-938be51ec2f0
+host: api.openai.com
+Connection: keep-alive
+content-length: 173
+Cookie: __cf_bm=Z354MHDTZGV241oM8.mCl0.prF.BRZu3QG2QDH5.zsQ-1702694947-1-AYaALW4/r2sARQqDkMXrcmFyEW5HWMao3y1d9wk5dYtI84pMvHS0Fd92L25NFRtQSwVn9EmayeGI1O23KIfcgr0=; _cfuvid=IMrzGGEO5b114RXmBoWQdzhpi6a6LO9KYzMyqg6G_HM-1702694947443-0-604800000
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (173 bytes)</summary>
+				
+				<pre><code>{
+    
+    &quot;messages&quot;: [
+        {
+            &quot;content&quot;: &quot;zj{{82110|add:32680}}zj&quot;,
+            &quot;role&quot;: &quot;user&quot;
+        }
+    ],
+    &quot;model&quot;: &quot;gpt-4&quot;,
+    &quot;temperature&quot;: 0
+}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (1151 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Sat, 16 Dec 2023 03:16:28 GMT
+Content-Type: application/json
+Content-Length: 451
+Connection: keep-alive
+access-control-allow-origin: *
+Cache-Control: no-cache, must-revalidate
+openai-model: gpt-4-0613
+openai-organization: adminai
+openai-processing-ms: 609
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 5000
+x-ratelimit-limit-tokens: 80000
+x-ratelimit-limit-tokens_usage_based: 80000
+x-ratelimit-remaining-requests: 4999
+x-ratelimit-remaining-tokens: 79977
+x-ratelimit-remaining-tokens_usage_based: 79977
+x-ratelimit-reset-requests: 12ms
+x-ratelimit-reset-tokens: 17ms
+x-ratelimit-reset-tokens_usage_based: 17ms
+x-request-id: 725eb320a220868de92bd23a65e9f630
+CF-Cache-Status: DYNAMIC
+Set-Cookie: __cf_bm=b77gvFoZtRqzVeydH79s_qiV0RogA0JFgLahKebjF50-1702696588-1-AeWQID3NdL9KkF8Sy20fXY309AxL7NFaU+ZBGzUsdnCFRXHF8xjw+diTAvb6Xn9TLcPwz1vM9m4jdp5s8nFwnKI=; path=/; expires=Sat, 16-Dec-23 03:46:28 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 8363c48ace49b0ac-ATL
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (451 bytes)</summary>
+				
+				<pre><code>{
+  &quot;id&quot;: &quot;chatcmpl-8WFS8FMRxFBjp5JLhdvllieKb5LC4&quot;,
+  &quot;object&quot;: &quot;chat.completion&quot;,
+  &quot;created&quot;: 1702696588,
+  &quot;model&quot;: &quot;gpt-4-0613&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;index&quot;: 0,
+      &quot;message&quot;: {
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &quot;zj114790zj&quot;
+      },
+      &quot;logprobs&quot;: null,
+      &quot;finish_reason&quot;: &quot;stop&quot;
+    }
+  ],
+  &quot;usage&quot;: {
+    &quot;prompt_tokens&quot;: 20,
+    &quot;completion_tokens&quot;: 6,
+    &quot;total_tokens&quot;: 26
+  },
+  &quot;system_fingerprint&quot;: null
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>content</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Attack</th>
+		<td><pre><code>zj{{82110|add:32680}}zj</code></pre></td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Instead of inserting the user input in the template, use it as rendering argument.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				<li id="alerts--risk-3-confidence-2">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">High</span>, <span>Confidence</span>=<span
+							class="confidence-level">Medium</span> <span>(5)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://api.openai.com</span> <span>(5)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-0">Remote OS Command Injection</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://api.openai.com/v1/chat/completions</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A03_2021-Injection/">OWASP_2021_A03</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A1_2017-Injection.html">OWASP_2017_A01</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/12-Testing_for_Command_Injection">WSTG-v42-INPV-12</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>Attack technique used for unauthorized execution of operating system commands. This attack is possible when an application accepts untrusted input to build operating system commands in an insecure manner involving improper data sanitization, and/or improper calling of external programs.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>The scan rule was able to retrieve the content of a file or command by sending [get-help] to the operating system running this application</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (577 bytes)</summary>
+				
+				<pre><code>POST https://api.openai.com/v1/chat/completions HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer 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
+User-Agent: PostmanRuntime/7.35.0
+Accept: */*
+Postman-Token: 6cc5a232-e228-4b69-b2c9-938be51ec2f0
+host: api.openai.com
+Connection: keep-alive
+Content-Length: 158
+Cookie: __cf_bm=Z354MHDTZGV241oM8.mCl0.prF.BRZu3QG2QDH5.zsQ-1702694947-1-AYaALW4/r2sARQqDkMXrcmFyEW5HWMao3y1d9wk5dYtI84pMvHS0Fd92L25NFRtQSwVn9EmayeGI1O23KIfcgr0=; _cfuvid=IMrzGGEO5b114RXmBoWQdzhpi6a6LO9KYzMyqg6G_HM-1702694947443-0-604800000
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (158 bytes)</summary>
+				
+				<pre><code>{
+    
+    &quot;messages&quot;: [
+        {
+            &quot;content&quot;: &quot;get-help&quot;,
+            &quot;role&quot;: &quot;user&quot;
+        }
+    ],
+    &quot;model&quot;: &quot;gpt-4&quot;,
+    &quot;temperature&quot;: 0
+}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (1154 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Sat, 16 Dec 2023 03:15:52 GMT
+Content-Type: application/json
+Content-Length: 1042
+Connection: keep-alive
+access-control-allow-origin: *
+Cache-Control: no-cache, must-revalidate
+openai-model: gpt-4-0613
+openai-organization: adminai
+openai-processing-ms: 11216
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 5000
+x-ratelimit-limit-tokens: 80000
+x-ratelimit-limit-tokens_usage_based: 80000
+x-ratelimit-remaining-requests: 4999
+x-ratelimit-remaining-tokens: 79981
+x-ratelimit-remaining-tokens_usage_based: 79981
+x-ratelimit-reset-requests: 12ms
+x-ratelimit-reset-tokens: 14ms
+x-ratelimit-reset-tokens_usage_based: 14ms
+x-request-id: 5bdea206dee465e01037f26b8dedc24d
+CF-Cache-Status: DYNAMIC
+Set-Cookie: __cf_bm=ZTlDfUAvE3KC78JzHutcoEwNnoiTZPddBPFPJ0ufItA-1702696552-1-AUJPFtJGYjCuqklDj6dBiHtAqyrpoxuxUZRsmHlVRQO5oMS3wgC5lO4DdJGHyyVn6anvt4lSkgbryg3f261KaFg=; path=/; expires=Sat, 16-Dec-23 03:45:52 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 8363c3646f74b136-ATL
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (1042 bytes)</summary>
+				
+				<pre><code>{
+  &quot;id&quot;: &quot;chatcmpl-8WFRMRoI1FiOxk8TO9IYUlUGegZgL&quot;,
+  &quot;object&quot;: &quot;chat.completion&quot;,
+  &quot;created&quot;: 1702696540,
+  &quot;model&quot;: &quot;gpt-4-0613&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;index&quot;: 0,
+      &quot;message&quot;: {
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &quot;It seems like you&#39;re trying to use a PowerShell command. The `get-help` command in PowerShell is used to display information about PowerShell concepts and commands, including cmdlets, functions, Common Information Model (CIM) commands, workflows, providers, aliases, and scripts. \n\nYou can use it like this:\n\n`Get-Help &lt;cmdlet-name&gt;`\n\nFor example, if you want to know more about the `Get-Process` cmdlet, you would use:\n\n`Get-Help Get-Process`\n\nThis will display detailed information about the `Get-Process` cmdlet, including its syntax, parameters, outputs, and examples of how to use it.&quot;
+      },
+      &quot;logprobs&quot;: null,
+      &quot;finish_reason&quot;: &quot;stop&quot;
+    }
+  ],
+  &quot;usage&quot;: {
+    &quot;prompt_tokens&quot;: 9,
+    &quot;completion_tokens&quot;: 135,
+    &quot;total_tokens&quot;: 144
+  },
+  &quot;system_fingerprint&quot;: null
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>content</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Attack</th>
+		<td><pre><code>get-help</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>cmdlet</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>If at all possible, use library calls rather than external processes to recreate the desired functionality.</p>
+
+<p>Run your code in a &quot;jail&quot; or similar sandbox environment that enforces strict boundaries between the process and the operating system. This may effectively restrict which files can be accessed in a particular directory or which commands can be executed by your software.</p>
+
+<p>OS-level examples include the Unix chroot jail, AppArmor, and SELinux. In general, managed code may provide some protection. For example, java.io.FilePermission in the Java SecurityManager allows you to specify restrictions on file operations.</p>
+
+<p>This may not be a feasible solution, and it only limits the impact to the operating system; the rest of your application may still be subject to compromise.</p>
+
+<p>For any data that will be used to generate a command to be executed, keep as much of that data out of external control as possible. For example, in web applications, this may require storing the command locally in the session&#39;s state instead of sending it out to the client in a hidden form field.</p>
+
+<p>Use a vetted library or framework that does not allow this weakness to occur or provides constructs that make this weakness easier to avoid.</p>
+
+<p>For example, consider using the ESAPI Encoding control or a similar tool, library, or framework. These will help the programmer encode outputs in a manner less prone to error.</p>
+
+<p>If you need to use dynamically-generated query strings or commands in spite of the risk, properly quote arguments and escape any special characters within those arguments. The most conservative approach is to escape or filter all characters that do not pass an extremely strict allow list (such as everything that is not alphanumeric or white space). If some special characters are still needed, such as white space, wrap each argument in quotes after the escaping/filtering step. Be careful of argument injection.</p>
+
+<p>If the program to be executed allows arguments to be specified within an input file or from standard input, then consider using that mode to pass arguments instead of the command line.</p>
+
+<p>If available, use structured mechanisms that automatically enforce the separation between data and code. These mechanisms may be able to provide the relevant quoting, encoding, and validation automatically, instead of relying on the developer to provide this capability at every point where output is generated.</p>
+
+<p>Some languages offer multiple functions that can be used to invoke commands. Where possible, identify any function that invokes a command shell using a single string, and replace it with a function that requires individual arguments. These functions typically perform appropriate quoting and filtering of arguments. For example, in C, the system() function accepts a string that contains the entire command to be executed, whereas execl(), execve(), and others require an array of strings, one for each argument. In Windows, CreateProcess() only accepts one command at a time. In Perl, if system() is provided with an array of arguments, then it will quote each of the arguments.</p>
+
+<p>Assume all input is malicious. Use an &quot;accept known good&quot; input validation strategy, i.e., use an allow list of acceptable inputs that strictly conform to specifications. Reject any input that does not strictly conform to specifications, or transform it into something that does. Do not rely exclusively on looking for malicious or malformed inputs (i.e., do not rely on a deny list). However, deny lists can be useful for detecting potential attacks or determining which inputs are so malformed that they should be rejected outright.</p>
+
+<p>When performing input validation, consider all potentially relevant properties, including length, type of input, the full range of acceptable values, missing or extra inputs, syntax, consistency across related fields, and conformance to business rules. As an example of business rule logic, &quot;boat&quot; may be syntactically valid because it only contains alphanumeric characters, but it is not valid if you are expecting colors such as &quot;red&quot; or &quot;blue.&quot;</p>
+
+<p>When constructing OS command strings, use stringent allow lists that limit the character set based on the expected value of the parameter in the request. This will indirectly limit the scope of an attack, but this technique is less important than proper output encoding and escaping.</p>
+
+<p>Note that proper output encoding, escaping, and quoting is the most effective solution for preventing OS command injection, although input validation may provide some defense-in-depth. This is because it effectively limits what will appear in output. Input validation will not always prevent OS command injection, especially if you are required to support free-form text fields that could contain arbitrary characters. For example, when invoking a mail program, you might need to allow the subject field to contain otherwise-dangerous inputs like &quot;;&quot; and &quot;&gt;&quot; characters, which would need to be escaped or otherwise handled. In this case, stripping the character might reduce the risk of OS command injection, but it would produce incorrect behavior because the subject field would not be recorded as the user intended. This might seem to be a minor inconvenience, but it could be more important when the program relies on well-structured subject lines in order to pass messages to other components.</p>
+
+<p>Even if you make a mistake in your validation (such as forgetting one out of 100 input fields), appropriate encoding is still likely to protect you from injection-based attacks. As long as it is not done in isolation, input validation is still a useful technique, since it may significantly reduce your attack surface, allow you to detect some attacks, and provide other security benefits that proper encoding does not address.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-1">SQL Injection - Oracle - Time Based</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://api.openai.com/v1/chat/completions</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A03_2021-Injection/">OWASP_2021_A03</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection">WSTG-v42-INPV-05</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A1_2017-Injection.html">OWASP_2017_A01</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>SQL injection may be possible.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>The query time is controllable using parameter value [(SELECT  UTL_INADDR.get_host_name(&#39;10.0.0.1&#39;) from dual union SELECT  UTL_INADDR.get_host_name(&#39;10.0.0.2&#39;) from dual union SELECT  UTL_INADDR.get_host_name(&#39;10.0.0.3&#39;) from dual union SELECT  UTL_INADDR.get_host_name(&#39;10.0.0.4&#39;) from dual union SELECT  UTL_INADDR.get_host_name(&#39;10.0.0.5&#39;) from dual)], which caused the request to take [18,634] milliseconds, when the original unmodified query with value [Hi there] took [1,651] milliseconds </p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (577 bytes)</summary>
+				
+				<pre><code>POST https://api.openai.com/v1/chat/completions HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer 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
+User-Agent: PostmanRuntime/7.35.0
+Accept: */*
+Postman-Token: 6cc5a232-e228-4b69-b2c9-938be51ec2f0
+host: api.openai.com
+Connection: keep-alive
+content-length: 450
+Cookie: __cf_bm=Z354MHDTZGV241oM8.mCl0.prF.BRZu3QG2QDH5.zsQ-1702694947-1-AYaALW4/r2sARQqDkMXrcmFyEW5HWMao3y1d9wk5dYtI84pMvHS0Fd92L25NFRtQSwVn9EmayeGI1O23KIfcgr0=; _cfuvid=IMrzGGEO5b114RXmBoWQdzhpi6a6LO9KYzMyqg6G_HM-1702694947443-0-604800000
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (450 bytes)</summary>
+				
+				<pre><code>{
+    
+    &quot;messages&quot;: [
+        {
+            &quot;content&quot;: &quot;(SELECT  UTL_INADDR.get_host_name(&#39;10.0.0.1&#39;) from dual union SELECT  UTL_INADDR.get_host_name(&#39;10.0.0.2&#39;) from dual union SELECT  UTL_INADDR.get_host_name(&#39;10.0.0.3&#39;) from dual union SELECT  UTL_INADDR.get_host_name(&#39;10.0.0.4&#39;) from dual union SELECT  UTL_INADDR.get_host_name(&#39;10.0.0.5&#39;) from dual)&quot;,
+            &quot;role&quot;: &quot;user&quot;
+        }
+    ],
+    &quot;model&quot;: &quot;gpt-4&quot;,
+    &quot;temperature&quot;: 0
+}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (1154 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Sat, 16 Dec 2023 03:12:59 GMT
+Content-Type: application/json
+Content-Length: 1425
+Connection: keep-alive
+access-control-allow-origin: *
+Cache-Control: no-cache, must-revalidate
+openai-model: gpt-4-0613
+openai-organization: adminai
+openai-processing-ms: 18506
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 5000
+x-ratelimit-limit-tokens: 80000
+x-ratelimit-limit-tokens_usage_based: 80000
+x-ratelimit-remaining-requests: 4999
+x-ratelimit-remaining-tokens: 79908
+x-ratelimit-remaining-tokens_usage_based: 79908
+x-ratelimit-reset-requests: 12ms
+x-ratelimit-reset-tokens: 69ms
+x-ratelimit-reset-tokens_usage_based: 69ms
+x-request-id: 2761588c394ccd3bd2432e51114aa456
+CF-Cache-Status: DYNAMIC
+Set-Cookie: __cf_bm=tBCKDZRrYxBTliUdOuHxpF_yNWBZdv0q9jW0n5XvKVc-1702696379-1-AS7YrxPkJbwg22DiwyDPEfKkvxM3t2F9sODjkWUgITmxOw5QuaP4PTmyDegBY0+gcPe9l7G6CNp00mKeIg4MMOc=; path=/; expires=Sat, 16-Dec-23 03:42:59 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 8363bf0088cfb136-ATL
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (1425 bytes)</summary>
+				
+				<pre><code>{
+  &quot;id&quot;: &quot;chatcmpl-8WFOTnS42VboxkSN6Qu0WLZ997l5g&quot;,
+  &quot;object&quot;: &quot;chat.completion&quot;,
+  &quot;created&quot;: 1702696361,
+  &quot;model&quot;: &quot;gpt-4-0613&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;index&quot;: 0,
+      &quot;message&quot;: {
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &quot;This SQL query is using the Oracle built-in function UTL_INADDR.get_host_name to get the host name for each of the IP addresses specified (&#39;10.0.0.1&#39;, &#39;10.0.0.2&#39;, &#39;10.0.0.3&#39;, &#39;10.0.0.4&#39;, &#39;10.0.0.5&#39;). \n\nThe UNION operator is used to combine the result sets of 5 SELECT statements into a single result set. The UNION operator removes duplicate rows from the result sets.\n\nHowever, this query can be simplified by using the IN clause instead of multiple UNIONs:\n\n```\nSELECT UTL_INADDR.get_host_name(ip_address)\nFROM (\n  SELECT &#39;10.0.0.1&#39; AS ip_address FROM dual\n  UNION ALL\n  SELECT &#39;10.0.0.2&#39; FROM dual\n  UNION ALL\n  SELECT &#39;10.0.0.3&#39; FROM dual\n  UNION ALL\n  SELECT &#39;10.0.0.4&#39; FROM dual\n  UNION ALL\n  SELECT &#39;10.0.0.5&#39; FROM dual\n)\n```\n\nThis query does the same thing as the original, but it&#39;s a bit cleaner and easier to read. It first creates a derived table with the IP addresses, and then it selects the host name for each IP address from that derived table.&quot;
+      },
+      &quot;logprobs&quot;: null,
+      &quot;finish_reason&quot;: &quot;stop&quot;
+    }
+  ],
+  &quot;usage&quot;: {
+    &quot;prompt_tokens&quot;: 112,
+    &quot;completion_tokens&quot;: 280,
+    &quot;total_tokens&quot;: 392
+  },
+  &quot;system_fingerprint&quot;: null
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>content</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Attack</th>
+		<td><pre><code>field: [content], value [(SELECT  UTL_INADDR.get_host_name(&#39;10.0.0.1&#39;) from dual union SELECT  UTL_INADDR.get_host_name(&#39;10.0.0.2&#39;) from dual union SELECT  UTL_INADDR.get_host_name(&#39;10.0.0.3&#39;) from dual union SELECT  UTL_INADDR.get_host_name(&#39;10.0.0.4&#39;) from dual union SELECT  UTL_INADDR.get_host_name(&#39;10.0.0.5&#39;) from dual)]</code></pre></td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Do not trust client side input, even if there is client side validation in place.</p>
+
+<p>In general, type check all data on the server side.</p>
+
+<p>If the application uses JDBC, use PreparedStatement or CallableStatement, with parameters passed by &#39;?&#39;</p>
+
+<p>If the application uses ASP, use ADO Command Objects with strong type checking and parameterized queries.</p>
+
+<p>If database Stored Procedures can be used, use them.</p>
+
+<p>Do *not* concatenate strings into queries in the stored procedure, or use &#39;exec&#39;, &#39;exec immediate&#39;, or equivalent functionality!</p>
+
+<p>Do not create dynamic SQL queries using simple string concatenation.</p>
+
+<p>Escape all data received from the client.</p>
+
+<p>Apply an &#39;allow list&#39; of allowed characters, or a &#39;deny list&#39; of disallowed characters in user input.</p>
+
+<p>Apply the principle of least privilege by using the least privileged database user possible.</p>
+
+<p>In particular, avoid using the &#39;sa&#39; or &#39;db-owner&#39; database users. This does not eliminate SQL injection, but minimizes its impact.</p>
+
+<p>Grant the minimum database access that is necessary for the application.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-2">SQL Injection - PostgreSQL - Time Based</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://api.openai.com/v1/chat/completions</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A03_2021-Injection/">OWASP_2021_A03</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection">WSTG-v42-INPV-05</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A1_2017-Injection.html">OWASP_2017_A01</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>SQL injection may be possible.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>The query time is controllable using parameter value [case when cast(pg_sleep(15) as varchar) &gt; &#39;&#39; then 0 else 1 end], which caused the request to take [19,043] milliseconds, when the original unmodified query with value [Hi there] took [875] milliseconds </p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (577 bytes)</summary>
+				
+				<pre><code>POST https://api.openai.com/v1/chat/completions HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer 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
+User-Agent: PostmanRuntime/7.35.0
+Accept: */*
+Postman-Token: 6cc5a232-e228-4b69-b2c9-938be51ec2f0
+host: api.openai.com
+Connection: keep-alive
+content-length: 212
+Cookie: __cf_bm=Z354MHDTZGV241oM8.mCl0.prF.BRZu3QG2QDH5.zsQ-1702694947-1-AYaALW4/r2sARQqDkMXrcmFyEW5HWMao3y1d9wk5dYtI84pMvHS0Fd92L25NFRtQSwVn9EmayeGI1O23KIfcgr0=; _cfuvid=IMrzGGEO5b114RXmBoWQdzhpi6a6LO9KYzMyqg6G_HM-1702694947443-0-604800000
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (212 bytes)</summary>
+				
+				<pre><code>{
+    
+    &quot;messages&quot;: [
+        {
+            &quot;content&quot;: &quot;case when cast(pg_sleep(15) as varchar) &gt; &#39;&#39; then 0 else 1 end&quot;,
+            &quot;role&quot;: &quot;user&quot;
+        }
+    ],
+    &quot;model&quot;: &quot;gpt-4&quot;,
+    &quot;temperature&quot;: 0
+}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (1154 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Sat, 16 Dec 2023 03:13:25 GMT
+Content-Type: application/json
+Content-Length: 1546
+Connection: keep-alive
+access-control-allow-origin: *
+Cache-Control: no-cache, must-revalidate
+openai-model: gpt-4-0613
+openai-organization: adminai
+openai-processing-ms: 18863
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 5000
+x-ratelimit-limit-tokens: 80000
+x-ratelimit-limit-tokens_usage_based: 80000
+x-ratelimit-remaining-requests: 4999
+x-ratelimit-remaining-tokens: 79967
+x-ratelimit-remaining-tokens_usage_based: 79967
+x-ratelimit-reset-requests: 12ms
+x-ratelimit-reset-tokens: 24ms
+x-ratelimit-reset-tokens_usage_based: 24ms
+x-request-id: 7b5fa6ece3f2a44ad6567369da275b26
+CF-Cache-Status: DYNAMIC
+Set-Cookie: __cf_bm=d3ROoZB_KYq7YdfgT7bCtJ57wHvDNe5mz_g7h0q.Aq0-1702696405-1-AZwj6q7H1enpJYtnHiz0GQ+yOsWKvm9YBO1VXgS2Nv7tiMUz885amEe2hUE+1JqhewTMXgj2hXv5J2HRVZsKdag=; path=/; expires=Sat, 16-Dec-23 03:43:25 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 8363bfa1dddfb136-ATL
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (1546 bytes)</summary>
+				
+				<pre><code>{
+  &quot;id&quot;: &quot;chatcmpl-8WFOsIw1qQeyE830foqVDgZwD6zU1&quot;,
+  &quot;object&quot;: &quot;chat.completion&quot;,
+  &quot;created&quot;: 1702696386,
+  &quot;model&quot;: &quot;gpt-4-0613&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;index&quot;: 0,
+      &quot;message&quot;: {
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &quot;This statement is a conditional statement in SQL that uses the PostgreSQL function `pg_sleep()`. \n\nThe `pg_sleep()` function is used to pause the execution of the script for a specified amount of time. In this case, it is set to pause for 15 seconds.\n\nThe `cast()` function is used to convert one data type to another. Here, it is converting the result of `pg_sleep(15)` to a string using `varchar`.\n\nThe `case when` statement is used to perform conditional logic in SQL. It checks if the string value of `pg_sleep(15)` is greater than an empty string (&#39;&#39;). If it is, it returns 0, otherwise, it returns 1.\n\nHowever, the `pg_sleep()` function does not return a value, it only pauses the execution. Therefore, casting it to a string will not give a meaningful result. This statement will always return 1, because the result of `pg_sleep(15)` cast as a string is not greater than an empty string. \n\nThis statement seems to be used for SQL injection, where an attacker can make the database server wait for 15 seconds before responding, confirming that the server is vulnerable to SQL injection.&quot;
+      },
+      &quot;logprobs&quot;: null,
+      &quot;finish_reason&quot;: &quot;stop&quot;
+    }
+  ],
+  &quot;usage&quot;: {
+    &quot;prompt_tokens&quot;: 27,
+    &quot;completion_tokens&quot;: 244,
+    &quot;total_tokens&quot;: 271
+  },
+  &quot;system_fingerprint&quot;: null
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>content</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Attack</th>
+		<td><pre><code>field: [content], value [case when cast(pg_sleep(15) as varchar) &gt; &#39;&#39; then 0 else 1 end]</code></pre></td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Do not trust client side input, even if there is client side validation in place.</p>
+
+<p>In general, type check all data on the server side.</p>
+
+<p>If the application uses JDBC, use PreparedStatement or CallableStatement, with parameters passed by &#39;?&#39;</p>
+
+<p>If the application uses ASP, use ADO Command Objects with strong type checking and parameterized queries.</p>
+
+<p>If database Stored Procedures can be used, use them.</p>
+
+<p>Do *not* concatenate strings into queries in the stored procedure, or use &#39;exec&#39;, &#39;exec immediate&#39;, or equivalent functionality!</p>
+
+<p>Do not create dynamic SQL queries using simple string concatenation.</p>
+
+<p>Escape all data received from the client.</p>
+
+<p>Apply an &#39;allow list&#39; of allowed characters, or a &#39;deny list&#39; of disallowed characters in user input.</p>
+
+<p>Apply the principle of least privilege by using the least privileged database user possible.</p>
+
+<p>In particular, avoid using the &#39;sa&#39; or &#39;db-owner&#39; database users. This does not eliminate SQL injection, but minimizes its impact.</p>
+
+<p>Grant the minimum database access that is necessary for the application.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-3">SQL Injection - SQLite</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://api.openai.com/v1/chat/completions</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A03_2021-Injection/">OWASP_2021_A03</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection">WSTG-v42-INPV-05</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A1_2017-Injection.html">OWASP_2017_A01</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>SQL injection may be possible.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>The query time is controllable using parameter value [case randomblob(100000) when not null then 1 else 1 end ], which caused the request to take [4,970] milliseconds, parameter value [case randomblob(1000000) when not null then 1 else 1 end ], which caused the request to take [5,525] milliseconds, when the original unmodified query with value [Hi there] took [987] milliseconds.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (577 bytes)</summary>
+				
+				<pre><code>POST https://api.openai.com/v1/chat/completions HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer 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
+User-Agent: PostmanRuntime/7.35.0
+Accept: */*
+Postman-Token: 6cc5a232-e228-4b69-b2c9-938be51ec2f0
+host: api.openai.com
+Connection: keep-alive
+content-length: 206
+Cookie: __cf_bm=Z354MHDTZGV241oM8.mCl0.prF.BRZu3QG2QDH5.zsQ-1702694947-1-AYaALW4/r2sARQqDkMXrcmFyEW5HWMao3y1d9wk5dYtI84pMvHS0Fd92L25NFRtQSwVn9EmayeGI1O23KIfcgr0=; _cfuvid=IMrzGGEO5b114RXmBoWQdzhpi6a6LO9KYzMyqg6G_HM-1702694947443-0-604800000
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (206 bytes)</summary>
+				
+				<pre><code>{
+    
+    &quot;messages&quot;: [
+        {
+            &quot;content&quot;: &quot;case randomblob(100000) when not null then 1 else 1 end &quot;,
+            &quot;role&quot;: &quot;user&quot;
+        }
+    ],
+    &quot;model&quot;: &quot;gpt-4&quot;,
+    &quot;temperature&quot;: 0
+}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (1152 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Sat, 16 Dec 2023 03:13:40 GMT
+Content-Type: application/json
+Content-Length: 942
+Connection: keep-alive
+access-control-allow-origin: *
+Cache-Control: no-cache, must-revalidate
+openai-model: gpt-4-0613
+openai-organization: adminai
+openai-processing-ms: 4879
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 5000
+x-ratelimit-limit-tokens: 80000
+x-ratelimit-limit-tokens_usage_based: 80000
+x-ratelimit-remaining-requests: 4999
+x-ratelimit-remaining-tokens: 79969
+x-ratelimit-remaining-tokens_usage_based: 79969
+x-ratelimit-reset-requests: 12ms
+x-ratelimit-reset-tokens: 23ms
+x-ratelimit-reset-tokens_usage_based: 23ms
+x-request-id: d341b90d8e6c2786ce71e90a8c723e70
+CF-Cache-Status: DYNAMIC
+Set-Cookie: __cf_bm=EmTkGCJDL7YEYhUTHQhjDchzn7ncGpV9UdNG0ki5KT0-1702696420-1-ATqFatVik02RL0oaewhF+bFh+8a/UddZnD3cB87p3TDXSi4w6v5VvVR+8RQcEpKVbsxKcnwiHTXctvulQQL/efs=; path=/; expires=Sat, 16-Dec-23 03:43:40 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 8363c0528dfeb136-ATL
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (942 bytes)</summary>
+				
+				<pre><code>{
+  &quot;id&quot;: &quot;chatcmpl-8WFPLRrX7GJoqr4r8Yo5mtw8msy0z&quot;,
+  &quot;object&quot;: &quot;chat.completion&quot;,
+  &quot;created&quot;: 1702696415,
+  &quot;model&quot;: &quot;gpt-4-0613&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;index&quot;: 0,
+      &quot;message&quot;: {
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &quot;This statement is a conditional expression in SQL. It checks if the result of the function `randomblob(100000)` is not null. If it is not null, then it returns 1. If it is null, it also returns 1. \n\nHowever, this statement is redundant because it returns 1 in both cases. It could be simplified to just `1`. \n\nThe `randomblob(N)` function in SQLite returns a blob that contains a pseudo-random number of bytes, up to N bytes long. In this case, it will return a blob of up to 100000 bytes long.&quot;
+      },
+      &quot;logprobs&quot;: null,
+      &quot;finish_reason&quot;: &quot;stop&quot;
+    }
+  ],
+  &quot;usage&quot;: {
+    &quot;prompt_tokens&quot;: 25,
+    &quot;completion_tokens&quot;: 122,
+    &quot;total_tokens&quot;: 147
+  },
+  &quot;system_fingerprint&quot;: null
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>content</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Attack</th>
+		<td><pre><code>case randomblob(100000) when not null then 1 else 1 end </code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>The query time is controllable using parameter value [case randomblob(100000) when not null then 1 else 1 end ], which caused the request to take [4,970] milliseconds, parameter value [case randomblob(1000000) when not null then 1 else 1 end ], which caused the request to take [5,525] milliseconds, when the original unmodified query with value [Hi there] took [987] milliseconds.</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Do not trust client side input, even if there is client side validation in place.</p>
+
+<p>In general, type check all data on the server side.</p>
+
+<p>If the application uses JDBC, use PreparedStatement or CallableStatement, with parameters passed by &#39;?&#39;</p>
+
+<p>If the application uses ASP, use ADO Command Objects with strong type checking and parameterized queries.</p>
+
+<p>If database Stored Procedures can be used, use them.</p>
+
+<p>Do *not* concatenate strings into queries in the stored procedure, or use &#39;exec&#39;, &#39;exec immediate&#39;, or equivalent functionality!</p>
+
+<p>Do not create dynamic SQL queries using simple string concatenation.</p>
+
+<p>Escape all data received from the client.</p>
+
+<p>Apply an &#39;allow list&#39; of allowed characters, or a &#39;deny list&#39; of disallowed characters in user input.</p>
+
+<p>Apply the principle of least privilege by using the least privileged database user possible.</p>
+
+<p>In particular, avoid using the &#39;sa&#39; or &#39;db-owner&#39; database users. This does not eliminate SQL injection, but minimizes its impact.</p>
+
+<p>Grant the minimum database access that is necessary for the application.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-4">Server Side Code Injection - PHP Code Injection</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://api.openai.com/v1/chat/completions</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A03_2021-Injection/">OWASP_2021_A03</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A1_2017-Injection.html">OWASP_2017_A01</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11-Testing_for_Code_Injection">WSTG-v42-INPV-11</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>A code injection may be possible including custom code that will be evaluated by the scripting engine</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (577 bytes)</summary>
+				
+				<pre><code>POST https://api.openai.com/v1/chat/completions HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer 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
+User-Agent: PostmanRuntime/7.35.0
+Accept: */*
+Postman-Token: 6cc5a232-e228-4b69-b2c9-938be51ec2f0
+host: api.openai.com
+Connection: keep-alive
+content-length: 246
+Cookie: __cf_bm=Z354MHDTZGV241oM8.mCl0.prF.BRZu3QG2QDH5.zsQ-1702694947-1-AYaALW4/r2sARQqDkMXrcmFyEW5HWMao3y1d9wk5dYtI84pMvHS0Fd92L25NFRtQSwVn9EmayeGI1O23KIfcgr0=; _cfuvid=IMrzGGEO5b114RXmBoWQdzhpi6a6LO9KYzMyqg6G_HM-1702694947443-0-604800000
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (246 bytes)</summary>
+				
+				<pre><code>{
+    
+    &quot;messages&quot;: [
+        {
+            &quot;content&quot;: &quot;\&quot;;print(chr(122).chr(97).chr(112).chr(95).chr(116).chr(111).chr(107).chr(101).chr(110));$var=\&quot;&quot;,
+            &quot;role&quot;: &quot;user&quot;
+        }
+    ],
+    &quot;model&quot;: &quot;gpt-4&quot;,
+    &quot;temperature&quot;: 0
+}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (1152 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Sat, 16 Dec 2023 03:14:13 GMT
+Content-Type: application/json
+Content-Length: 786
+Connection: keep-alive
+access-control-allow-origin: *
+Cache-Control: no-cache, must-revalidate
+openai-model: gpt-4-0613
+openai-organization: adminai
+openai-processing-ms: 5579
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 5000
+x-ratelimit-limit-tokens: 80000
+x-ratelimit-limit-tokens_usage_based: 80000
+x-ratelimit-remaining-requests: 4999
+x-ratelimit-remaining-tokens: 79959
+x-ratelimit-remaining-tokens_usage_based: 79959
+x-ratelimit-reset-requests: 12ms
+x-ratelimit-reset-tokens: 30ms
+x-ratelimit-reset-tokens_usage_based: 30ms
+x-request-id: 6809eb77faaf71ae278e891354fd27e5
+CF-Cache-Status: DYNAMIC
+Set-Cookie: __cf_bm=mrQguyWfRCHyyRwhyU7o5OIOlFYPudiCQliHl5X3uac-1702696453-1-AWmNk9S+ZhjvFq8y7qkYou/87Wosv7yh8nvJNR0/YQnw2Rca0CfVb2tz3kWbs1cztLhsEWyc5A0fnpLyNwfnJgk=; path=/; expires=Sat, 16-Dec-23 03:44:13 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 8363c11b1d89b136-ATL
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (786 bytes)</summary>
+				
+				<pre><code>{
+  &quot;id&quot;: &quot;chatcmpl-8WFPr9zQLLbviliUY1NWWHVta56Id&quot;,
+  &quot;object&quot;: &quot;chat.completion&quot;,
+  &quot;created&quot;: 1702696447,
+  &quot;model&quot;: &quot;gpt-4-0613&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;index&quot;: 0,
+      &quot;message&quot;: {
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &quot;This PHP code will print the string \&quot;zap_token\&quot;. The `chr()` function is used to get a specific character from the ASCII value. Here, the ASCII values 122, 97, 112, 95, 116, 111, 107, 101, 110 correspond to the characters &#39;z&#39;, &#39;a&#39;, &#39;p&#39;, &#39;_&#39;, &#39;t&#39;, &#39;o&#39;, &#39;k&#39;, &#39;e&#39;, &#39;n&#39; respectively. \n\nThe `$var=\&quot;\&quot;` is an empty string variable declaration.&quot;
+      },
+      &quot;logprobs&quot;: null,
+      &quot;finish_reason&quot;: &quot;stop&quot;
+    }
+  ],
+  &quot;usage&quot;: {
+    &quot;prompt_tokens&quot;: 48,
+    &quot;completion_tokens&quot;: 103,
+    &quot;total_tokens&quot;: 151
+  },
+  &quot;system_fingerprint&quot;: null
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>content</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Attack</th>
+		<td><pre><code>&quot;;print(chr(122).chr(97).chr(112).chr(95).chr(116).chr(111).chr(107).chr(101).chr(110));$var=&quot;</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>zap_token</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Do not trust client side input, even if there is client side validation in place.</p>
+
+<p>In general, type check all data on the server side and escape all data received from the client.</p>
+
+<p> Avoid the use of eval() functions combined with user input data.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				
+				  
+				 
+				
+				
+				
+				
+				<li id="alerts--risk-2-confidence-2">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Medium</span>, <span>Confidence</span>=<span
+							class="confidence-level">Medium</span> <span>(2)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://api.openai.com</span> <span>(2)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-6">Cross-Domain Misconfiguration</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://api.openai.com/v1/chat/completions</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/">OWASP_2021_A01</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control.html">OWASP_2017_A05</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>Web browser data loading may be possible, due to a Cross Origin Resource Sharing (CORS) misconfiguration on the web server</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>The CORS misconfiguration on the web server permits cross-domain read requests from arbitrary third party domains, using unauthenticated APIs on this domain. Web browser implementations do not permit arbitrary third parties to read the response from authenticated APIs, however. This reduces the risk somewhat. This misconfiguration could be used by an attacker to access data that is available in an unauthenticated manner, but which uses some other form of security, such as IP address white-listing.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (577 bytes)</summary>
+				
+				<pre><code>POST https://api.openai.com/v1/chat/completions HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer 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
+User-Agent: PostmanRuntime/7.35.0
+Accept: */*
+Postman-Token: 6cc5a232-e228-4b69-b2c9-938be51ec2f0
+host: api.openai.com
+Connection: keep-alive
+Content-Length: 158
+Cookie: __cf_bm=Z354MHDTZGV241oM8.mCl0.prF.BRZu3QG2QDH5.zsQ-1702694947-1-AYaALW4/r2sARQqDkMXrcmFyEW5HWMao3y1d9wk5dYtI84pMvHS0Fd92L25NFRtQSwVn9EmayeGI1O23KIfcgr0=; _cfuvid=IMrzGGEO5b114RXmBoWQdzhpi6a6LO9KYzMyqg6G_HM-1702694947443-0-604800000
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (158 bytes)</summary>
+				
+				<pre><code>{
+    
+    &quot;messages&quot;: [
+        {
+            &quot;content&quot;: &quot;Hi there&quot;,
+            &quot;role&quot;: &quot;user&quot;
+        }
+    ],
+    &quot;model&quot;: &quot;gpt-4&quot;,
+    &quot;temperature&quot;: 0
+}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (883 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Sat, 16 Dec 2023 03:00:44 GMT
+Content-Type: application/json
+Content-Length: 474
+Connection: keep-alive
+access-control-allow-origin: *
+Cache-Control: no-cache, must-revalidate
+openai-model: gpt-4-0613
+openai-organization: adminai
+openai-processing-ms: 1233
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 5000
+x-ratelimit-limit-tokens: 80000
+x-ratelimit-limit-tokens_usage_based: 80000
+x-ratelimit-remaining-requests: 4999
+x-ratelimit-remaining-tokens: 79981
+x-ratelimit-remaining-tokens_usage_based: 79981
+x-ratelimit-reset-requests: 12ms
+x-ratelimit-reset-tokens: 14ms
+x-ratelimit-reset-tokens_usage_based: 14ms
+x-request-id: 7c0e74c025d7ae883d0131badaf2f993
+CF-Cache-Status: DYNAMIC
+Server: cloudflare
+CF-RAY: 8363ad76ed76b054-ATL
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (474 bytes)</summary>
+				
+				<pre><code>{
+  &quot;id&quot;: &quot;chatcmpl-8WFCsUA2Z7AFReYBF6964YiV1Jroa&quot;,
+  &quot;object&quot;: &quot;chat.completion&quot;,
+  &quot;created&quot;: 1702695642,
+  &quot;model&quot;: &quot;gpt-4-0613&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;index&quot;: 0,
+      &quot;message&quot;: {
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &quot;Hello! How can I assist you today?&quot;
+      },
+      &quot;logprobs&quot;: null,
+      &quot;finish_reason&quot;: &quot;stop&quot;
+    }
+  ],
+  &quot;usage&quot;: {
+    &quot;prompt_tokens&quot;: 9,
+    &quot;completion_tokens&quot;: 9,
+    &quot;total_tokens&quot;: 18
+  },
+  &quot;system_fingerprint&quot;: null
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>access-control-allow-origin: *</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Ensure that sensitive data is not available in an unauthenticated manner (using IP address white-listing, for instance).</p>
+
+<p>Configure the &quot;Access-Control-Allow-Origin&quot; HTTP header to a more restrictive set of domains, or remove all CORS headers entirely, to allow the web browser to enforce the Same Origin Policy (SOP) in a more restrictive manner.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-7">XSLT Injection</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://api.openai.com/v1/chat/completions</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A03_2021-Injection/">OWASP_2021_A03</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A1_2017-Injection.html">OWASP_2017_A01</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>Injection using XSL transformations may be possible, and may allow an attacker to read system information, read and write files, or execute arbitrary code.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>The XSLT processor vendor name &quot;Saxonica&quot; was returned after an injection request.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (577 bytes)</summary>
+				
+				<pre><code>POST https://api.openai.com/v1/chat/completions HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer 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
+User-Agent: PostmanRuntime/7.35.0
+Accept: */*
+Postman-Token: 6cc5a232-e228-4b69-b2c9-938be51ec2f0
+host: api.openai.com
+Connection: keep-alive
+content-length: 206
+Cookie: __cf_bm=Z354MHDTZGV241oM8.mCl0.prF.BRZu3QG2QDH5.zsQ-1702694947-1-AYaALW4/r2sARQqDkMXrcmFyEW5HWMao3y1d9wk5dYtI84pMvHS0Fd92L25NFRtQSwVn9EmayeGI1O23KIfcgr0=; _cfuvid=IMrzGGEO5b114RXmBoWQdzhpi6a6LO9KYzMyqg6G_HM-1702694947443-0-604800000
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (206 bytes)</summary>
+				
+				<pre><code>{
+    
+    &quot;messages&quot;: [
+        {
+            &quot;content&quot;: &quot;&lt;xsl:value-of select=\&quot;system-property(&#39;xsl:vendor&#39;)\&quot;/&gt;&quot;,
+            &quot;role&quot;: &quot;user&quot;
+        }
+    ],
+    &quot;model&quot;: &quot;gpt-4&quot;,
+    &quot;temperature&quot;: 0
+}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (1152 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Sat, 16 Dec 2023 03:19:09 GMT
+Content-Type: application/json
+Content-Length: 918
+Connection: keep-alive
+access-control-allow-origin: *
+Cache-Control: no-cache, must-revalidate
+openai-model: gpt-4-0613
+openai-organization: adminai
+openai-processing-ms: 4622
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 5000
+x-ratelimit-limit-tokens: 80000
+x-ratelimit-limit-tokens_usage_based: 80000
+x-ratelimit-remaining-requests: 4999
+x-ratelimit-remaining-tokens: 79969
+x-ratelimit-remaining-tokens_usage_based: 79969
+x-ratelimit-reset-requests: 12ms
+x-ratelimit-reset-tokens: 23ms
+x-ratelimit-reset-tokens_usage_based: 23ms
+x-request-id: a201352962fbaf9954362fa117297e60
+CF-Cache-Status: DYNAMIC
+Set-Cookie: __cf_bm=J4qlAt9JjRa_dv1ma7.kPyOiPc0iTEtB9tevtw_vpG4-1702696749-1-AUNeWn6UQY2vR8twHtXg2S/VM4D/ZYSqY9X6mzO0h+roUrZrl0G0Qb4R/xTgAyVr8WJ1Rk43HLbsTf3mzh1Pjuc=; path=/; expires=Sat, 16-Dec-23 03:49:09 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 8363c85c2fa44515-ATL
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (918 bytes)</summary>
+				
+				<pre><code>{
+  &quot;id&quot;: &quot;chatcmpl-8WFUeJx9sjtza3GxHSJg8P3Xx8Hr0&quot;,
+  &quot;object&quot;: &quot;chat.completion&quot;,
+  &quot;created&quot;: 1702696744,
+  &quot;model&quot;: &quot;gpt-4-0613&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;index&quot;: 0,
+      &quot;message&quot;: {
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &quot;This XSLT code is used to retrieve the name of the XSLT processor&#39;s vendor. The `system-property` function is a built-in XSLT function that returns the value of a system property. The argument &#39;xsl:vendor&#39; is a property that holds the name of the vendor for the XSLT processor. \n\nFor example, if you are using the Apache Xalan processor, this code will return \&quot;Apache Software Foundation\&quot;. If you are using the Saxon processor from Saxonica, it will return \&quot;Saxonica\&quot;.&quot;
+      },
+      &quot;logprobs&quot;: null,
+      &quot;finish_reason&quot;: &quot;stop&quot;
+    }
+  ],
+  &quot;usage&quot;: {
+    &quot;prompt_tokens&quot;: 22,
+    &quot;completion_tokens&quot;: 112,
+    &quot;total_tokens&quot;: 134
+  },
+  &quot;system_fingerprint&quot;: null
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>content</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Attack</th>
+		<td><pre><code>&lt;xsl:value-of select=&quot;system-property(&#39;xsl:vendor&#39;)&quot;/&gt;</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>Saxonica</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Sanitize and analyze every user input coming from any client-side.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				
+				  
+				 
+				
+				
+				<li id="alerts--risk-1-confidence-3">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Low</span>, <span>Confidence</span>=<span
+							class="confidence-level">High</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://api.openai.com</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-9">Strict-Transport-Security Header Not Set</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://api.openai.com</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (243 bytes)</summary>
+				
+				<pre><code>GET https://api.openai.com HTTP/1.1
+host: api.openai.com
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 OPR/102.0.0.0
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (499 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 421 Misdirected Request
+Date: Sat, 16 Dec 2023 03:07:21 GMT
+Content-Type: application/json
+Content-Length: 124
+Connection: keep-alive
+Set-Cookie: __cf_bm=qqYbfkGM48SqpCUQDHaTleLiKme2VtEo7elaXXQztL4-1702696041-1-AYyno9kn9N1/YMt1pCAhZ7dptF/0iGHCl42IEaVFiqYLH41qUO8y7lshjyrWYVUKWY7pVKgd62Y8fTteu8lPKbk=; path=/; expires=Sat, 16-Dec-23 03:37:21 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 8363b730dec312e5-ATL
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (124 bytes)</summary>
+				
+				<pre><code>{
+    &quot;message&quot;: &quot;Welcome to the OpenAI API! Documentation is available at https://platform.openai.com/docs/api-reference&quot;
+}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				<li id="alerts--risk-1-confidence-2">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Low</span>, <span>Confidence</span>=<span
+							class="confidence-level">Medium</span> <span>(2)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://api.openai.com</span> <span>(2)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-8">Cookie with SameSite Attribute None</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://api.openai.com/v1/chat/completions</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/">OWASP_2021_A01</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes">WSTG-v42-SESS-02</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control.html">OWASP_2017_A05</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>A cookie has been set with its SameSite attribute set to &quot;none&quot;, which means that the cookie can be sent as a result of a &#39;cross-site&#39; request. The SameSite attribute is an effective counter measure to cross-site request forgery, cross-site script inclusion, and timing attacks.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (263 bytes)</summary>
+				
+				<pre><code>GET https://api.openai.com/v1/chat/completions HTTP/1.1
+host: api.openai.com
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 OPR/102.0.0.0
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (815 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 401 Unauthorized
+Date: Sat, 16 Dec 2023 03:07:21 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 496
+Connection: keep-alive
+vary: Origin
+x-request-id: 8539f136d514d98bfed9bfe6c15f77ae
+strict-transport-security: max-age=15724800; includeSubDomains
+CF-Cache-Status: DYNAMIC
+Set-Cookie: __cf_bm=KPlYu6CLCr2NudB3uxcmCifwG8xvxOAeT0Pn3RBs.UU-1702696041-1-AX1Urci/aaTWGcmY06HB426/CBTiZgHF89ujL/3jaxOVrIuKeZyCXctAL4QrBsV6dZsiKnDkT+VlGM+hh8d/xAE=; path=/; expires=Sat, 16-Dec-23 03:37:21 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+Set-Cookie: _cfuvid=a_ii06SBY4yvpOuIbhYYjZ2kFXQBMqNafdRNj7h4Xac-1702696041150-0-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 8363b730de9d4587-ATL
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (496 bytes)</summary>
+				
+				<pre><code>{
+    &quot;error&quot;: {
+        &quot;message&quot;: &quot;You didn&#39;t provide an API key. You need to provide your API key in an Authorization header using Bearer auth (i.e. Authorization: Bearer YOUR_KEY), or as the password field (with blank username) if you&#39;re accessing the API from your browser and are prompted for a username and password. You can obtain an API key from https://platform.openai.com/account/api-keys.&quot;,
+        &quot;type&quot;: &quot;invalid_request_error&quot;,
+        &quot;param&quot;: null,
+        &quot;code&quot;: null
+    }
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>__cf_bm</code></pre></td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>Set-Cookie: __cf_bm</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Ensure that the SameSite attribute is set to either &#39;lax&#39; or ideally &#39;strict&#39; for all cookies.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-11">X-Content-Type-Options Header Missing</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://api.openai.com/v1/chat/completions</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to &#39;nosniff&#39;. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p>
+
+<p>At &quot;High&quot; threshold this scan rule will not alert on client or server error responses.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (577 bytes)</summary>
+				
+				<pre><code>POST https://api.openai.com/v1/chat/completions HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer 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
+User-Agent: PostmanRuntime/7.35.0
+Accept: */*
+Postman-Token: 6cc5a232-e228-4b69-b2c9-938be51ec2f0
+host: api.openai.com
+Connection: keep-alive
+Content-Length: 158
+Cookie: __cf_bm=Z354MHDTZGV241oM8.mCl0.prF.BRZu3QG2QDH5.zsQ-1702694947-1-AYaALW4/r2sARQqDkMXrcmFyEW5HWMao3y1d9wk5dYtI84pMvHS0Fd92L25NFRtQSwVn9EmayeGI1O23KIfcgr0=; _cfuvid=IMrzGGEO5b114RXmBoWQdzhpi6a6LO9KYzMyqg6G_HM-1702694947443-0-604800000
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (158 bytes)</summary>
+				
+				<pre><code>{
+    
+    &quot;messages&quot;: [
+        {
+            &quot;content&quot;: &quot;Hi there&quot;,
+            &quot;role&quot;: &quot;user&quot;
+        }
+    ],
+    &quot;model&quot;: &quot;gpt-4&quot;,
+    &quot;temperature&quot;: 0
+}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (883 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Sat, 16 Dec 2023 03:00:44 GMT
+Content-Type: application/json
+Content-Length: 474
+Connection: keep-alive
+access-control-allow-origin: *
+Cache-Control: no-cache, must-revalidate
+openai-model: gpt-4-0613
+openai-organization: adminai
+openai-processing-ms: 1233
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 5000
+x-ratelimit-limit-tokens: 80000
+x-ratelimit-limit-tokens_usage_based: 80000
+x-ratelimit-remaining-requests: 4999
+x-ratelimit-remaining-tokens: 79981
+x-ratelimit-remaining-tokens_usage_based: 79981
+x-ratelimit-reset-requests: 12ms
+x-ratelimit-reset-tokens: 14ms
+x-ratelimit-reset-tokens_usage_based: 14ms
+x-request-id: 7c0e74c025d7ae883d0131badaf2f993
+CF-Cache-Status: DYNAMIC
+Server: cloudflare
+CF-RAY: 8363ad76ed76b054-ATL
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (474 bytes)</summary>
+				
+				<pre><code>{
+  &quot;id&quot;: &quot;chatcmpl-8WFCsUA2Z7AFReYBF6964YiV1Jroa&quot;,
+  &quot;object&quot;: &quot;chat.completion&quot;,
+  &quot;created&quot;: 1702695642,
+  &quot;model&quot;: &quot;gpt-4-0613&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;index&quot;: 0,
+      &quot;message&quot;: {
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &quot;Hello! How can I assist you today?&quot;
+      },
+      &quot;logprobs&quot;: null,
+      &quot;finish_reason&quot;: &quot;stop&quot;
+    }
+  ],
+  &quot;usage&quot;: {
+    &quot;prompt_tokens&quot;: 9,
+    &quot;completion_tokens&quot;: 9,
+    &quot;total_tokens&quot;: 18
+  },
+  &quot;system_fingerprint&quot;: null
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>x-content-type-options</code></pre></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to &#39;nosniff&#39; for all web pages.</p>
+
+<p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				<li id="alerts--risk-1-confidence-1">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Low</span>, <span>Confidence</span>=<span
+							class="confidence-level">Low</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://api.openai.com</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-10">Timestamp Disclosure - Unix</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://api.openai.com/v1/chat/completions</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/">OWASP_2021_A01</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure.html">OWASP_2017_A03</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>A timestamp was disclosed by the application/web server - Unix</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>1702695642, which evaluates to: 2023-12-15 21:00:42</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (577 bytes)</summary>
+				
+				<pre><code>POST https://api.openai.com/v1/chat/completions HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer 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
+User-Agent: PostmanRuntime/7.35.0
+Accept: */*
+Postman-Token: 6cc5a232-e228-4b69-b2c9-938be51ec2f0
+host: api.openai.com
+Connection: keep-alive
+Content-Length: 158
+Cookie: __cf_bm=Z354MHDTZGV241oM8.mCl0.prF.BRZu3QG2QDH5.zsQ-1702694947-1-AYaALW4/r2sARQqDkMXrcmFyEW5HWMao3y1d9wk5dYtI84pMvHS0Fd92L25NFRtQSwVn9EmayeGI1O23KIfcgr0=; _cfuvid=IMrzGGEO5b114RXmBoWQdzhpi6a6LO9KYzMyqg6G_HM-1702694947443-0-604800000
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (158 bytes)</summary>
+				
+				<pre><code>{
+    
+    &quot;messages&quot;: [
+        {
+            &quot;content&quot;: &quot;Hi there&quot;,
+            &quot;role&quot;: &quot;user&quot;
+        }
+    ],
+    &quot;model&quot;: &quot;gpt-4&quot;,
+    &quot;temperature&quot;: 0
+}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (883 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Sat, 16 Dec 2023 03:00:44 GMT
+Content-Type: application/json
+Content-Length: 474
+Connection: keep-alive
+access-control-allow-origin: *
+Cache-Control: no-cache, must-revalidate
+openai-model: gpt-4-0613
+openai-organization: adminai
+openai-processing-ms: 1233
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 5000
+x-ratelimit-limit-tokens: 80000
+x-ratelimit-limit-tokens_usage_based: 80000
+x-ratelimit-remaining-requests: 4999
+x-ratelimit-remaining-tokens: 79981
+x-ratelimit-remaining-tokens_usage_based: 79981
+x-ratelimit-reset-requests: 12ms
+x-ratelimit-reset-tokens: 14ms
+x-ratelimit-reset-tokens_usage_based: 14ms
+x-request-id: 7c0e74c025d7ae883d0131badaf2f993
+CF-Cache-Status: DYNAMIC
+Server: cloudflare
+CF-RAY: 8363ad76ed76b054-ATL
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (474 bytes)</summary>
+				
+				<pre><code>{
+  &quot;id&quot;: &quot;chatcmpl-8WFCsUA2Z7AFReYBF6964YiV1Jroa&quot;,
+  &quot;object&quot;: &quot;chat.completion&quot;,
+  &quot;created&quot;: 1702695642,
+  &quot;model&quot;: &quot;gpt-4-0613&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;index&quot;: 0,
+      &quot;message&quot;: {
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &quot;Hello! How can I assist you today?&quot;
+      },
+      &quot;logprobs&quot;: null,
+      &quot;finish_reason&quot;: &quot;stop&quot;
+    }
+  ],
+  &quot;usage&quot;: {
+    &quot;prompt_tokens&quot;: 9,
+    &quot;completion_tokens&quot;: 9,
+    &quot;total_tokens&quot;: 18
+  },
+  &quot;system_fingerprint&quot;: null
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>1702695642</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				  
+				 
+				
+				
+				
+				
+				<li id="alerts--risk-0-confidence-2">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Informational</span>, <span>Confidence</span>=<span
+							class="confidence-level">Medium</span> <span>(2)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://api.openai.com</span> <span>(2)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-13">Session Management Response Identified</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://api.openai.com/v1/chat/completions</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The given response has been identified as containing a session management token. The &#39;Other Info&#39; field contains a set of header tokens that can be used in the Header Based Session Management Method. If the request is in a context which has a Session Management Method set to &quot;Auto-Detect&quot; then this rule will change the session management to use the tokens identified.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>cookie:_cfuvid</p>
+
+<p>cookie:__cf_bm</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (263 bytes)</summary>
+				
+				<pre><code>GET https://api.openai.com/v1/chat/completions HTTP/1.1
+host: api.openai.com
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 OPR/102.0.0.0
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (815 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 401 Unauthorized
+Date: Sat, 16 Dec 2023 03:07:21 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 496
+Connection: keep-alive
+vary: Origin
+x-request-id: 8539f136d514d98bfed9bfe6c15f77ae
+strict-transport-security: max-age=15724800; includeSubDomains
+CF-Cache-Status: DYNAMIC
+Set-Cookie: __cf_bm=KPlYu6CLCr2NudB3uxcmCifwG8xvxOAeT0Pn3RBs.UU-1702696041-1-AX1Urci/aaTWGcmY06HB426/CBTiZgHF89ujL/3jaxOVrIuKeZyCXctAL4QrBsV6dZsiKnDkT+VlGM+hh8d/xAE=; path=/; expires=Sat, 16-Dec-23 03:37:21 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+Set-Cookie: _cfuvid=a_ii06SBY4yvpOuIbhYYjZ2kFXQBMqNafdRNj7h4Xac-1702696041150-0-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 8363b730de9d4587-ATL
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (496 bytes)</summary>
+				
+				<pre><code>{
+    &quot;error&quot;: {
+        &quot;message&quot;: &quot;You didn&#39;t provide an API key. You need to provide your API key in an Authorization header using Bearer auth (i.e. Authorization: Bearer YOUR_KEY), or as the password field (with blank username) if you&#39;re accessing the API from your browser and are prompted for a username and password. You can obtain an API key from https://platform.openai.com/account/api-keys.&quot;,
+        &quot;type&quot;: &quot;invalid_request_error&quot;,
+        &quot;param&quot;: null,
+        &quot;code&quot;: null
+    }
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>_cfuvid</code></pre></td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>a_ii06SBY4yvpOuIbhYYjZ2kFXQBMqNafdRNj7h4Xac-1702696041150-0-604800000</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>This is an informational alert rather than a vulnerability and so there is nothing to fix.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-14">User Agent Fuzzer</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://api.openai.com/v1/chat/completions</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>Check for differences in response based on fuzzed User Agent (eg. mobile sites, access as a Search Engine Crawler). Compares the response statuscode and the hashcode of the response body with the original response.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (606 bytes)</summary>
+				
+				<pre><code>POST https://api.openai.com/v1/chat/completions HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer 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
+user-agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)
+Accept: */*
+Postman-Token: 6cc5a232-e228-4b69-b2c9-938be51ec2f0
+host: api.openai.com
+Connection: keep-alive
+Content-Length: 158
+Cookie: __cf_bm=Z354MHDTZGV241oM8.mCl0.prF.BRZu3QG2QDH5.zsQ-1702694947-1-AYaALW4/r2sARQqDkMXrcmFyEW5HWMao3y1d9wk5dYtI84pMvHS0Fd92L25NFRtQSwVn9EmayeGI1O23KIfcgr0=; _cfuvid=IMrzGGEO5b114RXmBoWQdzhpi6a6LO9KYzMyqg6G_HM-1702694947443-0-604800000
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (158 bytes)</summary>
+				
+				<pre><code>{
+    
+    &quot;messages&quot;: [
+        {
+            &quot;content&quot;: &quot;Hi there&quot;,
+            &quot;role&quot;: &quot;user&quot;
+        }
+    ],
+    &quot;model&quot;: &quot;gpt-4&quot;,
+    &quot;temperature&quot;: 0
+}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (1307 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Sat, 16 Dec 2023 03:19:12 GMT
+Content-Type: application/json
+Content-Length: 474
+Connection: keep-alive
+access-control-allow-origin: *
+Cache-Control: no-cache, must-revalidate
+openai-model: gpt-4-0613
+openai-organization: adminai
+openai-processing-ms: 683
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 5000
+x-ratelimit-limit-tokens: 80000
+x-ratelimit-limit-tokens_usage_based: 80000
+x-ratelimit-remaining-requests: 4999
+x-ratelimit-remaining-tokens: 79981
+x-ratelimit-remaining-tokens_usage_based: 79981
+x-ratelimit-reset-requests: 12ms
+x-ratelimit-reset-tokens: 14ms
+x-ratelimit-reset-tokens_usage_based: 14ms
+x-request-id: 02cc30617f08a68a329699c322cde38e
+CF-Cache-Status: DYNAMIC
+Set-Cookie: __cf_bm=kLfjizeB7Lx9ldT2Oxhj7Xkn_Qza7VbsIHh2YlGCEeo-1702696752-1-Ae4dKpkYvqXcm9G57ykAdcOdxEdRx6Bwk5Z4ZYa+SlQ5A2XpPKES3l4r+u4mOVlaYpyI4tVHzstqdLFpX4d3+K8=; path=/; expires=Sat, 16-Dec-23 03:49:12 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+Set-Cookie: _cfuvid=Em8ZAwEBit4x4uDGZB0fIyOlw_KAxrrgNJXkOIUKaXU-1702696752321-0-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 8363c887cfcb4515-ATL
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (474 bytes)</summary>
+				
+				<pre><code>{
+  &quot;id&quot;: &quot;chatcmpl-8WFUlALH19nlbmbdn4TUvJpqA3rUc&quot;,
+  &quot;object&quot;: &quot;chat.completion&quot;,
+  &quot;created&quot;: 1702696751,
+  &quot;model&quot;: &quot;gpt-4-0613&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;index&quot;: 0,
+      &quot;message&quot;: {
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &quot;Hello! How can I assist you today?&quot;
+      },
+      &quot;logprobs&quot;: null,
+      &quot;finish_reason&quot;: &quot;stop&quot;
+    }
+  ],
+  &quot;usage&quot;: {
+    &quot;prompt_tokens&quot;: 9,
+    &quot;completion_tokens&quot;: 9,
+    &quot;total_tokens&quot;: 18
+  },
+  &quot;system_fingerprint&quot;: null
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>Header User-Agent</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Attack</th>
+		<td><pre><code>Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)</code></pre></td>
+	</tr>
+	
+	
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				<li id="alerts--risk-0-confidence-1">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Informational</span>, <span>Confidence</span>=<span
+							class="confidence-level">Low</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://api.openai.com</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-12">Re-examine Cache-control Directives</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://api.openai.com/v1/chat/completions</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/04-Authentication_Testing/06-Testing_for_Browser_Cache_Weaknesses">WSTG-v42-ATHN-06</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (577 bytes)</summary>
+				
+				<pre><code>POST https://api.openai.com/v1/chat/completions HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer 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
+User-Agent: PostmanRuntime/7.35.0
+Accept: */*
+Postman-Token: 6cc5a232-e228-4b69-b2c9-938be51ec2f0
+host: api.openai.com
+Connection: keep-alive
+Content-Length: 158
+Cookie: __cf_bm=Z354MHDTZGV241oM8.mCl0.prF.BRZu3QG2QDH5.zsQ-1702694947-1-AYaALW4/r2sARQqDkMXrcmFyEW5HWMao3y1d9wk5dYtI84pMvHS0Fd92L25NFRtQSwVn9EmayeGI1O23KIfcgr0=; _cfuvid=IMrzGGEO5b114RXmBoWQdzhpi6a6LO9KYzMyqg6G_HM-1702694947443-0-604800000
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (158 bytes)</summary>
+				
+				<pre><code>{
+    
+    &quot;messages&quot;: [
+        {
+            &quot;content&quot;: &quot;Hi there&quot;,
+            &quot;role&quot;: &quot;user&quot;
+        }
+    ],
+    &quot;model&quot;: &quot;gpt-4&quot;,
+    &quot;temperature&quot;: 0
+}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (883 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Sat, 16 Dec 2023 03:00:44 GMT
+Content-Type: application/json
+Content-Length: 474
+Connection: keep-alive
+access-control-allow-origin: *
+Cache-Control: no-cache, must-revalidate
+openai-model: gpt-4-0613
+openai-organization: adminai
+openai-processing-ms: 1233
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 5000
+x-ratelimit-limit-tokens: 80000
+x-ratelimit-limit-tokens_usage_based: 80000
+x-ratelimit-remaining-requests: 4999
+x-ratelimit-remaining-tokens: 79981
+x-ratelimit-remaining-tokens_usage_based: 79981
+x-ratelimit-reset-requests: 12ms
+x-ratelimit-reset-tokens: 14ms
+x-ratelimit-reset-tokens_usage_based: 14ms
+x-request-id: 7c0e74c025d7ae883d0131badaf2f993
+CF-Cache-Status: DYNAMIC
+Server: cloudflare
+CF-RAY: 8363ad76ed76b054-ATL
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (474 bytes)</summary>
+				
+				<pre><code>{
+  &quot;id&quot;: &quot;chatcmpl-8WFCsUA2Z7AFReYBF6964YiV1Jroa&quot;,
+  &quot;object&quot;: &quot;chat.completion&quot;,
+  &quot;created&quot;: 1702695642,
+  &quot;model&quot;: &quot;gpt-4-0613&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;index&quot;: 0,
+      &quot;message&quot;: {
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &quot;Hello! How can I assist you today?&quot;
+      },
+      &quot;logprobs&quot;: null,
+      &quot;finish_reason&quot;: &quot;stop&quot;
+    }
+  ],
+  &quot;usage&quot;: {
+    &quot;prompt_tokens&quot;: 9,
+    &quot;completion_tokens&quot;: 9,
+    &quot;total_tokens&quot;: 18
+  },
+  &quot;system_fingerprint&quot;: null
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>cache-control</code></pre></td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>no-cache, must-revalidate</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>For secure content, ensure the cache-control HTTP header is set with &quot;no-cache, no-store, must-revalidate&quot;. If an asset should be cached consider setting the directives &quot;public, max-age, immutable&quot;.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				  
+			</ol>
+		</section>
+
+		<section id="appendix" class="appendix">
+			<h2>Appendix</h2>
+
+			<section id="alert-types" class="alert-types">
+				<h3>Alert types</h3>
+				<p class="alert-types-intro">This section contains additional information on the types of alerts in the report.</p>
+				<ol>
+					<li
+						id="alert-type-0">
+						<h4>Remote OS Command Injection</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by an active scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/90020/">Remote OS Command Injection</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/78.html">78</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>31</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="http://cwe.mitre.org/data/definitions/78.html">http://cwe.mitre.org/data/definitions/78.html</a></li>
+										<li><a
+											href="https://owasp.org/www-community/attacks/Command_Injection">https://owasp.org/www-community/attacks/Command_Injection</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-1">
+						<h4>SQL Injection - Oracle - Time Based</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by an active scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/40021/">SQL Injection - Oracle</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/89.html">89</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>19</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-2">
+						<h4>SQL Injection - PostgreSQL - Time Based</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by an active scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/40022/">SQL Injection - PostgreSQL</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/89.html">89</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>19</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-3">
+						<h4>SQL Injection - SQLite</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by an active scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/40024/">SQL Injection - SQLite</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/89.html">89</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>19</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-4">
+						<h4>Server Side Code Injection - PHP Code Injection</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by an active scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/90019/">Server Side Code Injection</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/94.html">94</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>20</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="http://cwe.mitre.org/data/definitions/94.html">http://cwe.mitre.org/data/definitions/94.html</a></li>
+										<li><a
+											href="https://owasp.org/www-community/attacks/Direct_Dynamic_Code_Evaluation_Eval%20Injection">https://owasp.org/www-community/attacks/Direct_Dynamic_Code_Evaluation_Eval%20Injection</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-5">
+						<h4>Server Side Template Injection</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by an active scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/90035/">Server Side Template Injection</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/94.html">94</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>20</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://portswigger.net/blog/server-side-template-injection">https://portswigger.net/blog/server-side-template-injection</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-6">
+						<h4>Cross-Domain Misconfiguration</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10098/">Cross-Domain Misconfiguration</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/264.html">264</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>14</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://vulncat.fortify.com/en/detail?id=desc.config.dotnet.html5_overly_permissive_cors_policy">https://vulncat.fortify.com/en/detail?id=desc.config.dotnet.html5_overly_permissive_cors_policy</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-7">
+						<h4>XSLT Injection</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by an active scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/90017/">XSLT Injection</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/91.html">91</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>23</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://www.contextis.com/blog/xslt-server-side-injection-attacks">https://www.contextis.com/blog/xslt-server-side-injection-attacks</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-8">
+						<h4>Cookie with SameSite Attribute None</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10054/">Cookie without SameSite Attribute</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/1275.html">1275</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>13</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site">https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-9">
+						<h4>Strict-Transport-Security Header Not Set</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10035/">Strict-Transport-Security Header</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/319.html">319</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</a></li>
+										<li><a
+											href="https://owasp.org/www-community/Security_Headers">https://owasp.org/www-community/Security_Headers</a></li>
+										<li><a
+											href="http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security">http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</a></li>
+										<li><a
+											href="http://caniuse.com/stricttransportsecurity">http://caniuse.com/stricttransportsecurity</a></li>
+										<li><a
+											href="http://tools.ietf.org/html/rfc6797">http://tools.ietf.org/html/rfc6797</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-10">
+						<h4>Timestamp Disclosure - Unix</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10096/">Timestamp Disclosure</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/200.html">200</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>13</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="http://projects.webappsec.org/w/page/13246936/Information%20Leakage">http://projects.webappsec.org/w/page/13246936/Information%20Leakage</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-11">
+						<h4>X-Content-Type-Options Header Missing</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10021/">X-Content-Type-Options Header Missing</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/693.html">693</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx">http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx</a></li>
+										<li><a
+											href="https://owasp.org/www-community/Security_Headers">https://owasp.org/www-community/Security_Headers</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-12">
+						<h4>Re-examine Cache-control Directives</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10015/">Re-examine Cache-control Directives</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/525.html">525</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>13</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching">https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</a></li>
+										<li><a
+											href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</a></li>
+										<li><a
+											href="https://grayduck.mn/2021/09/13/cache-control-recommendations/">https://grayduck.mn/2021/09/13/cache-control-recommendations/</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-13">
+						<h4>Session Management Response Identified</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10112/">Session Management Response Identified</a>)
+									</span>   
+								</td>
+							</tr>
+							
+							
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id">https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-14">
+						<h4>User Agent Fuzzer</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by an active scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10104/">User Agent Fuzzer</a>)
+									</span>   
+								</td>
+							</tr>
+							
+							
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://owasp.org/wstg">https://owasp.org/wstg</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+				</ol>
+			</section>
+		</section>
+		 
+	</main>
+</body>
+</html>
+
+
+
