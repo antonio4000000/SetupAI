@@ -9,6 +9,14 @@
 deploy-options.json
 force-app/main/default/customMetadata/API_Secret.Backup.md-meta.xml
 force-app/main/default/customMetadata/API_Secret.Default.md-meta.xml
+force-app/main/default/flows/Set_Opportunity_to_Private.flow-meta.xml
+force-app/main/default/layouts/Opportunity-New Business.layout-meta.xml
+force-app/main/default/layouts/Opportunity-Renewal%2FExpansion.layout-meta.xml
+force-app/main/default/objects/Account/fields/Important__c.field-meta.xml
+force-app/main/default/objects/Opportunity
+force-app/main/default/reports
+force-app/main/default/classes/DemoClass.cls
+force-app/main/default/classes/DemoClass.cls-meta.xml
 
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
