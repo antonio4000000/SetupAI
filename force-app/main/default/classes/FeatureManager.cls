@@ -34,6 +34,7 @@ public with sharing class FeatureManager {
     }
 
     //Sets number of inputTokens
+    @future
     public static void setInputTokens(Integer numberOfTokens){
         if(!Test.isRunningTest()){System.FeatureManagement.setPackageIntegerValue('inputTokens', numberOfTokens);}
     }
@@ -44,6 +45,7 @@ public with sharing class FeatureManager {
     }
 
     //Sets number of outputTokens
+    @future
     public static void setOutputTokens(Integer numberOfTokens){
         if(!Test.isRunningTest()){System.FeatureManagement.setPackageIntegerValue('outputTokens', numberOfTokens);}
     }
@@ -54,6 +56,7 @@ public with sharing class FeatureManager {
     }
 
     //Sets number of outputTokens
+    @future
     public static void setUsingCustomAPIKey(Boolean newValue){
         System.FeatureManagement.setPackageBooleanValue('usingCustomAPIKey', newValue);
     }

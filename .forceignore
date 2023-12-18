@@ -14,6 +14,7 @@ force-app/main/default/objects/Account/fields/Important__c.field-meta.xml
 force-app/main/default/objects/Opportunity
 force-app/main/default/reports
 force-app/main/default/classes/DemoClass.cls
+force-app/main/default/classes/DemoClass.cls-meta.xml
 
 
 # LWC configuration files

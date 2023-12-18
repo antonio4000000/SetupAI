@@ -14,15 +14,23 @@ public with sharing class OpenAI {
             if(Tokenizer.maxExceeded()){
                 throw new OpenAIException(Label.Max_Tokens_Exceeded);
             }
-            return(ChatResponse)JSON.deserialize(Callout.execute(
-                /** Endpoint */             'Chat',
-                /** Method */               'POST',
-                /** Body */                 req.serialize(),
-                /** Headers */              new Map<String, String>{
-                                                'Content-Type'=>'application/json',
-                                                'Authorization'=>'Bearer '+CalloutSecurity.getOpenAIKey()
-                                            }
-            ).replace('"object":', '"object_x":'),ChatResponse.class);
+            String response;
+            do{
+                response = Callout.execute(
+                    /** Endpoint */             'Chat',
+                    /** Method */               'POST',
+                    /** Body */                 req.serialize(),
+                    /** Headers */              new Map<String, String>{
+                                                    'Content-Type'=>'application/json',
+                                                    'Authorization'=>'Bearer '+CalloutSecurity.getOpenAIKey()
+                                                }
+                ).replace('"object":', '"object_x":');
+            }while(response == 'RETRY');
+            //If backup key was flipped, save to custom setting(doing after all callouts to avoid uncommitted work error)
+            if(Callout.useBackup){
+                CalloutSecurity.setBackupKeyTrue();
+            }
+            return(ChatResponse)JSON.deserialize(response, ChatResponse.class);
         }catch(Exception ex){
             return getError(ex.getMessage());
         }

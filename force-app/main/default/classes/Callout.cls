@@ -9,6 +9,9 @@ public with sharing class Callout {
     //Set to false for test setup methods to avoid callouts
     public static Boolean testSetup = false;
 
+    //Returns true if backup key needs to be used due to primary key being compromised
+    public static Boolean useBackup = CalloutSecurity.getBackupKeyStatus();
+
     //Custom exception for handling errors
     public class CalloutException extends Exception{}
 
@@ -60,7 +63,12 @@ public with sharing class Callout {
             if(!errorCodes.contains(res.getStatusCode())){
                 return res.getBody();
             }else{
-                throw new CalloutException(res.getBody());
+                if(res.getBody().contains('Incorrect API key provided') && !CalloutSecurity.customKeySaved()){
+                    useBackup = true;
+                    return 'RETRY';
+                }else{
+                    throw new CalloutException(res.getBody());
+                }
             }  
         }else{return 'success';}
     }
