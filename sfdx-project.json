@@ -4,8 +4,8 @@
       "path": "force-app",
       "default": true,
       "package": "SetupAI",
-      "versionName": "ver 0.2",
-      "versionNumber": "0.2.0.1",
+      "versionName": "ver 1.0",
+      "versionNumber": "1.0.0.0",
       "versionDescription": "AI Assistant to Salesforce Admins",
       "ancestorId": "04tDp000000uQdCIAU",
       "postInstallScript": "PostInstall"
@@ -22,6 +22,7 @@
     "SetupAI@0.1.0-3": "04tDp000000uQT5IAM",
     "SetupAI@0.1.0-4": "04tDp000000uQTAIA2",
     "SetupAI@0.1.0-5": "04tDp000000uQd2IAE",
-    "SetupAI@0.2.0-1": "04tDp000000uQdCIAU"
+    "SetupAI@0.2.0-1": "04tDp000000uQdCIAU",
+    "SetupAI@1.0.0": "04tDp000000qTGSIA2"
   }
 }
