@@ -11,6 +11,7 @@ public with sharing class TestController {
     static void testSetup(){
         User testUser = TestDataFactory.createTestUser();
         System.runAs(testUser){
+            Tokenizer.getUsage();
             Callout.testSetup = true;
             Chat__c testChat = TestDataFactory.createCompleteChat();
         }
@@ -82,19 +83,19 @@ public with sharing class TestController {
 
             //Verify results
             Chat__c newChat = [SELECT Id, Name 
-                                        FROM Chat__c
-                                        WHERE Id = :results];
+                               FROM Chat__c
+                               WHERE Id = :results];
             System.assertEquals('Chat thread started', newChat.Name, 'Unexpected thread summary');
             Message__c[] messages = [SELECT Name, Role__c, Content__c, Function_Name__c, Function_Arguments__c 
-                                            FROM Message__c 
-                                            WHERE Thread__c = :newChat.Id
-                                            ORDER BY Id];
+                                     FROM Message__c 
+                                     WHERE Thread__c = :newChat.Id
+                                     ORDER BY Id];
             System.assertEquals(2, messages.size(), 'Unexpected number of messages saved to chat');
             System.assertEquals('user', messages[0].Role__c, 'Unexpected role on message');
             System.assertEquals('Hi there', messages[0].Content__c, 'Unexpected user message content');
             System.assertEquals('assistant', messages[1].Role__c, 'Unexpected role on message');
             System.assertEquals('Hello! How can I help you today?', messages[1].Content__c, 'Unexpected user message content');
-    }
+        }
     }
 
     @isTest

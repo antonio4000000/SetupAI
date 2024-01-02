@@ -6,14 +6,6 @@
 
 public with sharing class ChatInterface {
 
-    //Get Model name for given abbreviation
-    private static String getModel(String modelAbbr){
-        return [SELECT MasterLabel 
-                FROM Model__mdt
-                WHERE Abbreviation__c = :modelAbbr
-                WITH SECURITY_ENFORCED].MasterLabel;
-    }
-
     //Retrieve defined functions and return them formatted
     private static ChatRequest.ChatFunction[] getFunctions(){
         ChatRequest.ChatFunction[] toReturn = new ChatRequest.ChatFunction[]{};
@@ -31,15 +23,21 @@ public with sharing class ChatInterface {
     public static ChatRequest.ChatMessage chat(ChatRequest.ChatMessage[] messages, String model, Boolean includeFunctions){
         //Construct request
         ChatRequest req = new ChatRequest(
-            /** model */            getModel(model == null ? 'gpt-3' : model),
+            /** model */            model,
             /** temperature */      0,
             /** messages */         messages,
             /** functions */        includeFunctions ? getFunctions() : null
         );
         //Submit request
         ChatResponse res = OpenAI.chat(req);
+        Tokenizer.updateUsage(
+            res?.usage?.prompt_tokens != null ? res.usage.prompt_tokens : 0,
+            res?.usage?.completion_tokens != null ? res.usage.completion_tokens : 0
+        );
         //Return response from assistant
-        ChatRequest.ChatMessage toReturn = res?.choices[0]?.message;
+        ChatRequest.ChatMessage toReturn = res?.choices != null && res?.choices.size() > 0 ?
+                                           res?.choices[0]?.message :
+                                           OpenAI.getError('Invalid response from server').choices[0].message;
         if(toReturn != null){
             //Copy tokens down so they can be saved to records later
             toReturn.completionTokens = res?.usage?.completion_tokens;

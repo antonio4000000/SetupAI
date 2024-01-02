@@ -6,6 +6,12 @@
 
 public with sharing class Utils {
 
+    //Default model for chats
+    public static FINAL String DEFAULT_MODEL = [SELECT SetupAI__Model__c
+                                                FROM SetupAI__API_Secret__mdt
+                                                WHERE MasterLabel =:'Default'
+                                                WITH SECURITY_ENFORCED].Model__c;
+
     //Checks if specified value is a primitive data type
     public static Boolean isPrimitive(Object value){
         return value instanceof Boolean || value instanceof String || value instanceof Integer ||
@@ -29,7 +35,8 @@ public with sharing class Utils {
     public static String getStaticResource(String nameOfFile){
         return [SELECT Body
                 FROM StaticResource 
-                WHERE Name = :nameOfFile].Body.toString();
+                WHERE Name = :nameOfFile
+                WITH SECURITY_ENFORCED].Body.toString();
     }
 
     //Generate random number string
@@ -49,6 +56,32 @@ public with sharing class Utils {
             this.endpoint = settings.Endpoint__c;
             this.details = settings.Details__c;
         }
+    }
+
+    //Returns model to use in chats
+    public static String getModel(){
+        if(CalloutSecurity.customKeySaved()){
+            SetupAI__GPT_Settings__c settings = SetupAI__GPT_Settings__c.getOrgDefaults();
+            return settings == null || settings.Model__c == null || settings.Model__c == '' ? 
+                   DEFAULT_MODEL :
+                   settings.Model__c;
+        }else{
+            return DEFAULT_MODEL;
+        }
+    }
+
+    //Prevents HTML from displaying in chat
+    public static String sanitizeHtml(String input) {
+        if (String.isEmpty(input)) {
+            return input;
+        }
+        // Escape all HTML entities
+        String sanitized = input.escapeHtml4();
+        // Unescape specific characters for readability
+        sanitized = sanitized.replace('&#39;', '\'') // Apostrophe
+                             .replace('&quot;', '"') // Double Quote
+                             .replace('&amp;', '&');  // Ampersand
+        return sanitized;
     }
 
 }

@@ -30,6 +30,15 @@ public with sharing class TestDataFactory {
         );
         return testUser;
     }
+
+    //Create default GPT Settings
+    public static SetupAI__GPT_Settings__c createSettings(){
+        SetupAI__GPT_Settings__c settings = new SetupAI__GPT_Settings__c();
+        settings.API_Key__c = 'TeStKeY';
+        settings.SetupOwnerId = UserInfo.getOrganizationId();
+        upsert settings;
+        return settings;
+    }
     
     //Generate Chat__c record along with related Message__c records
     public static Chat__c createCompleteChat(){

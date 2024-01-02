@@ -4,7 +4,7 @@
  * Description: Response from Tooling AI request for all SObject definitions
 */
 
-public class ToolingSObjectsResponse {
+public with sharing class ToolingSObjectsResponse {
 	public String encoding;	//UTF-8
 	public Integer maxBatchSize;	//200
 	public cls_sobjects[] sobjects;

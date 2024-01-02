@@ -51,7 +51,7 @@ public with sharing class Function {
         if(CRUD.createMessage()){
             insert new Message__c(Thread__c = chatId,
                                   Role__c = 'function',
-                                  Content__c = content,
+                                  Content__c = Utils.sanitizeHtml(content),
                                   Function_Name__c = name);
         }
     }
@@ -60,8 +60,8 @@ public with sharing class Function {
     public static String soql(FunctionParam.SOQL args){
         String query = SOQLModifier.modify(args.query);
         return query.toUpperCase().contains('COUNT()') ?
-               String.valueOf(Database.countQuery(query)) :
-               JSON.serialize(Database.query(query));
+               String.valueOf(Database.countQuery(query, AccessLevel.USER_MODE)) :
+               JSON.serialize(Database.query(query, AccessLevel.USER_MODE));
     }
 
     //Execute SOQL Query on Tooling API
@@ -153,7 +153,8 @@ public with sharing class Function {
     public static String getEndpoints(){
         Utils.InternalEndpoint[] toReturn = new Utils.InternalEndpoint[]{};
         for(URL__mdt url : [SELECT MasterLabel, Endpoint__c, Details__c
-                            FROM URL__mdt]){
+                            FROM URL__mdt
+                            WITH SECURITY_ENFORCED]){
             toReturn.add(new Utils.InternalEndpoint(url));
         }
         return JSON.serialize(toReturn);

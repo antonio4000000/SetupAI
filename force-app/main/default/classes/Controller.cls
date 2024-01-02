@@ -23,8 +23,8 @@ public with sharing class Controller {
                     return initialize(content);
                 }else{
                     insert new Message__c(Thread__c = chatId,
-                                                   Content__c = content,
-                                                   Role__c = 'user');
+                                          Content__c = Utils.sanitizeHtml(content),
+                                          Role__c = 'user');
                     return null;
                 }
             }else{
@@ -37,14 +37,18 @@ public with sharing class Controller {
     
     //Creates Chat and System message before inserting first chat message
     private static String initialize(String firstMessage){
-        Chat__c chat = generateChat(firstMessage);
-        insert chat;
-        insert new Message__c(
-            Role__c = 'user',
-            Content__c = firstMessage,
-            Thread__c = chat.Id
-        );
-        return chat.Id;
+        if(CRUD.createChat() && CRUD.createMessage()){
+            Chat__c chat = generateChat(firstMessage);
+            insert chat;
+            insert new Message__c(
+                Role__c = 'user',
+                Content__c = Utils.sanitizeHtml(firstMessage),
+                Thread__c = chat.Id
+            );
+            return chat.Id;
+        }else{
+            throw new AuraHandledException(Label.Create_Chat_Access);
+        }
     }
 
     //Creates initial Chat__c record
@@ -63,9 +67,9 @@ public with sharing class Controller {
                     message
                 )
             }, 
-            'gpt-3',
+            Utils.getModel(),
             false
-        ).content;
+        ).content.removeStart('"').removeEnd('"');
         //Save chat record
         return new Chat__c(
             Running__c = true,
@@ -96,13 +100,13 @@ public with sharing class Controller {
                     returnObj.containerClass = OUTBOUND_CONTAINER_CLASS;
                     returnObj.msgClass = OUTBOUND_MESSAGE_CLASS;
                     returnObj.id = msg.Id;
-                    returnObj.text = msg.Content__c;
+                    returnObj.text = Utils.sanitizeHtml(msg.Content__c);
                 }
                 if(msg.Role__c == 'assistant' || msg.Role__c == 'error'){
                     returnObj.containerClass = INBOUND_CONTAINER_CLASS;
                     returnObj.msgClass = INBOUND_MESSAGE_CLASS;
                     returnObj.id = msg.Id;
-                    returnObj.text = (msg.Role__c == 'error' ? 'ERROR: ' : '' ) + msg.Content__c;
+                    returnObj.text = (msg.Role__c == 'error' ? 'ERROR: ' : '' ) + Utils.sanitizeHtml(msg.Content__c);
                 }
                 if(returnObj.text != null){
                     toReturn.add(returnObj);
@@ -143,5 +147,6 @@ public with sharing class Controller {
             throw new AuraHandledException(e.getMessage());
         }
     }
+    
 
 }

@@ -4,7 +4,7 @@
     <protected>true</protected>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Query to execute on Tooling API</value>
+        <value xsi:type="xsd:string">Query to execute on Tooling API. Only request minimum required fields to complete request</value>
     </values>
     <values>
         <field>Enumerated_Values__c</field>

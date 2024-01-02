@@ -3,6 +3,8 @@ import { subscribe } from 'lightning/empApi';
 import getMessages from '@salesforce/apex/Controller.getMessages';
 import submitMessage from '@salesforce/apex/Controller.submitMessage';
 import getChatSummary from '@salesforce/apex/Controller.getChatSummary';
+import maxExceeded from '@salesforce/apex/Tokenizer.maxExceeded';
+import maxExceededLabel from '@salesforce/label/c.Max_Tokens_Exceeded';
 
 export default class NewChatOverrideLWC extends LightningElement {
 
@@ -18,15 +20,25 @@ export default class NewChatOverrideLWC extends LightningElement {
     @track fadeAnimation = 'fade-in'
     //Chat summary
     @track title = 'New Chat';
+    //Determines if max tokens exceeded for this month
+    @track isMaxExceeded = false;
+    //Custom labels
+    @track label = {
+        maxExceededLabel
+    }
 
     //Platform event handling to display new messages
     subscription = {};
     errorSubscription = {};
-    @api channelName = '/event/Message_Notice__e';
-    @api errorChannelName = '/event/Async_Error__e';
+    @api channelName = '/event/SetupAI__Message_Notice__e';
+    @api errorChannelName = '/event/SetupAI__Async_Error__e';
 
     //On component load, retrieve messages
     connectedCallback(){
+        // eslint-disable-next-line @lwc/lwc/no-async-operation
+        setTimeout(() => {
+            this.fadeAnimation = '';
+        }, 400);
         if(this.recordId){
             this.retrieveMessages();
             getChatSummary({chatId:this.recordId})
@@ -34,33 +46,22 @@ export default class NewChatOverrideLWC extends LightningElement {
                     this.title = result != null ? result : this.title;
                 })
                 .catch(error => {
-                    console.log(error.body.message);
-                    this.displayError(error.body.message);
+                    this.displayError(error);
                 })
         } 
         this.handleSubscribe();
+        this.checkTokenUsage();
     }
-
-    //On component rendered
-    renderedCallback() {
-        setTimeout(() => {
-            this.fadeAnimation = '';
-        }, 400);
     
-        this.template.querySelector('.chat-messages').scrollTop = this.template.querySelector('.chat-messages').scrollHeight;
-    
-        // Manually insert the processed HTML for each message
-        const messageElems = this.template.querySelectorAll('.message-content');
-        this.messages.forEach((message, index) => {
-            if (message.msgClass.includes('inbound')) {
-                // Only insert the already processed/sanitized text
-                messageElems[index].innerHTML = message.text;
-            } else {
-                messageElems[index].textContent = message.text; 
-            }
-        });
+    checkTokenUsage() {
+        maxExceeded()
+            .then((result) => {
+                this.isMaxExceeded = result;
+            })
+            .catch((error) => {
+                this.displayError(error.body.message);
+            });
     }
-        
 
     //Handle user input updates
     handleInputChange(event) {
@@ -85,8 +86,7 @@ export default class NewChatOverrideLWC extends LightningElement {
                     this.retrieveMessages();
                 })
                 .catch(error => {
-                    console.log(error.body.message);
-                    this.displayError(error.body.message);
+                    this.displayError(error);
                 })
         }
     }
@@ -95,29 +95,26 @@ export default class NewChatOverrideLWC extends LightningElement {
     retrieveMessages(){
         getMessages({chatId: this.recordId})
             .then((result) => {
-                this.messages = result.map(message => {
-                    // Convert markdown to HTML only for the inbound messages
-                    if (message.msgClass.includes('inbound')) {
-                        message.text = this.markdownToHTML(message.text);
-                    } else {
-                        message.text = this.escapeHTML(message.text); // Ensure outbound messages are escaped as well
-                    }
-                    return message;
-                });
+                this.messages = result;
                 //If last message is not user submitted, hide loading wheel
-                this.isLoading = this.messages[this.messages.length-1].msgClass.includes('outbound');
+                this.isLoading = this.messages[this.messages.length-1]?.msgClass?.includes('outbound');
+                this.updateScrollPosition();
             })
             .catch((error) => {
-                console.log(error.body.message);
-                this.displayError(error.body.message);
+                this.displayError(error);
             });
+    }
+
+    // Logic to adjust scroll position
+    updateScrollPosition() {
+        this.template.querySelector('.chat-messages').scrollTop = this.template.querySelector('.chat-messages').scrollHeight;
     }
 
     // Handles subscribe button click
     handleSubscribe() {
         // Callback invoked whenever a new event message is received
         const messageCallback = (response) => {
-            if(response.data.payload.SetupAI__Chat_Id__c == this.recordId){
+            if(response.data.payload.SetupAI__Chat_Id__c === this.recordId){
                 this.isLoading = true;
                 this.retrieveMessages();
             }
@@ -131,7 +128,7 @@ export default class NewChatOverrideLWC extends LightningElement {
 
         //Handle error subscription
         const errorCallback = (response) => {
-            if(response.data.payload.SetupAI__Chat_Id__c == this.recordId){
+            if(response.data.payload.SetupAI__Chat_Id__c === this.recordId){
                 this.displayError(JSON.parse(JSON.stringify(response.data.payload.SetupAI__Error_Content__c)));
             }
         }
@@ -142,12 +139,12 @@ export default class NewChatOverrideLWC extends LightningElement {
     }
 
     //Displays error message on screen
-    displayError(message){
+    displayError(errorMessage){
         this.messages.push({
             msgClass: 'slds-chat-message__text slds-chat-message__text_inbound',
             containerClass: 'slds-chat-listitem slds-chat-listitem_inbound',
             id: 0,
-            text: message
+            text: errorMessage?.body?.message || errorMessage
         });
         this.isLoading = false;
     }
@@ -158,29 +155,5 @@ export default class NewChatOverrideLWC extends LightningElement {
             this.submit();
         }
     }
-
-    // Converts markdown link [label](url) to HTML anchor tags
-    markdownToHTML(inputStr) {
-        const regex = /\[([^\[]+)\]\(([^\)]+)\)/g;
-        return inputStr.replace(regex, (match, label, url) => `<a href="${url}" target="_blank">${label}</a>`);
-    }
-
-    // This function escapes dangerous characters from the input string
-    escapeHTML(str) {
-        var div = document.createElement('div');
-        div.appendChild(document.createTextNode(str));
-        return div.innerHTML;
-    }
-
-    // Converts markdown link [label](url) to HTML anchor tags
-    markdownToHTML(inputStr) {
-        // First, escape any HTML in the input string
-        let escapedStr = this.escapeHTML(inputStr);
-        
-        // Next, replace markdown links with HTML links
-        const regex = /\[([^\[]+)\]\(([^\)]+)\)/g;
-        return escapedStr.replace(regex, (match, label, url) => `<a href="${url}" target="_blank">${label}</a>`);
-    }
-
 
 }
