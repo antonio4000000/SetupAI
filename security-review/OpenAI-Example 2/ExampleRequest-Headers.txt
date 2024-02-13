@@ -1,0 +1,2 @@
+Authorization: Bearer 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
+Content-Type: application/json
