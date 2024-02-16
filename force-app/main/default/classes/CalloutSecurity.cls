@@ -10,29 +10,20 @@ public with sharing class CalloutSecurity {
     
     //Retrieve OpenAI API Key
     public static String getOpenAIKey(){
-        if(customKeySaved()){
-            //If parameter to send to LMO doesn't match, fix it
-            if(!FeatureManager.usingCustomAPIKey()){
-                FeatureManager.setUsingCustomAPIKey(true);
-            }
-            return SetupAI__GPT_Settings__c.getOrgDefaults().API_Key__c;
-        }else{
-            //If parameter to send to LMO doesn't match, fix it
-            if(FeatureManager.usingCustomAPIKey()){
-                FeatureManager.setUsingCustomAPIKey(false);
-            }
-            SetupAI__Token_Usage__c usage = SetupAI__Token_Usage__c.getOrgDefaults();
-            return [SELECT Key__c
-                    FROM API_Secret__mdt
-                    WHERE MasterLabel = :(Callout.useBackup ? 'Backup' : 'Default')
-                    WITH SECURITY_ENFORCED].Key__c;
+        //If parameter to send to LMO doesn't match, fix it
+        if(FeatureManager.usingCustomAPIKey()){
+            flipCustomKeyFlag();
         }
+        SetupAI__Token_Usage__c usage = SetupAI__Token_Usage__c.getOrgDefaults();
+        return [SELECT Key__c
+                FROM API_Secret__mdt
+                WHERE MasterLabel = :(Callout.useBackup ? 'Backup' : 'Default')
+                WITH SECURITY_ENFORCED].Key__c;
     }
 
     //Returns true if a custom API key was saved
     public static Boolean customKeySaved(){
-        SetupAI__GPT_Settings__c settings = SetupAI__GPT_Settings__c.getOrgDefaults();
-        return settings != null && settings.API_Key__c != null;
+        return [SELECT Id FROM NamedCredential WHERE MasterLabel = :'SetupAI'].size() > 0;
     }
 
     //Sets flag to use backup key if primary key is turned off/compromised
@@ -41,6 +32,13 @@ public with sharing class CalloutSecurity {
         SetupAI__Token_Usage__c usage = SetupAI__Token_Usage__c.getOrgDefaults();
         usage.SetupAI__Use_Backup__c = true;
         update usage;
+    }
+
+    //Sets Custom API Key feature(future method called directly before callouts)
+    public static void flipCustomKeyFlag(){
+        FeatureManager.setUsingCustomAPIKey(
+            !FeatureManager.usingCustomAPIKey()
+        );
     }
 
     //Returns backup key indicator flag

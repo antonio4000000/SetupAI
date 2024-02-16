@@ -32,6 +32,18 @@ public with sharing class Callout {
         );
     }
 
+    //Standard execute but referencing named credential
+    public static String namedCredExecute(String namedCred, String endpoint, String method, String body, Map<String, String> headers){
+        //Retrieve endpoint with friendly name
+        Endpoint__mdt e = [SELECT Endpoint__c FROM Endpoint__mdt WHERE MasterLabel = :endpoint WITH SECURITY_ENFORCED];
+        return execute_i(
+            'callout:' + namedCred + Utils.getEndpointPath(e.Endpoint__c), 
+            method, 
+            body, 
+            headers
+        );
+    }
+
     //Call this Salesforce org
     public static String internalExecute(String endpoint, String method, String body, Map<String, String> headers){
         headers.put('Authorization','Bearer ' + UserInfo.getSessionId());

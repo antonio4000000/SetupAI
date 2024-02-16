@@ -16,15 +16,32 @@ public with sharing class OpenAI {
             }
             String response;
             do{
-                response = Callout.execute(
-                    /** Endpoint */             'Chat',
-                    /** Method */               'POST',
-                    /** Body */                 req.serialize(),
-                    /** Headers */              new Map<String, String>{
-                                                    'Content-Type'=>'application/json',
-                                                    'Authorization'=>'Bearer '+CalloutSecurity.getOpenAIKey()
-                                                }
-                ).replace('"object":', '"object_x":');
+                //If custom named cred is saved, use that instead of internal key
+                if(CalloutSecurity.customKeySaved()){
+                    //If parameter to send to LMO doesn't match, fix it
+                    if(!FeatureManager.usingCustomAPIKey()){
+                        CalloutSecurity.flipCustomKeyFlag();
+                    }
+                    response = Callout.namedCredExecute(
+                        /** NamedCred */            'SetupAI',
+                        /** Endpoint */             'Chat',
+                        /** Method */               'POST',
+                        /** Body */                 req.serialize(),
+                        /** Headers */              new Map<String, String>{
+                                                        'Content-Type'=>'application/json'
+                                                    }
+                    ).replace('"object":', '"object_x":');
+                }else{
+                    response = Callout.execute(
+                        /** Endpoint */             'Chat',
+                        /** Method */               'POST',
+                        /** Body */                 req.serialize(),
+                        /** Headers */              new Map<String, String>{
+                                                        'Content-Type'=>'application/json',
+                                                        'Authorization'=>'Bearer '+CalloutSecurity.getOpenAIKey()
+                                                    }
+                    ).replace('"object":', '"object_x":');
+                }
             }while(response == 'RETRY');
             //If backup key was flipped, save to custom setting(doing after all callouts to avoid uncommitted work error)
             if(Callout.useBackup){
