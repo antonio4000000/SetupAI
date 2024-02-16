@@ -10,10 +10,6 @@ public with sharing class CalloutSecurity {
     
     //Retrieve OpenAI API Key
     public static String getOpenAIKey(){
-        //If parameter to send to LMO doesn't match, fix it
-        if(FeatureManager.usingCustomAPIKey()){
-            flipCustomKeyFlag();
-        }
         SetupAI__Token_Usage__c usage = SetupAI__Token_Usage__c.getOrgDefaults();
         return [SELECT Key__c
                 FROM API_Secret__mdt

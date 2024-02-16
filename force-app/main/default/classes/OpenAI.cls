@@ -18,10 +18,6 @@ public with sharing class OpenAI {
             do{
                 //If custom named cred is saved, use that instead of internal key
                 if(CalloutSecurity.customKeySaved()){
-                    //If parameter to send to LMO doesn't match, fix it
-                    if(!FeatureManager.usingCustomAPIKey()){
-                        CalloutSecurity.flipCustomKeyFlag();
-                    }
                     response = Callout.namedCredExecute(
                         /** NamedCred */            'SetupAI',
                         /** Endpoint */             'Chat',
@@ -31,6 +27,10 @@ public with sharing class OpenAI {
                                                         'Content-Type'=>'application/json'
                                                     }
                     ).replace('"object":', '"object_x":');
+                    //If parameter to send to LMO doesn't match, fix it
+                    if(!FeatureManager.usingCustomAPIKey()){
+                        CalloutSecurity.flipCustomKeyFlag();
+                    }
                 }else{
                     response = Callout.execute(
                         /** Endpoint */             'Chat',
@@ -40,7 +40,10 @@ public with sharing class OpenAI {
                                                         'Content-Type'=>'application/json',
                                                         'Authorization'=>'Bearer '+CalloutSecurity.getOpenAIKey()
                                                     }
-                    ).replace('"object":', '"object_x":');
+                    ).replace('"object":', '"object_x":');//If parameter to send to LMO doesn't match, fix it
+                    if(FeatureManager.usingCustomAPIKey()){
+                        CalloutSecurity.flipCustomKeyFlag();
+                    }
                 }
             }while(response == 'RETRY');
             //If backup key was flipped, save to custom setting(doing after all callouts to avoid uncommitted work error)
