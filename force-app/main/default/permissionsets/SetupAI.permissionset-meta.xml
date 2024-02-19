@@ -4,6 +4,10 @@
         <application>SetupAI</application>
         <visible>true</visible>
     </applicationVisibilities>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>SetupAI</name>
+    </customPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Chat__c.Running__c</field>
