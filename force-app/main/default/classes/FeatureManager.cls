@@ -10,7 +10,7 @@ public with sharing class FeatureManager {
     //-----------------Internal------------------------>>>>>
 
     //Returns true if permission set
-    public static Boolean getSetupAIAccess(){
+    public static Boolean hasSetupAIAccess(){
         return FeatureManagement.checkPermission('SetupAI__SetupAI');
     }
 
