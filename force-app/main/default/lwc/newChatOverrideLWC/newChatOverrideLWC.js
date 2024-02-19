@@ -5,6 +5,8 @@ import submitMessage from '@salesforce/apex/Controller.submitMessage';
 import getChatSummary from '@salesforce/apex/Controller.getChatSummary';
 import maxExceeded from '@salesforce/apex/Tokenizer.maxExceeded';
 import maxExceededLabel from '@salesforce/label/c.Max_Tokens_Exceeded';
+import noAccessLabel from '@salesforce/label/c.No_SetupAI_Access';
+import hasSetupAIPermission from '@salesforce/customPermission/SetupAI';
 
 export default class NewChatOverrideLWC extends LightningElement {
 
@@ -22,9 +24,18 @@ export default class NewChatOverrideLWC extends LightningElement {
     @track title = 'New Chat';
     //Determines if max tokens exceeded for this month
     @track isMaxExceeded = false;
+    //If true, user has permission set assigned
+    get hasSetupAIPermission(){
+        return hasSetupAIPermission == null ? false : hasSetupAIPermission;
+    }
+    //If max tokens( not exceeded and user has access to app, display chatbox.
+    get displayChat(){
+        return !this.isMaxExceeded && this.hasSetupAIPermission;
+    }
     //Custom labels
     @track label = {
-        maxExceededLabel
+        maxExceededLabel,
+        noAccessLabel
     }
 
     //Platform event handling to display new messages
@@ -51,7 +62,7 @@ export default class NewChatOverrideLWC extends LightningElement {
         } 
         this.handleSubscribe();
         this.checkTokenUsage();
-    }
+    }  
     
     checkTokenUsage() {
         maxExceeded()
