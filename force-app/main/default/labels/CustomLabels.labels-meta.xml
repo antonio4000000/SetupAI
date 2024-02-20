@@ -72,4 +72,12 @@
         <shortDescription>No Key Saved</shortDescription>
         <value>You must set an API key on your GPT settings with the Unlimited license type. See help for how to do this.</value>
     </labels>
+    <labels>
+        <fullName>No_SetupAI_Access</fullName>
+        <categories>Errors</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No SetupAI Access</shortDescription>
+        <value>You cannot access SetupAI until the SetupAI permission set has been enabled on your user.</value>
+    </labels>
 </CustomLabels>
