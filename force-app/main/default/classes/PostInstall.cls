@@ -16,6 +16,9 @@ public with sharing class PostInstall implements InstallHandler {
         if(tokenUsage.isUpdateable() &&
            month.isUpdateable() &&
            ownerId.isUpdateable() &&
+           tokenUsage.isCreateable() &&
+           month.isCreateable() &&
+           ownerId.isCreateable() &&
            //Check default needs to be populated
            SetupAI__Token_Usage__c.getOrgDefaults() != null &&
            SetupAI__Token_Usage__c.getOrgDefaults().SetupAI__Month__c == null){
