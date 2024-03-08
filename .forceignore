@@ -15,6 +15,8 @@ force-app/main/default/objects/Opportunity
 force-app/main/default/reports
 force-app/main/default/classes/DemoClass.cls
 force-app/main/default/classes/DemoClass.cls-meta.xml
+force-app/main/default/namedCredentials/SetupAI.namedCredential-meta.xml
+force-app/main/default/externalCredentials/SetupAI.externalCredential-meta.xml
 
 
 # LWC configuration files

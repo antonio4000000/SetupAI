@@ -24,7 +24,7 @@
                         </template>
                     </section>
                 </div>
-                <template if:false={isMaxExceeded}>
+                <template if:true={displayChat}>
                     <div class="slds-m-top_small user-input-box slds-grid align-items-center">
                         <lightning-input 
                             type="text" 
@@ -46,6 +46,11 @@
                 <template if:true={isMaxExceeded}>
                     <div class="slds-m-top_small user-input-box slds-grid align-items-center">
                         <p class="slds-text-color_error slds-p-around_medium">{label.maxExceededLabel}</p>
+                    </div>
+                </template>         
+                <template if:false={hasSetupAIPermission}>
+                    <div class="slds-m-top_small user-input-box slds-grid align-items-center">
+                        <p class="slds-text-color_error slds-p-around_medium">{label.noAccessLabel}</p>
                     </div>
                 </template>    
             </div>

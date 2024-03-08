@@ -60,14 +60,7 @@ public with sharing class Utils {
 
     //Returns model to use in chats
     public static String getModel(){
-        if(CalloutSecurity.customKeySaved()){
-            SetupAI__GPT_Settings__c settings = SetupAI__GPT_Settings__c.getOrgDefaults();
-            return settings == null || settings.Model__c == null || settings.Model__c == '' ? 
-                   DEFAULT_MODEL :
-                   settings.Model__c;
-        }else{
-            return DEFAULT_MODEL;
-        }
+        return DEFAULT_MODEL;
     }
 
     //Prevents HTML from displaying in chat
@@ -82,6 +75,13 @@ public with sharing class Utils {
                              .replace('&quot;', '"') // Double Quote
                              .replace('&amp;', '&');  // Ampersand
         return sanitized;
+    }
+
+    //returns path after domain in url
+    public static String getEndpointPath(String urlString){
+        String[] parts = urlString.split('//', 2);
+        String domainPart = parts.size() > 1 ? parts[1] : parts[0];
+        return '/' + domainPart.substringAfter('/');
     }
 
 }

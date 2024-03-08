@@ -6,24 +6,30 @@
 
 public with sharing class Tokenizer {
 
+    public class TokenizerException extends Exception{}
+
     // Static variable to hold the default organization level custom setting
     private static SetupAI__Token_Usage__c usage;
 
     public static SetupAI__Token_Usage__c getUsage() {
-        if (usage == null) {
-            usage = SetupAI__Token_Usage__c.getOrgDefaults();
-            
-            // If the custom setting does not exist, instantiate a new one
+        if(FeatureManager.hasSetupAIAccess()){
             if (usage == null) {
-                usage = new SetupAI__Token_Usage__c();
-                usage.SetupOwnerId = UserInfo.getOrganizationId();
-                usage.SetupAI__Month__c = Date.today().month();
-                upsert usage; // Perform DML operation to save the new defaults
-            } else if (Date.today().month() != usage.SetupAI__Month__c) {
-                resetMonthlyUsage(); // Reset usage for new month
+                usage = SetupAI__Token_Usage__c.getOrgDefaults();
+                
+                // If the custom setting does not exist, instantiate a new one
+                if (usage == null) {
+                    usage = new SetupAI__Token_Usage__c();
+                    usage.SetupOwnerId = UserInfo.getOrganizationId();
+                    usage.SetupAI__Month__c = Date.today().month();
+                    upsert usage; // Perform DML operation to save the new defaults
+                } else if (Date.today().month() != usage.SetupAI__Month__c) {
+                    resetMonthlyUsage(); // Reset usage for new month
+                }
             }
+            return usage;
+        }else{
+            throw new TokenizerException(Label.No_SetupAI_Access);
         }
-        return usage;
     }
 
     private static void resetMonthlyUsage() {
