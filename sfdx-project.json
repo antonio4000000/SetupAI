@@ -5,9 +5,9 @@
       "default": true,
       "package": "SetupAI",
       "versionName": "ver 1.0",
-      "versionNumber": "1.5.0.0",
+      "versionNumber": "1.6.0.0",
       "versionDescription": "AI Assistant to Salesforce Admins",
-      "ancestorId": "04tDp000000qToeIAE",
+      "ancestorId": "04tDp000000qTp8IAE",
       "postInstallScript": "PostInstall"
     }
   ],
@@ -29,6 +29,7 @@
     "SetupAI@1.2.0-1": "04tDp000000qTjsIAE",
     "SetupAI@1.3.0": "04tDp000000qTkMIAU",
     "SetupAI@1.4.0": "04tDp000000qToeIAE",
-    "SetupAI@1.5.0": "04tDp000000qTp8IAE"
+    "SetupAI@1.5.0": "04tDp000000qTp8IAE",
+    "SetupAI@1.6.0": "04tDp000000qTudIAE"
   }
 }
