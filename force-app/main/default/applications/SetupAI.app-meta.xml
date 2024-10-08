@@ -11,7 +11,7 @@
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>true</isNavPersonalizationDisabled>
     <isNavTabPersistenceDisabled>true</isNavTabPersistenceDisabled>
-    <label>SetupAI</label>
+    <label>Lucent</label>
     <navType>Console</navType>
     <tabs>Chat__c</tabs>
     <uiType>Lightning</uiType>
